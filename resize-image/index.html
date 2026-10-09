@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resize Image Online — Free Image Resizer | NinaTools</title>
+<meta name="description" content="Resize JPG, PNG and WebP images online for free. Set exact dimensions, keep image proportions and download your resized image privately in your browser.">
+<link rel="canonical" href="https://ninatools.github.io/resize-image/">
+<meta name="theme-color" content="#ffffff">
+<style>
+*{box-sizing:border-box}
+:root{--ink:#172033;--muted:#647084;--line:#e2e7ef;--accent:#315ee8;--soft:#f5f7fb}
+body{margin:0;color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent);text-decoration:none}
+header,footer{border-bottom:1px solid var(--line)}
+nav,.footer-inner{max-width:1000px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:750;color:var(--ink)}
+main{max-width:900px;margin:auto;padding:32px 20px 55px}
+.hero{text-align:center;margin-bottom:26px}
+.badge{display:inline-block;padding:5px 12px;background:#eef2ff;color:#334fc5;border-radius:999px;font-size:.85rem}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15;letter-spacing:-.04em;margin:14px 0}
+.intro{max-width:680px;margin:auto;color:var(--muted)}
+.panel{border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,28px);box-shadow:0 8px 30px #1423460d}
+.field{margin-bottom:18px}
+label{display:block;font-weight:650;font-size:.94rem;margin-bottom:7px}
+input[type=file],input[type=number],select{width:100%;min-height:46px;border:1px solid #cfd6e2;border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);font:inherit}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.checkline{display:flex;align-items:center;gap:9px;margin:0 0 20px}
+.checkline input{width:18px;height:18px;accent-color:var(--accent)}
+.hint,.stats{font-size:.86rem;color:var(--muted)}
+.quality-row{display:flex;justify-content:space-between;gap:10px}
+.quality-row label{margin:0}
+input[type=range]{width:100%;accent-color:var(--accent)}
+button,.button{border:0;border-radius:11px;padding:12px 18px;min-height:46px;font:inherit;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.primary{background:var(--accent);color:white}
+.secondary{background:#edf1f8;color:var(--ink)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.status{margin-top:14px;color:var(--muted);font-size:.93rem;overflow-wrap:anywhere}
+.error{color:#b42318}.success{color:#16794b}
+.previews{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.preview-card{min-width:0;border:1px solid var(--line);border-radius:13px;padding:12px;background:var(--soft)}
+.preview-card h2{font-size:1rem;margin:0 0 8px}
+.preview-box{height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background-color:white;background-image:linear-gradient(45deg,#edf0f5 25%,transparent 25%),linear-gradient(-45deg,#edf0f5 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#edf0f5 75%),linear-gradient(-45deg,transparent 75%,#edf0f5 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}
+.preview-box img{max-width:100%;max-height:100%;object-fit:contain}
+.preview-empty{padding:12px;text-align:center;color:var(--muted);font-size:.88rem}
+.content{margin-top:40px}
+.content h2{font-size:1.4rem;margin-top:28px}
+.content p,.content li{color:#4b566a}
+.faq{border-top:1px solid var(--line);padding:14px 0}
+.faq h3{font-size:1rem;margin:0 0 5px}
+.faq p{margin:0}
+footer{border-top:1px solid var(--line);border-bottom:0;color:var(--muted);font-size:.9rem}
+@media(max-width:600px){main{padding-top:24px}.two,.previews{grid-template-columns:1fr}.buttons button,.buttons a{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<nav aria-label="Main navigation">
+<a class="brand" href="https://ninatools.github.io/">NinaTools</a>
+<a href="https://ninatools.github.io/tools/">All Tools</a>
+</nav>
+</header>
+<main>
+<section class="hero">
+<span class="badge">Free online tool</span>
+<h1>Resize Image Online</h1>
+<p class="intro">Change the width and height of JPG, PNG and WebP images in seconds. Keep your image proportions and download the resized file for free.</p>
+</section>
+<section class="panel" aria-label="Image resizer">
+<div class="field">
+<label for="imageFile">Choose an image</label>
+<input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp">
+<p class="hint">Supported formats: JPG, PNG and WebP. For best results, use an image smaller than 20 MB.</p>
+</div>
+<div class="two">
+<div class="field"><label for="width">Width (pixels)</label><input id="width" type="number" min="1" max="10000" placeholder="e.g. 1200"></div>
+<div class="field"><label for="height">Height (pixels)</label><input id="height" type="number" min="1" max="10000" placeholder="e.g. 800"></div>
+</div>
+<label class="checkline" for="keepRatio"><input id="keepRatio" type="checkbox" checked> Keep aspect ratio</label>
+<div class="two">
+<div class="field"><label for="format">Output format</label><select id="format"><option value="original">Same as original (recommended)</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div>
+<div class="field"><div class="quality-row"><label for="quality">Quality (JPG/WebP)</label><output id="qualityValue">90%</output></div><input id="quality" type="range" min="30" max="100" value="90"><p class="hint">Higher quality usually means a larger file.</p></div>
+</div>
+<div class="buttons">
+<button class="primary" id="resizeBtn" type="button" disabled>Resize image</button>
+<button class="secondary" id="resetBtn" type="button">Reset</button>
+<a id="downloadBtn" class="button primary" href="#" download hidden>Download resized image</a>
+</div>
+<p id="status" class="status" role="status" aria-live="polite">Choose an image to get started. Your image is processed in this browser.</p>
+<div class="previews">
+<div class="preview-card"><h2>Original image</h2><div class="preview-box" id="originalBox"><span class="preview-empty">Your original preview will appear here.</span></div><div class="stats" id="originalStats">No image selected</div></div>
+<div class="preview-card"><h2>Resized image</h2><div class="preview-box" id="resultBox"><span class="preview-empty">Your resized preview will appear here.</span></div><div class="stats" id="resultStats">Not resized yet</div></div>
+</div>
+</section>
+<section class="content">
+<h2>How to resize an image</h2>
+<ol><li>Choose a JPG, PNG or WebP image.</li><li>Enter your new width and height in pixels.</li><li>Keep “Keep aspect ratio” checked to avoid stretching the image.</li><li>Choose the output format and quality, then select “Resize image”.</li><li>Review the result and download your resized image.</li></ol>
+<h2>Private image resizing</h2>
+<p>Your selected image is processed locally in your browser. This tool does not upload your image to a NinaTools server. Your browser needs enough memory to process the image.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><h3>Which formats are supported?</h3><p>You can use JPG/JPEG, PNG and WebP images and choose an output format.</p></div>
+<div class="faq"><h3>Will resizing reduce image quality?</h3><p>Reducing dimensions can remove detail. The quality setting also affects JPG and WebP compression. PNG does not use a lossy quality setting.</p></div>
+<div class="faq"><h3>Will my image be uploaded?</h3><p>No image upload is performed by this tool. Processing happens in your browser, although an internet connection is needed to load the page.</p></div>
+<div class="faq"><h3>Why is the resized file larger?</h3><p>File size depends on dimensions, format, image content and quality. A PNG or high-quality image may be larger than the original.</p></div>
+<p>More free tools: <a href="https://ninatools.github.io/heic-to-jpg/">HEIC to JPG</a> · <a href="https://ninatools.github.io/compress-jpg/">Compress JPG</a>.</p>
+</section>
+</main>
+<footer><div class="footer-inner"><span>© <span id="year"></span> NinaTools</span><div><a href="https://ninatools.github.io/">Home</a> · <a href="https://ninatools.github.io/tools/">Tools</a> · <a href="https://ninatools.github.io/about/">About</a> · <a href="https://ninatools.github.io/privacy/">Privacy</a> · <a href="https://ninatools.github.io/terms/">Terms</a> · <a href="https://ninatools.github.io/contact/">Contact</a></div></div></footer>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fileInput = $("imageFile");
+  const widthInput = $("width");
+  const heightInput = $("height");
+  const keepRatio = $("keepRatio");
+  const formatInput = $("format");
+  const qualityInput = $("quality");
+  const qualityValue = $("qualityValue");
+  const resizeBtn = $("resizeBtn");
+  const resetBtn = $("resetBtn");
+  const downloadBtn = $("downloadBtn");
+  const status = $("status");
+  const originalBox = $("originalBox");
+  const resultBox = $("resultBox");
+  const originalStats = $("originalStats");
+  const resultStats = $("resultStats");
+
+  let originalImage = null;
+  let originalUrl = null;
+  let resultUrl = null;
+  let originalFile = null;
+  let ratio = 1;
+
+  $("year").textContent = new Date().getFullYear();
+  qualityInput.addEventListener("input", () => {
+    qualityValue.value = qualityInput.value + "%";
+    qualityValue.textContent = qualityInput.value + "%";
+  });
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function setStatus(message, type = "") {
+    status.textContent = message;
+    status.className = "status" + (type ? " " + type : "");
+  }
+
+  function clearResult() {
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    resultUrl = null;
+    downloadBtn.hidden = true;
+    downloadBtn.removeAttribute("href");
+    resultBox.replaceChildren();
+    const placeholder = document.createElement("span");
+    placeholder.className = "preview-empty";
+    placeholder.textContent = "Your resized preview will appear here.";
+    resultBox.appendChild(placeholder);
+    resultStats.textContent = "Not resized yet";
+  }
+
+  function resetAll() {
+    if (originalUrl) URL.revokeObjectURL(originalUrl);
+    originalUrl = null;
+    originalImage = null;
+    originalFile = null;
+    fileInput.value = "";
+    widthInput.value = "";
+    heightInput.value = "";
+    widthInput.disabled = false;
+    heightInput.disabled = false;
+    originalBox.replaceChildren();
+    const placeholder = document.createElement("span");
+    placeholder.className = "preview-empty";
+    placeholder.textContent = "Your original preview will appear here.";
+    originalBox.appendChild(placeholder);
+    originalStats.textContent = "No image selected";
+    resizeBtn.disabled = true;
+    clearResult();
+    setStatus("Choose an image to get started. Your image is processed in this browser.");
+  }
+
+  fileInput.addEventListener("change", () => {
+    clearResult();
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      resetAll();
+      setStatus("Please choose a JPG, PNG or WebP image.", "error");
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      resetAll();
+      setStatus("This image is larger than 20 MB. Please choose a smaller image.", "error");
+      return;
+    }
+    if (originalUrl) URL.revokeObjectURL(originalUrl);
+    originalFile = file;
+    originalUrl = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      originalImage = img;
+      ratio = img.naturalWidth / img.naturalHeight;
+      widthInput.value = img.naturalWidth;
+      heightInput.value = img.naturalHeight;
+      originalBox.replaceChildren();
+      const preview = document.createElement("img");
+      preview.src = originalUrl;
+      preview.alt = "Original image preview";
+      originalBox.appendChild(preview);
+      originalStats.textContent = img.naturalWidth + " × " + img.naturalHeight + " px · " + formatBytes(file.size);
+      resizeBtn.disabled = false;
+      setStatus("Image loaded. Enter your desired dimensions and select Resize image.", "success");
+    };
+    img.onerror = () => {
+      resetAll();
+      setStatus("This image could not be opened. Please try another file.", "error");
+    };
+    img.src = originalUrl;
+  });
+
+  widthInput.addEventListener("input", () => {
+    if (!originalImage || !keepRatio.checked) return;
+    const width = Number(widthInput.value);
+    if (width > 0) heightInput.value = Math.max(1, Math.round(width / ratio));
+  });
+  heightInput.addEventListener("input", () => {
+    if (!originalImage || !keepRatio.checked) return;
+    const height = Number(heightInput.value);
+    if (height > 0) widthInput.value = Math.max(1, Math.round(height * ratio));
+  });
+  keepRatio.addEventListener("change", () => {
+    if (keepRatio.checked && originalImage) {
+      const width = Number(widthInput.value);
+      if (width > 0) heightInput.value = Math.max(1, Math.round(width / ratio));
+    }
+  });
+
+  resizeBtn.addEventListener("click", () => {
+    if (!originalImage || !originalFile) {
+      setStatus("Please choose an image first.", "error");
+      return;
+    }
+    const width = Number(widthInput.value);
+    const height = Number(heightInput.value);
+    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 || width > 10000 || height > 10000) {
+      setStatus("Enter valid width and height between 1 and 10,000 pixels.", "error");
+      return;
+    }
+    if (width * height > 40000000) {
+      setStatus("The output would be very large. Please use dimensions with a combined total of 40 million pixels or less.", "error");
+      return;
+    }
+    const requestedFormat = formatInput.value === "original" ? originalFile.type : formatInput.value;
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      setStatus("Your browser could not start image processing. Please try another browser.", "error");
+      return;
+    }
+    if (requestedFormat === "image/jpeg") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+    }
+    ctx.drawImage(originalImage, 0, 0, width, height);
+    const quality = Number(qualityInput.value) / 100;
+    resizeBtn.disabled = true;
+    setStatus("Resizing image…");
+    canvas.toBlob(blob => {
+      resizeBtn.disabled = false;
+      if (!blob) {
+        setStatus("Could not create the resized image. Try another format or smaller dimensions.", "error");
+        return;
+      }
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+      resultUrl = URL.createObjectURL(blob);
+      resultBox.replaceChildren();
+      const preview = document.createElement("img");
+      preview.src = resultUrl;
+      preview.alt = "Resized image preview";
+      resultBox.appendChild(preview);
+      resultStats.textContent = width + " × " + height + " px · " + formatBytes(blob.size) + " · " + Math.round((1 - blob.size / originalFile.size) * 100) + "% size change";
+      const extension = blob.type === "image/jpeg" ? "jpg" : blob.type === "image/webp" ? "webp" : "png";
+      downloadBtn.href = resultUrl;
+      downloadBtn.download = "resized-image." + extension;
+      downloadBtn.hidden = false;
+      setStatus("Image resized successfully. Review the preview and download your file.", "success");
+    }, requestedFormat, requestedFormat === "image/jpeg" || requestedFormat === "image/webp" ? quality : undefined);
+  });
+
+  resetBtn.addEventListener("click", resetAll);
+  window.addEventListener("beforeunload", () => {
+    if (originalUrl) URL.revokeObjectURL(originalUrl);
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+  });
+})();
+</script>
+</body>
+</html>
+  
+  
