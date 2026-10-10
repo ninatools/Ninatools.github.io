@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merge PDF Files Free Online | NinaTools</title>
+<meta name="description" content="Merge multiple PDF files into one document for free. Reorder your files and combine PDFs securely in your browser with NinaTools.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ninatools.github.io/pdf-merger/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;color:#192033;font-family:Arial,sans-serif;line-height:1.6}
+header,main,footer{max-width:850px;margin:auto;padding:22px}
+header a,footer a{color:#5553d9;text-decoration:none}
+h1{font-size:clamp(30px,6vw,42px);line-height:1.2;margin:24px 0 12px}
+p{color:#626b80}
+.card{background:#fff;border:1px solid #e0e5ef;border-radius:20px;padding:24px;margin:20px 0;box-shadow:0 4px 18px #17233b08}
+.drop{border:2px dashed #aeb8ce;border-radius:16px;padding:28px 16px;text-align:center;background:#fafbff}
+button,.pick{display:inline-block;border:0;border-radius:11px;padding:12px 17px;background:#5553d9;color:white;font-size:16px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.secondary{background:#edf0fa;color:#252c42}
+input[type=file]{max-width:100%;margin:12px 0}
+.file{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e8ebf2;overflow-wrap:anywhere}
+.file-name{flex:1;min-width:0}
+.file button{padding:7px 10px;font-size:14px}
+.status{padding:12px 0;overflow-wrap:anywhere}
+.success{color:#167548}.error{color:#b42318}
+.small{font-size:14px;color:#727b8e}
+footer{font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://ninatools.github.io/">← NinaTools Home</a>
+  <h1>Merge PDF Files</h1>
+  <p>Combine multiple PDF documents into one file — free, simple and secure.</p>
+</header>
+
+<main>
+<section class="card">
+  <h2>1. Choose your PDF files</h2>
+  <p>Select two or more PDF files. Use the arrows to change their order before merging.</p>
+  <div class="drop">
+    <label class="pick" for="pdfFiles">Choose PDF files</label>
+    <input id="pdfFiles" type="file" accept=".pdf,application/pdf" multiple>
+    <div class="small">Your documents are processed in your browser, not uploaded to NinaTools.</div>
+  </div>
+
+  <h3>Selected files</h3>
+  <div id="fileList" aria-live="polite">No files selected yet.</div>
+  <p id="status" class="status" aria-live="polite"></p>
+  <button id="mergeBtn" disabled>Merge PDFs</button>
+  <button id="clearBtn" class="secondary" type="button">Clear files</button>
+</section>
+
+<section class="card">
+  <h2>How to merge PDF files</h2>
+  <ol>
+    <li>Select at least two PDF files.</li>
+    <li>Arrange them in the order you want.</li>
+    <li>Click “Merge PDFs”.</li>
+    <li>Download your combined PDF.</li>
+  </ol>
+  <p class="small">Please keep your original files until you have checked the merged document. Password-protected or damaged PDFs may not be supported.</p>
+</section>
+
+<section class="card">
+  <h2>Frequently asked questions</h2>
+  <h3>Is this PDF merger free?</h3>
+  <p>Yes. You can merge PDF files for free using NinaTools.</p>
+  <h3>Are my documents uploaded?</h3>
+  <p>The merging process runs locally in your browser. The PDF files are not sent to NinaTools by this page. The PDF processing library is loaded from a third-party content delivery network.</p>
+  <h3>Can I change the order of the files?</h3>
+  <p>Yes. Use the up and down buttons beside each file before merging.</p>
+</section>
+</main>
+
+<footer>
+  <a href="https://ninatools.github.io/tools/">All tools</a> ·
+  <a href="https://ninatools.github.io/privacy/">Privacy</a> ·
+  <a href="https://ninatools.github.io/contact/">Contact</a>
+  <p>© NinaTools</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
+const input = document.getElementById('pdfFiles');
+const list = document.getElementById('fileList');
+const mergeBtn = document.getElementById('mergeBtn');
+const clearBtn = document.getElementById('clearBtn');
+const statusBox = document.getElementById('status');
+let files = [];
+
+function formatSize(bytes) {
+  return bytes < 1024 * 1024
+    ? (bytes / 1024).toFixed(1) + ' KB'
+    : (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+function showStatus(message, type = '') {
+  statusBox.textContent = message;
+  statusBox.className = 'status ' + type;
+}
+
+function renderFiles() {
+  list.replaceChildren();
+
+  if (!files.length) {
+    list.textContent = 'No files selected yet.';
+  } else {
+    files.forEach((file, index) => {
+      const row = document.createElement('div');
+      row.className = 'file';
+
+      const name = document.createElement('div');
+      name.className = 'file-name';
+      name.textContent = `${index + 1}. ${file.name} (${formatSize(file.size)})`;
+
+      const up = document.createElement('button');
+      up.className = 'secondary';
+      up.textContent = '↑';
+      up.setAttribute('aria-label', 'Move ' + file.name + ' up');
+      up.disabled = index === 0;
+      up.onclick = () => {
+        [files[index - 1], files[index]] = [files[index], files[index - 1]];
+        renderFiles();
+      };
+
+      const down = document.createElement('button');
+      down.className = 'secondary';
+      down.textContent = '↓';
+      down.setAttribute('aria-label', 'Move ' + file.name + ' down');
+      down.disabled = index === files.length - 1;
+      down.onclick = () => {
+        [files[index + 1], files[index]] = [files[index], files[index + 1]];
+        renderFiles();
+      };
+
+      row.append(name, up, down);
+      list.append(row);
+    });
+  }
+
+  mergeBtn.disabled = files.length < 2;
+}
+
+input.addEventListener('change', () => {
+  const selected = Array.from(input.files || []);
+  const invalid = selected.filter(file =>
+    !file.name.toLowerCase().endsWith('.pdf') &&
+    file.type !== 'application/pdf'
+  );
+
+  if (invalid.length) {
+    showStatus('Please select PDF files only.', 'error');
+    input.value = '';
+    return;
+  }
+
+  files = selected;
+  renderFiles();
+  showStatus(files.length < 2
+    ? 'Select at least two PDF files to continue.'
+    : files.length + ' PDF files ready to merge.');
+});
+
+clearBtn.addEventListener('click', () => {
+  files = [];
+  input.value = '';
+  renderFiles();
+  showStatus('');
+});
+
+mergeBtn.addEventListener('click', async () => {
+  if (files.length < 2) return;
+
+  if (!window.PDFLib) {
+    showStatus('The PDF library could not load. Check your internet connection and try again.', 'error');
+    return;
+  }
+
+  mergeBtn.disabled = true;
+  clearBtn.disabled = true;
+  showStatus('Merging your PDF files. Please wait...');
+
+  try {
+    const mergedPdf = await PDFLib.PDFDocument.create();
+
+    for (const file of files) {
+      const bytes = await file.arrayBuffer();
+      const sourcePdf = await PDFLib.PDFDocument.load(bytes);
+      const pages = await mergedPdf.copyPages(
+        sourcePdf,
+        sourcePdf.getPageIndices()
+      );
+      pages.forEach(page => mergedPdf.addPage(page));
+    }
+
+    const result = await mergedPdf.save();
+    const blob = new Blob([result], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'ninatools-merged.pdf';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+    showStatus('PDFs merged successfully! Your download should begin automatically.', 'success');
+  } catch (error) {
+    console.error(error);
+    showStatus('Could not merge these files. Check that each PDF opens correctly and is not password-protected, then try again.', 'error');
+  } finally {
+    mergeBtn.disabled = files.length < 2;
+    clearBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
