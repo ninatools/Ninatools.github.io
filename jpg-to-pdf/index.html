@@ -317,7 +317,7 @@ footer a { margin: 0 8px; }
   const margin = document.getElementById("margin");
   const filename = document.getElementById("filename");
 
-  let images = [];
+  let images = [];let rotationAngles = {};
   let busy = false;
   let nextId = 1;
 
@@ -389,7 +389,21 @@ footer a { margin: 0 8px; }
       meta.textContent = item.width + " × " + item.height + " px · " + formatBytes(item.file.size);
 
       info.append(name, meta);
+const rotate = document.createElement("button");
+rotate.type = "button";
+rotate.textContent = "Rotate ↻";
+rotate.setAttribute("aria-label", "Rotate " + item.file.name);
+rotate.disabled = busy;
 
+rotate.addEventListener("click", () => {
+  if (busy) return;
+
+  rotationAngles[item.id] =
+    ((rotationAngles[item.id] || 0) + 90) % 360;
+
+  preview.style.transform =
+    "rotate(" + rotationAngles[item.id] + "deg)";
+});
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "remove-button";
@@ -405,7 +419,7 @@ footer a { margin: 0 8px; }
         setStatus(images.length ? "Image removed. Ready to convert." : "Select images to get started.");
       });
 
-      row.append(preview, info, remove);
+      row.append(preview, info, rotate, remove);
       imageList.append(row);
     });
   }
