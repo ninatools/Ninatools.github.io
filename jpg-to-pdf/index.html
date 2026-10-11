@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert JPG, JPEG and PNG images into a PDF document for free. Choose page size, orientation and margins. Files are processed in your browser.">
+<meta name="theme-color" content="#6857df">
+<title>JPG to PDF Converter - NinaTools</title>
+
+<style>
+:root {
+  --primary: #6857df;
+  --primary-dark: #5140c4;
+  --text: #192033;
+  --muted: #68738a;
+  --border: #e0e4ef;
+  --background: #f6f7fc;
+  --success: #16794b;
+  --danger: #b42318;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+a { color: inherit; }
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  max-width: 1050px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.brand {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.nav-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.nav-links a { text-decoration: none; color: var(--muted); }
+main {
+  max-width: 900px;
+  margin: 42px auto;
+  padding: 0 18px;
+}
+.hero { text-align: center; margin-bottom: 28px; }
+.hero-icon { font-size: 2.7rem; }
+h1 { font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.2; margin: 8px 0 14px; }
+.hero p { color: var(--muted); margin: 0 auto; max-width: 650px; }
+.panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: clamp(18px, 4vw, 32px);
+  box-shadow: 0 8px 30px rgba(25,32,51,.04);
+  margin-bottom: 22px;
+}
+.dropzone {
+  display: block;
+  border: 2px dashed #b9b2f4;
+  border-radius: 16px;
+  background: #faf9ff;
+  padding: 30px 16px;
+  text-align: center;
+  cursor: pointer;
+}
+.dropzone:hover { background: #f2efff; }
+.dropzone strong { display: block; font-size: 1.12rem; }
+.dropzone span { display: block; color: var(--muted); margin-top: 5px; }
+input[type="file"] { max-width: 100%; }
+#fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+#fileInput:focus-visible + .dropzone {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+.settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.field label {
+  display: block;
+  font-weight: 650;
+  margin-bottom: 7px;
+}
+select, input[type="text"] {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #cbd2e1;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+input:focus, select:focus, button:focus-visible, a:focus-visible {
+  outline: 3px solid #c5bcff;
+  outline-offset: 2px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+button {
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 11px;
+  padding: 12px 18px;
+  min-height: 46px;
+  cursor: pointer;
+}
+button:disabled { opacity: .55; cursor: not-allowed; }
+.primary { background: var(--primary); color: #fff; flex: 1; }
+.primary:hover:not(:disabled) { background: var(--primary-dark); }
+.secondary { background: #efedff; color: var(--primary-dark); }
+.danger { background: #fff0ef; color: var(--danger); }
+.status {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: #f4f5fa;
+  border-radius: 10px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.status.success { color: var(--success); background: #edf9f1; }
+.status.error { color: var(--danger); background: #fff0ef; }
+.summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  margin: 18px 0 12px;
+}
+.image-list { display: grid; gap: 12px; }
+.image-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0,1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  min-width: 0;
+}
+.image-item img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  background: #f3f4f8;
+  border-radius: 8px;
+}
+.image-name { font-weight: 650; overflow-wrap: anywhere; }
+.image-meta { color: var(--muted); font-size: .9rem; }
+.remove-button {
+  background: #fff0ef;
+  color: var(--danger);
+  padding: 8px 11px;
+  min-height: 40px;
+}
+.note { color: var(--muted); font-size: .92rem; }
+h2 { font-size: 1.35rem; margin-top: 0; }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 16px 36px;
+}
+footer a { margin: 0 8px; }
+[hidden] { display: none !important; }
+@media (max-width: 560px) {
+  main { margin-top: 28px; }
+  .nav { align-items: flex-start; flex-direction: column; }
+  .settings { grid-template-columns: 1fr; }
+  .image-item { grid-template-columns: 58px minmax(0,1fr); gap: 10px; }
+  .image-item img { width: 58px; height: 58px; }
+  .remove-button { grid-column: 2; justify-self: start; }
+  .actions button { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="/">NinaTools</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/tools/">All Tools</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-icon" aria-hidden="true">🖼️</div>
+    <h1>JPG to PDF Converter</h1>
+    <p>Convert JPG, JPEG and PNG images into one PDF document. Free, easy to use, and processed directly in your browser.</p>
+  </section>
+
+  <section class="panel" aria-label="Image to PDF converter">
+    <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple>
+    <label class="dropzone" for="fileInput">
+      <strong>＋ Select Images</strong>
+      <span>Choose one or more JPG, JPEG or PNG images</span>
+      <span>No account required. Your images stay on your device.</span>
+    </label>
+
+    <div class="settings">
+      <div class="field">
+        <label for="pageSize">Page size</label>
+        <select id="pageSize">
+          <option value="a4">A4</option>
+          <option value="letter">US Letter</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="orientation">Page orientation</label>
+        <select id="orientation">
+          <option value="auto">Match each image</option>
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="margin">Page margins</label>
+        <select id="margin">
+          <option value="0">No margin</option>
+          <option value="5">5 mm</option>
+          <option value="10" selected>10 mm</option>
+          <option value="15">15 mm</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="filename">PDF file name</label>
+        <input id="filename" type="text" value="my-images" maxlength="100" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="summary">
+      <span id="imageCount">0 images selected</span>
+      <span id="totalSize">Total size: 0 KB</span>
+    </div>
+
+    <div id="imageList" class="image-list"></div>
+
+    <div class="actions">
+      <button id="convertButton" class="primary" type="button" disabled>
+        Convert to PDF
+      </button>
+      <button id="clearButton" class="secondary" type="button" disabled>
+        Clear Images
+      </button>
+    </div>
+
+    <div id="status" class="status" role="status" aria-live="polite">
+      Select images to get started.
+    </div>
+    <p class="note">Each image will be placed on its own PDF page. Very large images may take longer to process.</p>
+  </section>
+
+  <section class="panel">
+    <h2>How to convert JPG to PDF</h2>
+    <ol>
+      <li>Select one or more images from your device.</li>
+      <li>Choose the page size, orientation and margins.</li>
+      <li>Set a name for your PDF file.</li>
+      <li>Select <strong>Convert to PDF</strong> to create and download your document.</li>
+    </ol>
+    <p class="note">For privacy, image processing happens in your browser. The converter does not upload your selected images to NinaTools.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Free online tools by NinaTools</p>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/privacy/">Privacy</a>
+  <a href="/terms/">Terms</a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script>
+(() => {
+  "use strict";
+
+  const fileInput = document.getElementById("fileInput");
+  const imageList = document.getElementById("imageList");
+  const imageCount = document.getElementById("imageCount");
+  const totalSize = document.getElementById("totalSize");
+  const convertButton = document.getElementById("convertButton");
+  const clearButton = document.getElementById("clearButton");
+  const statusBox = document.getElementById("status");
+  const pageSize = document.getElementById("pageSize");
+  const orientation = document.getElementById("orientation");
+  const margin = document.getElementById("margin");
+  const filename = document.getElementById("filename");
+
+  let images = [];
+  let busy = false;
+  let nextId = 1;
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function setStatus(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.className = "status" + (type ? " " + type : "");
+  }
+
+  function updateSummary() {
+    imageCount.textContent = images.length + (images.length === 1 ? " image selected" : " images selected");
+    totalSize.textContent = "Total size: " + formatBytes(
+      images.reduce((sum, item) => sum + item.file.size, 0)
+    );
+    convertButton.disabled = busy || images.length === 0;
+    clearButton.disabled = busy || images.length === 0;
+    fileInput.disabled = busy;
+  }
+
+  function loadImage(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        resolve({
+          id: nextId++,
+          file,
+          dataUrl: null,
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+          preview: URL.createObjectURL(file)
+        });
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Could not read image: " + file.name));
+      };
+
+      img.src = url;
+    });
+  }
+
+  function renderImages() {
+    imageList.replaceChildren();
+
+    images.forEach((item, index) => {
+      const row = document.createElement("div");
+      row.className = "image-item";
+
+      const preview = document.createElement("img");
+      preview.src = item.preview;
+      preview.alt = "Preview of " + item.file.name;
+
+      const info = document.createElement("div");
+      const name = document.createElement("div");
+      name.className = "image-name";
+      name.textContent = (index + 1) + ". " + item.file.name;
+
+      const meta = document.createElement("div");
+      meta.className = "image-meta";
+      meta.textContent = item.width + " × " + item.height + " px · " + formatBytes(item.file.size);
+
+      info.append(name, meta);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "remove-button";
+      remove.textContent = "Remove";
+      remove.setAttribute("aria-label", "Remove " + item.file.name);
+      remove.disabled = busy;
+      remove.addEventListener("click", () => {
+        if (busy) return;
+        const [removed] = images.splice(index, 1);
+        if (removed) URL.revokeObjectURL(removed.preview);
+        renderImages();
+        updateSummary();
+        setStatus(images.length ? "Image removed. Ready to convert." : "Select images to get started.");
+      });
+
+      row.append(preview, info, remove);
+      imageList.append(row);
+    });
+  }
+
+  fileInput.addEventListener("change", async () => {
+    const selected = Array.from(fileInput.files || []);
+    fileInput.value = "";
+
+    if (!selected.length) return;
+
+    const accepted = selected.filter(file => {
+      const typeOK = ["image/jpeg", "image/png"].includes(file.type);
+      const extensionOK = /\.(jpe?g|png)$/i.test(file.name);
+      return typeOK || extensionOK;
+    });
+
+    if (accepted.length !== selected.length) {
+      setStatus("Some files were skipped. Please select JPG, JPEG or PNG images only.", "error");
+    }
+
+    const existingKeys = new Set(images.map(item =>
+      item.file.name + "|" + item.file.size + "|" + item.file.lastModified
+    ));
+
+    let added = 0;
+
+    for (const file of accepted) {
+      const key = file.name + "|" + file.size + "|" + file.lastModified;
+      if (existingKeys.has(key)) continue;
+
+      try {
+        const item = await loadImage(file);
+        images.push(item);
+        existingKeys.add(key);
+        added++;
+      } catch (error) {
+        setStatus(error.message || "One of the images could not be opened.", "error");
+      }
+    }
+
+    renderImages();
+    updateSummary();
+
+    if (images.length) {
+      setStatus(added ? added + " image(s) added. Ready to convert." : "These images are already selected.");
+    } else if (accepted.length) {
+      setStatus("No readable images were selected.", "error");
+    }
+  });
+
+  clearButton.addEventListener("click", () => {
+    if (busy) return;
+    images.forEach(item => URL.revokeObjectURL(item.preview));
+    images = [];
+    renderImages();
+    updateSummary();
+    setStatus("Images cleared. Select new images to get started.");
+  });
+
+  function readAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("Could not read " + file.name));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function safeFilename(value) {
+    let result = value.trim().replace(/\.pdf$/i, "");
+    result = result.replace(/[\\/:*?"<>|]/g, "-").replace(/\s+/g, "-");
+    return result.slice(0, 100) || "my-images";
+  }
+
+  convertButton.addEventListener("click", async () => {
+    if (busy || images.length === 0) return;
+
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      setStatus("The PDF library could not load. Check your internet connection and reload the page.", "error");
+      return;
+    }
+
+    busy = true;
+    updateSummary();
+    renderImages();
+    setStatus("Preparing your PDF… Please keep this page open.");
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: pageSize.value,
+        compress: true
+      });
+
+      const selectedMargin = Number(margin.value);
+      let pageAdded = false;
+
+      for (let i = 0; i < images.length; i++) {
+        const item = images[i];
+        setStatus("Creating PDF page " + (i + 1) + " of " + images.length + "…");
+
+        const dataUrl = await readAsDataURL(item.file);
+        const imageFormat = item.file.type === "image/png" ||
+          /\.png$/i.test(item.file.name) ? "PNG" : "JPEG";
+
+        const naturalLandscape = item.width > item.height;
+        let pageOrientation = orientation.value;
+
+        if (pageOrientation === "auto") {
+          pageOrientation = naturalLandscape ? "landscape" : "portrait";
+        }
+
+        const widthMm = pageSize.value === "a4" ? 210 : 215.9;
+        const heightMm = pageSize.value === "a4" ? 297 : 279.4;
+        const pageWidth = pageOrientation === "landscape" ? heightMm : widthMm;
+        const pageHeight = pageOrientation === "landscape" ? widthMm : heightMm;
+
+        if (pageAdded) {
+          doc.addPage(pageSize.value, pageOrientation);
+          doc.setPage(i + 1);
+        } else {
+          doc.setPage(1);
+          doc.deletePage(1);
+          doc.addPage(pageSize.value, pageOrientation);
+          pageAdded = true;
+        }
+
+        const availableWidth = Math.max(1, pageWidth - selectedMargin * 2);
+        const availableHeight = Math.max(1, pageHeight - selectedMargin * 2);
+        const scale = Math.min(
+          availableWidth / item.width,
+          availableHeight / item.height
+        );
+
+        const drawWidth = item.width * scale;
+        const drawHeight = item.height * scale;
+        const x = (pageWidth - drawWidth) / 2;
+        const y = (pageHeight - drawHeight) / 2;
+
+        doc.addImage(dataUrl, imageFormat, x, y, drawWidth, drawHeight);
+      }
+
+      const outputName = safeFilename(filename.value) + ".pdf";
+      doc.save(outputName);
+      setStatus("Success! Your PDF has been created: " + outputName, "success");
+    } catch (error) {
+      console.error(error);
+      setStatus("Could not create the PDF. Try fewer or smaller images, then try again.", "error");
+    } finally {
+      busy = false;
+      updateSummary();
+      renderImages();
+    }
+  });
+
+  updateSummary();
+})();
+</script>
+</body>
+</html>
