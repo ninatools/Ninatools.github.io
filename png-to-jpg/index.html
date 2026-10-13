@@ -1,1 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert PNG images to JPG online for free. Convert multiple images, adjust JPG quality, and download your images securely in your browser.">
+<meta name="theme-color" content="#6857df">
+<title>PNG to JPG Converter - NinaTools</title>
 
+<style>
+:root {
+  --primary: #6857df;
+  --primary-dark: #5141c5;
+  --background: #f7f8fc;
+  --surface: #ffffff;
+  --text: #25243a;
+  --muted: #6b7080;
+  --border: #e2e4ef;
+  --success: #18794e;
+  --danger: #b42318;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+nav a,
+.back-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover,
+.back-link:hover {
+  color: var(--primary);
+}
+
+main {
+  width: min(900px, calc(100% - 32px));
+  margin: 32px auto 48px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+h1 {
+  margin: 8px 0;
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.intro p {
+  max-width: 620px;
+  margin: 12px auto;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(36, 31, 91, 0.04);
+}
+
+.drop-zone {
+  border: 2px dashed #c9c4f5;
+  border-radius: 13px;
+  padding: 30px 16px;
+  text-align: center;
+  background: #faf9ff;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.drop-zone.dragging {
+  border-color: var(--primary);
+  background: #f0edff;
+}
+
+.upload-icon {
+  font-size: 38px;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.drop-zone h2 {
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+.drop-zone p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 5px 0 15px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #b9b0ff;
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  color: white;
+  background: var(--primary);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.secondary {
+  color: var(--primary);
+  background: #efedff;
+}
+
+.secondary:hover:not(:disabled) {
+  background: #e5e1ff;
+}
+
+.danger {
+  color: var(--danger);
+  background: #fff0ee;
+}
+
+.small-button {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.setting label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.quality-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+#qualityValue {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.privacy-note {
+  background: #f0faf5;
+  color: #216547;
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+#fileCount {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.file-list {
+  display: grid;
+  gap: 14px;
+}
+
+.file-item {
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1fr);
+  gap: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px;
+  min-width: 0;
+}
+
+.preview {
+  width: 94px;
+  height: 94px;
+  object-fit: contain;
+  background-color: #f4f4f8;
+  border-radius: 8px;
+}
+
+.file-info {
+  min-width: 0;
+}
+
+.file-name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  margin-bottom: 4px;
+}
+
+.file-meta {
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.file-status {
+  font-size: 13px;
+  margin: 5px 0 10px;
+  overflow-wrap: anywhere;
+}
+
+.file-status.success {
+  color: var(--success);
+}
+
+.file-status.error {
+  color: var(--danger);
+}
+
+.file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.overall-status {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.error-message {
+  color: var(--danger);
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+  padding: 18px 8px;
+  font-size: 14px;
+}
+
+.info h2 {
+  font-size: 20px;
+  margin-top: 0;
+}
+
+.info h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.info p,
+.info li {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.info ol {
+  padding-left: 22px;
+}
+
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+footer a {
+  color: var(--primary);
+  text-decoration: none;
+  margin: 0 7px;
+}
+
+@media (max-width: 560px) {
+  header {
+    padding: 14px 16px;
+  }
+
+  .header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  nav {
+    gap: 14px;
+  }
+
+  main {
+    width: calc(100% - 24px);
+    margin-top: 24px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .settings {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .file-item {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 11px;
+    padding: 10px;
+  }
+
+  .preview {
+    width: 72px;
+    height: 72px;
+  }
+
+  .file-actions .button {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="header-inner">
+    <a class="brand" href="https://ninatools.github.io/">NinaTools</a>
+    <nav aria-label="Main navigation">
+      <a href="https://ninatools.github.io/">Home</a>
+      <a href="https://ninatools.github.io/tools/">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <a class="back-link" href="https://ninatools.github.io/tools/">← Back to all tools</a>
+
+  <section class="intro">
+    <h1>PNG to JPG Converter</h1>
+    <p>Convert PNG images to JPG online for free. Choose multiple images, adjust image quality, and download your converted files in seconds.</p>
+  </section>
+
+  <section class="card" aria-label="Image upload and settings">
+    <div class="drop-zone" id="dropZone">
+      <div class="upload-icon" aria-hidden="true">🖼️</div>
+      <h2>Choose PNG images</h2>
+      <p>Select one or more PNG files from your device.</p>
+      <button type="button" class="button primary" id="chooseButton">Choose PNG Images</button>
+      <input type="file" id="fileInput" accept="image/png,.png" multiple>
+      <p>PNG files only · Your images stay in your browser</p>
+    </div>
+
+    <div class="settings">
+      <div class="setting">
+        <div class="quality-line">
+          <label for="quality">JPG quality</label>
+          <span id="qualityValue">90%</span>
+        </div>
+        <input type="range" id="quality" min="10" max="100" value="90" step="5">
+        <div class="hint">Higher quality usually means a larger file.</div>
+      </div>
+
+      <div class="setting">
+        <label>Background for transparency</label>
+        <div style="padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;">
+          White
+        </div>
+        <div class="hint">Transparent areas become white in JPG images.</div>
+      </div>
+    </div>
+
+    <div class="privacy-note">
+      🔒 Privacy-friendly: conversion happens on your device. Your selected images are not uploaded by this tool.
+    </div>
+  </section>
+
+  <section class="card" aria-label="Selected images">
+    <div class="section-heading">
+      <h2>Your images</h2>
+      <span id="fileCount">0 images</span>
+    </div>
+
+    <div id="emptyState" class="empty-state">
+      No images selected yet. Choose PNG images above to get started.
+    </div>
+
+    <div id="fileList" class="file-list"></div>
+
+    <div class="section-heading" style="margin-top:20px;">
+      <button type="button" class="button secondary" id="convertAllButton" disabled>Convert All</button>
+      <button type="button" class="button danger" id="clearButton" disabled>Clear All</button>
+    </div>
+
+    <div id="overallStatus" class="overall-status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card info">
+    <h2>How to convert PNG to JPG</h2>
+    <ol>
+      <li>Click <strong>Choose PNG Images</strong> and select your PNG files.</li>
+      <li>Adjust the JPG quality if needed.</li>
+      <li>Click <strong>Convert All</strong> or convert an individual image.</li>
+      <li>Click <strong>Download JPG</strong> to save each converted image.</li>
+    </ol>
+    <h3>Why convert PNG to JPG?</h3>
+    <p>JPG is widely supported and can produce smaller files for photographs. Unlike PNG, JPG does not support transparency, so transparent areas are filled with white.</p>
+  </section>
+</main>
+
+<footer>
+  <div>© <span id="year"></span> NinaTools. Free online tools.</div>
+  <p>
+    <a href="https://ninatools.github.io/">Home</a>
+    <a href="https://ninatools.github.io/tools/">Tools</a>
+  </p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const fileInput = document.getElementById("fileInput");
+  const chooseButton = document.getElementById("chooseButton");
+  const dropZone = document.getElementById("dropZone");
+  const qualityInput = document.getElementById("quality");
+  const qualityValue = document.getElementById("qualityValue");
+  const fileList = document.getElementById("fileList");
+  const fileCount = document.getElementById("fileCount");
+  const emptyState = document.getElementById("emptyState");
+  const convertAllButton = document.getElementById("convertAllButton");
+  const clearButton = document.getElementById("clearButton");
+  const overallStatus = document.getElementById("overallStatus");
+
+  const MAX_FILE_SIZE = 50 * 1024 * 1024;
+  const MAX_FILES = 30;
+
+  let nextId = 1;
+  let items = [];
+  let isConvertingAll = false;
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  function formatBytes(bytes) {
+    if (!Number.isFinite(bytes) || bytes < 0) return "";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function safeBaseName(filename) {
+    const dot = filename.lastIndexOf(".");
+    const base = dot > 0 ? filename.slice(0, dot) : filename;
+    return (base || "image").replace(/[\\/:*?"<>|]/g, "_");
+  }
+
+  function setOverallStatus(message, isError) {
+    overallStatus.textContent = message;
+    overallStatus.classList.toggle("error-message", !!isError);
+  }
+
+  function getItem(id) {
+    return items.find(function (item) {
+      return item.id === id;
+    });
+  }
+
+  function revokeResult(item) {
+    if (item.resultUrl) {
+      URL.revokeObjectURL(item.resultUrl);
+      item.resultUrl = null;
+    }
+    item.resultBlob = null;
+    item.resultSize = null;
+    item.resultQuality = null;
+  }
+
+  function setItemError(item, message) {
+    revokeResult(item);
+    item.status = "error";
+    item.error = message;
+  }
+
+  function updateButtons() {
+    const hasItems = items.length > 0;
+    const busy = isConvertingAll ||
+      items.some(function (item) { return item.busy; });
+
+    convertAllButton.disabled = !hasItems || busy ||
+      items.every(function (item) {
+        return item.status === "success" &&
+          item.resultQuality === Number(qualityInput.value) / 100;
+      });
+
+    clearButton.disabled = !hasItems || busy;
+    chooseButton.disabled = busy;
+    fileInput.disabled = busy;
+
+    items.forEach(function (item) {
+      const row = fileList.querySelector(
+        '[data-item-id="' + item.id + '"]'
+      );
+      if (!row) return;
+
+      const convertButton = row.querySelector(".convert-button");
+      const downloadButton = row.querySelector(".download-button");
+      const removeButton = row.querySelector(".remove-button");
+
+      if (convertButton) {
+        convertButton.disabled = busy || item.busy ||
+          (item.status === "success" &&
+           item.resultQuality === Number(qualityInput.value) / 100);
+      }
+      if (downloadButton) {
+        downloadButton.disabled = busy || !item.resultUrl;
+      }
+      if (removeButton) {
+        removeButton.disabled = busy || item.busy;
+      }
+    });
+  }
+
+  function render() {
+    fileList.replaceChildren();
+    emptyState.hidden = items.length > 0;
+    fileCount.textContent = items.length +
+      (items.length === 1 ? " image" : " images");
+
+    items.forEach(function (item) {
+      const row = document.createElement("article");
+      row.className = "file-item";
+      row.dataset.itemId = String(item.id);
+
+      const preview = document.createElement("img");
+      preview.className = "preview";
+      preview.alt = "Preview of " + item.file.name;
+      preview.src = item.previewUrl;
+
+      const info = document.createElement("div");
+      info.className = "file-info";
+
+      const name = document.createElement("div");
+      name.className = "file-name";
+      name.textContent = safeBaseName(item.file.name) + ".jpg";
+
+      const meta = document.createElement("div");
+      meta.className = "file-meta";
+      meta.textContent = "PNG · " + formatBytes(item.file.size);
+
+      const status = document.createElement("div");
+      status.className = "file-status";
+      status.setAttribute("role", "status");
+
+      if (item.busy) {
+        status.textContent = "Converting...";
+      } else if (item.status === "success") {
+        status.classList.add("success");
+        status.textContent = "Converted · " +
+          formatBytes(item.resultSize) +
+          (item.resultQuality !== Number(qualityInput.value) / 100
+            ? " · Quality changed; convert again to update"
+            : "");
+      } else if (item.status === "error") {
+        status.classList.add("error");
+        status.textContent = item.error || "Conversion failed.";
+      } else {
+        status.textContent = "Ready to convert";
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "file-actions";
+
+      const convertButton = document.createElement("button");
+      convertButton.type = "button";
+      convertButton.className = "button primary small-button convert-button";
+      convertButton.textContent = item.status === "success"
+        ? "Convert Again"
+        : "Convert to JPG";
+      convertButton.addEventListener("click", function () {
+        convertOne(item.id);
+      });
+
+      const downloadButton = document.createElement("button");
+      downloadButton.type = "button";
+      downloadButton.className =
+        "button secondary small-button download-button";
+      downloadButton.textContent = "Download JPG";
+      downloadButton.disabled = !item.resultUrl;
+      downloadButton.addEventListener("click", function () {
+        downloadOne(item.id);
+      });
+
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.className = "button danger small-button remove-button";
+      removeButton.textContent = "Remove";
+      removeButton.addEventListener("click", function () {
+        removeOne(item.id);
+      });
+
+      actions.append(convertButton, downloadButton, removeButton);
+      info.append(name, meta, status, actions);
+      row.append(preview, info);
+      fileList.append(row);
+    });
+
+    updateButtons();
+  }
+
+  function addFiles(fileCollection) {
+    const incoming = Array.from(fileCollection || []);
+    if (!incoming.length) return;
+
+    let added = 0;
+    let rejected = 0;
+    let duplicates = 0;
+
+    incoming.forEach(function (file) {
+      if (items.length >= MAX_FILES) {
+        rejected++;
+        return;
+      }
+
+      const isPng = file.type === "image/png" ||
+        /\.png$/i.test(file.name);
+
+      if (!isPng || file.size === 0 || file.size > MAX_FILE_SIZE) {
+        rejected++;
+        return;
+      }
+
+      const duplicate = items.some(function (item) {
+        return item.file.name === file.name &&
+          item.file.size === file.size &&
+          item.file.lastModified === file.lastModified;
+      });
+
+      if (duplicate) {
+        duplicates++;
+        return;
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+
+      const item = {
+        id: nextId++,
+        file: file,
+        previewUrl: previewUrl,
+        resultUrl: null,
+        resultBlob: null,
+        resultSize: null,
+        resultQuality: null,
+        status: "ready",
+        error: "",
+        busy: false
+      };
+
+      items.push(item);
+      added++;
+    });
+
+    const messages = [];
+    if (added) messages.push(added + " image(s) added.");
+    if (duplicates) messages.push(duplicates + " duplicate(s) skipped.");
+    if (rejected) {
+      messages.push(
+        rejected + " file(s) skipped. Choose PNG files up to 50 MB each, with no more than 30 images."
+      );
+    }
+
+    setOverallStatus(messages.join(" "));
+    render();
+    fileInput.value = "";
+  }
+
+  function loadImage(file) {
+    return new Promise(function (resolve, reject) {
+      const url = URL.createObjectURL(file);
+      const image = new Image();
+      let finished = false;
+
+      function cleanup() {
+        image.onload = null;
+        image.onerror = null;
+        URL.revokeObjectURL(url);
+      }
+
+      image.onload = function () {
+        if (finished) return;
+        finished = true;
+        const width = image.naturalWidth;
+        const height = image.naturalHeight;
+        cleanup();
+
+        if (!width || !height) {
+          reject(new Error("This image has invalid dimensions."));
+          return;
+        }
+        resolve({ width: width, height: height, image: image });
+      };
+
+      image.onerror = function () {
+        if (finished) return;
+        finished = true;
+        cleanup();
+        reject(new Error("The image could not be opened. It may be damaged."));
+      };
+
+      image.src = url;
+    });
+  }
+
+  function canvasToBlob(canvas, quality) {
+    return new Promise(function (resolve, reject) {
+      try {
+        canvas.toBlob(function (blob) {
+          if (!blob) {
+            reject(new Error("The browser could not create a JPG image."));
+            return;
+          }
+          if (blob.type !== "image/jpeg") {
+            reject(new Error("JPG conversion is not supported by this browser."));
+            return;
+          }
+          resolve(blob);
+        }, "image/jpeg", quality);
+      } catch (error) {
+        reject(new Error("Conversion failed. Try a smaller image."));
+      }
+    });
+  }
+
+  async function convertItem(item) {
+    const quality = Number(qualityInput.value) / 100;
+
+    if (item.status === "success" &&
+        item.resultQuality === quality &&
+        item.resultUrl) {
+      return true;
+    }
+
+    item.busy = true;
+    item.error = "";
+    render();
+
+    let canvas = null;
+
+    try {
+      const loaded = await loadImage(item.file);
+
+      canvas = document.createElement("canvas");
+      canvas.width = loaded.width;
+      canvas.height = loaded.height;
+
+      const context = canvas.getContext("2d", { alpha: false });
+      if (!context) {
+        throw new Error("Canvas is unavailable in this browser.");
+      }
+
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(loaded.image, 0, 0);
+
+      const blob = await canvasToBlob(canvas, quality);
+
+      revokeResult(item);
+      item.resultBlob = blob;
+      item.resultUrl = URL.createObjectURL(blob);
+      item.resultSize = blob.size;
+      item.resultQuality = quality;
+      item.status = "success";
+      item.error = "";
+      return true;
+    } catch (error) {
+      setItemError(
+        item,
+        error && error.message
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+      return false;
+    } finally {
+      if (canvas) {
+        canvas.width = 0;
+        canvas.height = 0;
+      }
+      item.busy = false;
+      render();
+    }
+  }
+
+  async function convertOne(id) {
+    const item = getItem(id);
+    if (!item || isConvertingAll || item.busy) return;
+
+    setOverallStatus("Converting " + item.file.name + "...");
+    const success = await convertItem(item);
+
+    setOverallStatus(success
+      ? "Conversion complete: " + safeBaseName(item.file.name) + ".jpg"
+      : "Could not convert " + item.file.name + ". Check the error message.");
+
+    render();
+  }
+
+  async function convertAll() {
+    if (isConvertingAll || items.length === 0) return;
+
+    isConvertingAll = true;
+    updateButtons();
+
+    let successCount = 0;
+    let failedCount = 0;
+
+    try {
+      const total = items.length;
+
+      for (let i = 0; i < total; i++) {
+        const item = items[i];
+        setOverallStatus(
+          "Converting image " + (i + 1) + " of " + total + "..."
+        );
+
+        const success = await convertItem(item);
+        if (success) {
+          successCount++;
+        } else {
+          failedCount++;
+        }
+      }
+
+      setOverallStatus(
+        "Finished: " + successCount + " converted, " +
+        failedCount + " failed. Download each JPG below."
+      );
+    } finally {
+      isConvertingAll = false;
+      render();
+    }
+  }
+
+  function downloadOne(id) {
+    const item = getItem(id);
+    if (!item || !item.resultUrl || isConvertingAll) return;
+
+    const link = document.createElement("a");
+    link.href = item.resultUrl;
+    link.download = safeBaseName(item.file.name) + ".jpg";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  function removeOne(id) {
+    if (isConvertingAll) return;
+    const item = getItem(id);
+    if (!item || item.busy) return;
+
+    URL.revokeObjectURL(item.previewUrl);
+    revokeResult(item);
+    items = items.filter(function (entry) {
+      return entry.id !== id;
+    });
+
+    setOverallStatus("Image removed.");
+    render();
+  }
+
+  function clearAll() {
+    if (isConvertingAll ||
+        items.some(function (item) { return item.busy; })) return;
+
+    items.forEach(function (item) {
+      URL.revokeObjectURL(item.previewUrl);
+      revokeResult(item);
+    });
+
+    items = [];
+    setOverallStatus("All images cleared.");
+    render();
+  }
+
+  chooseButton.addEventListener("click", function () {
+    if (!isConvertingAll) fileInput.click();
+  });
+
+  fileInput.addEventListener("change", function () {
+    addFiles(fileInput.files);
+  });
+
+  qualityInput.addEventListener("input", function () {
+    qualityValue.textContent = qualityInput.value + "%";
+    items.forEach(function (item) {
+      if (item.status === "success" &&
+          item.resultQuality !== Number(qualityInput.value) / 100) {
+        item.status = "success";
+      }
+    });
+    render();
+  });
+
+  convertAllButton.addEventListener("click", convertAll);
+  clearButton.addEventListener("click", clearAll);
+
+  ["dragenter", "dragover"].forEach(function (eventName) {
+    dropZone.addEventListener(eventName, function (event) {
+      event.preventDefault();
+      if (!isConvertingAll) dropZone.classList.add("dragging");
+    });
+  });
+
+  ["dragleave", "drop"].forEach(function (eventName) {
+    dropZone.addEventListener(eventName, function (event) {
+      event.preventDefault();
+      dropZone.classList.remove("dragging");
+    });
+  });
+
+  dropZone.addEventListener("drop", function (event) {
+    if (isConvertingAll) return;
+    addFiles(event.dataTransfer.files);
+  });
+
+  window.addEventListener("beforeunload", function () {
+    items.forEach(function (item) {
+      URL.revokeObjectURL(item.previewUrl);
+      revokeResult(item);
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
