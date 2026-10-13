@@ -243,6 +243,7 @@ footer a { color: var(--purple); }
     <div class="actions">
       <button class="primary" id="generateBtn" type="button">Generate QR Code</button>
       <button class="secondary" id="downloadBtn" type="button" disabled>Download PNG</button>
+<button class="secondary" id="downloadJpgBtn" type="button" disabled>Download JPG</button>
     </div>
     <div id="message" role="status" aria-live="polite"></div>
 
@@ -322,16 +323,19 @@ function generateQR() {
       if (canvas) {
         qrReady = true;
         downloadBtn.disabled = false;
+        document.getElementById("downloadJpgBtn").disabled = false;
         message.textContent = "QR code created successfully!";
       } else if (image) {
         if (image.complete && image.naturalWidth > 0) {
           qrReady = true;
           downloadBtn.disabled = false;
+          document.getElementById("downloadJpgBtn").disabled = false;
           message.textContent = "QR code created successfully!";
         } else {
           image.onload = () => {
             qrReady = true;
             downloadBtn.disabled = false;
+            document.getElementById("downloadJpgBtn").disabled = false;
             message.textContent = "QR code created successfully!";
           };
           image.onerror = () => {
@@ -388,6 +392,48 @@ function downloadQR() {
 
 document.getElementById("generateBtn").addEventListener("click", generateQR);
 downloadBtn.addEventListener("click", downloadQR);
+  document.getElementById("downloadJpgBtn").addEventListener("click", () => {
+  if (!qrReady) {
+    message.textContent = "Please generate a QR code first.";
+    return;
+  }
+
+  const qrCanvas = qrContainer.querySelector("canvas");
+  const qrImage = qrContainer.querySelector("img");
+  const output = document.createElement("canvas");
+  output.width = 1024;
+  output.height = 1024;
+
+  const context = output.getContext("2d");
+  context.fillStyle = lightInput.value;
+  context.fillRect(0, 0, output.width, output.height);
+
+  const download = () => {
+    try {
+      const link = document.createElement("a");
+      link.download = "ninatools-qr-code.jpg";
+      link.href = output.toDataURL("image/jpeg", 1.0);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      message.textContent = "JPG download started. Check your Downloads folder.";
+    } catch (error) {
+      message.textContent = "Could not download JPG. Please try again.";
+    }
+  };
+
+  if (qrCanvas) {
+    context.imageSmoothingEnabled = false;
+    context.drawImage(qrCanvas, 0, 0, output.width, output.height);
+    download();
+  } else if (qrImage && qrImage.complete && qrImage.naturalWidth > 0) {
+    context.imageSmoothingEnabled = false;
+    context.drawImage(qrImage, 0, 0, output.width, output.height);
+    download();
+  } else {
+    message.textContent = "Please generate the QR code again first.";
+  }
+});
 darkInput.addEventListener("input", () => {
   updateColorLabels();
   if (textInput.value.trim()) generateQR();
