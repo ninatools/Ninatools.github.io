@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Format, validate and minify JSON online for free. Find JSON syntax errors and make your data easier to read. Your data stays in your browser.">
+  <meta name="theme-color" content="#6857df">
+  <title>JSON Formatter &amp; Validator - NinaTools</title>
+
+  <style>
+    :root {
+      --purple: #6857df;
+      --purple-dark: #5141c1;
+      --text: #24243b;
+      --muted: #686b80;
+      --border: #deddf0;
+      --background: #f7f7fc;
+      --success: #28784a;
+      --error: #b42335;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 18px 16px;
+    }
+
+    .header-inner, main, footer {
+      width: min(100% - 28px, 900px);
+      margin: 0 auto;
+    }
+
+    .brand {
+      color: var(--purple);
+      font-size: 23px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .breadcrumb {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main { padding: 28px 0 40px; }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 38px);
+      line-height: 1.2;
+      margin: 0 0 12px;
+      overflow-wrap: anywhere;
+    }
+
+    h2 { font-size: 22px; margin: 0 0 10px; }
+
+    .intro {
+      color: var(--muted);
+      font-size: 17px;
+      margin: 0 0 24px;
+    }
+
+    .panel, .info-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 8px rgba(30, 30, 70, .03);
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    textarea, select {
+      display: block;
+      width: 100%;
+      border: 1px solid #c9c7e4;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 16px;
+      padding: 14px;
+    }
+
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    textarea:focus, select:focus {
+      outline: 3px solid rgba(104, 87, 223, .17);
+      border-color: var(--purple);
+    }
+
+    .field { margin-bottom: 18px; }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      min-height: 48px;
+      padding: 12px 14px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      overflow-wrap: anywhere;
+    }
+
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid #a59af8;
+      outline-offset: 3px;
+    }
+
+    .primary {
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .primary:hover { background: var(--purple-dark); }
+
+    .secondary {
+      background: #eeecff;
+      color: var(--purple-dark);
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .status {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f0eff8;
+      overflow-wrap: anywhere;
+    }
+
+    .status.success {
+      color: var(--success);
+      background: #edf8f0;
+    }
+
+    .status.error {
+      color: var(--error);
+      background: #fff0f1;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 12px 0 0;
+    }
+
+    .info-card p, .info-card li { color: var(--muted); }
+
+    .info-card a, footer a {
+      color: var(--purple-dark);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 0 30px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    footer a {
+      margin: 0 7px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .panel, .info-card { padding: 16px; }
+      .button-grid { grid-template-columns: 1fr; }
+      .wide { grid-column: auto; }
+      textarea { min-height: 190px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="https://ninatools.github.io/">NinaTools</a>
+      <div class="breadcrumb">
+        <a href="https://ninatools.github.io/tools/">All Tools</a>
+        / JSON Formatter &amp; Validator
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>JSON Formatter &amp; Validator</h1>
+    <p class="intro">
+      Format JSON to make it easier to read, validate JSON syntax,
+      or minify JSON to reduce unnecessary whitespace. Free and easy to use.
+    </p>
+
+    <section class="panel" aria-label="JSON editor">
+      <div class="field">
+        <label for="jsonInput">Enter your JSON</label>
+        <textarea id="jsonInput" spellcheck="false"
+          autocapitalize="off" autocomplete="off"
+          placeholder='Paste JSON here, e.g. {"name":"Nina","active":true}'></textarea>
+        <p class="small">
+          Paste JSON or load the example. Your input is processed locally in this browser.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="indentSize">Indent size</label>
+        <select id="indentSize">
+          <option value="2" selected>2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </div>
+
+      <div class="button-grid">
+        <button type="button" class="primary" id="formatBtn">Format JSON</button>
+        <button type="button" class="primary" id="validateBtn">Validate JSON</button>
+        <button type="button" class="secondary" id="minifyBtn">Minify JSON</button>
+        <button type="button" class="secondary" id="exampleBtn">Load Example</button>
+        <button type="button" class="secondary" id="copyBtn">Copy Result</button>
+        <button type="button" class="secondary" id="clearBtn">Clear</button>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite">
+        Enter JSON to get started.
+      </div>
+    </section>
+
+    <section class="info-card">
+      <h2>What is JSON?</h2>
+      <p>
+        JSON (JavaScript Object Notation) is a text format used to store
+        and exchange structured data. It commonly represents objects,
+        arrays, strings, numbers, booleans, and null values.
+      </p>
+
+      <h2>How to use this tool</h2>
+      <ol>
+        <li>Paste your JSON into the input box.</li>
+        <li>Select an indentation size if you want to format it.</li>
+        <li>Choose Format JSON, Validate JSON, or Minify JSON.</li>
+        <li>Use Copy Result to copy the processed JSON.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+
+      <h3>What does a JSON validator check?</h3>
+      <p>
+        It checks whether the input follows JSON syntax rules.
+        It does not verify whether the data is factually correct
+        or matches a particular application's requirements.
+      </p>
+
+      <h3>Why is my JSON invalid?</h3>
+      <p>
+        Common causes include missing quotation marks around property names,
+        trailing commas, missing brackets, or single quotes where JSON
+        requires double quotes.
+      </p>
+
+      <h3>Is my JSON uploaded?</h3>
+      <p>
+        No. This tool processes JSON in your browser and does not send
+        the input to a NinaTools server. Avoid pasting sensitive information
+        into any website unless you trust the page and your device.
+      </p>
+    </section>
+
+    <section class="info-card">
+      <h2>Explore more free tools</h2>
+      <ul>
+        <li><a href="https://ninatools.github.io/url-encoder-decoder/">URL Encoder / Decoder</a></li>
+        <li><a href="https://ninatools.github.io/base64-encoder-decoder/">Base64 Encoder / Decoder</a></li>
+        <li><a href="https://ninatools.github.io/timestamp-converter/">Timestamp Converter</a></li>
+        <li><a href="https://ninatools.github.io/password-generator/">Password Generator</a></li>
+        <li><a href="https://ninatools.github.io/tools/">View all tools</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 NinaTools</p>
+    <a href="https://ninatools.github.io/">Home</a> ·
+    <a href="https://ninatools.github.io/about/">About</a> ·
+    <a href="https://ninatools.github.io/privacy/">Privacy</a> ·
+    <a href="https://ninatools.github.io/terms/">Terms</a> ·
+    <a href="https://ninatools.github.io/contact/">Contact</a>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const input = document.getElementById("jsonInput");
+    const indentSize = document.getElementById("indentSize");
+    const statusBox = document.getElementById("status");
+
+    let resultText = "";
+
+    function showStatus(message, type = "") {
+      statusBox.textContent = message;
+      statusBox.className = "status" + (type ? " " + type : "");
+    }
+
+    function getIndent() {
+      return indentSize.value === "tab" ? "\t" : Number(indentSize.value);
+    }
+
+    function parseInput() {
+      const text = input.value.trim();
+
+      if (!text) {
+        showStatus("Please enter JSON first.", "error");
+        return null;
+      }
+
+      try {
+        return JSON.parse(text);
+      } catch (error) {
+        showStatus("Invalid JSON: " + error.message, "error");
+        resultText = "";
+        return null;
+      }
+    }
+
+    function formatJSON() {
+      const data = parseInput();
+      if (data === null) {
+        if (input.value.trim() === "null") {
+          resultText = "null";
+          input.value = resultText;
+          showStatus("Valid JSON. Formatted successfully.", "success");
+        }
+        return;
+      }
+
+      resultText = JSON.stringify(data, null, getIndent());
+      input.value = resultText;
+      showStatus("Valid JSON. Formatted successfully.", "success");
+    }
+
+    function validateJSON() {
+      const text = input.value.trim();
+
+      if (!text) {
+        showStatus("Please enter JSON first.", "error");
+        return;
+      }
+
+      try {
+        JSON.parse(text);
+        resultText = text;
+        showStatus("Valid JSON. No syntax errors found.", "success");
+      } catch (error) {
+        resultText = "";
+        showStatus("Invalid JSON: " + error.message, "error");
+      }
+    }
+
+    function minifyJSON() {
+      const data = parseInput();
+      if (data === null) {
+        if (input.value.trim() === "null") {
+          resultText = "null";
+          input.value = resultText;
+          showStatus("Valid JSON. Minified successfully.", "success");
+        }
+        return;
+      }
+
+      resultText = JSON.stringify(data);
+      input.value = resultText;
+      showStatus("Valid JSON. Minified successfully.", "success");
+    }
+
+    async function copyResult() {
+      const text = resultText || input.value;
+
+      if (!text.trim()) {
+        showStatus("There is no result to copy.", "error");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showStatus("Result copied to clipboard.", "success");
+      } catch (error) {
+        input.focus();
+        input.select();
+        showStatus("Automatic copy is unavailable. The text is selected; use Copy from your browser or device menu.");
+      }
+    }
+
+    function loadExample() {
+      input.value = JSON.stringify({
+        name: "NinaTools",
+        category: "online tools",
+        free: true,
+        features: ["format", "validate", "minify"],
+        settings: {
+          language: "en",
+          indent: 2
+        }
+      }, null, 2);
+
+      resultText = input.value;
+      showStatus("Example loaded. Try formatting or minifying it.");
+    }
+
+    function clearAll() {
+      input.value = "";
+      resultText = "";
+      showStatus("Input cleared. Enter JSON to get started.");
+      input.focus();
+    }
+
+    document.getElementById("formatBtn").addEventListener("click", formatJSON);
+    document.getElementById("validateBtn").addEventListener("click", validateJSON);
+    document.getElementById("minifyBtn").addEventListener("click", minifyJSON);
+    document.getElementById("exampleBtn").addEventListener("click", loadExample);
+    document.getElementById("copyBtn").addEventListener("click", copyResult);
+    document.getElementById("clearBtn").addEventListener("click", clearAll);
+
+    input.addEventListener("input", () => {
+      resultText = "";
+      showStatus("Input changed. Choose an action to process your JSON.");
+    });
+  </script>
+</body>
+</html>
