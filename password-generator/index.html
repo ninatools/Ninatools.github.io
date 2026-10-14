@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Generate strong random passwords for free. Choose password length and character types. Passwords are generated locally in your browser.">
+<meta name="theme-color" content="#6857df">
+<title>Password Generator - NinaTools</title>
+
+<style>
+:root {
+  --purple: #6857df;
+  --purple-dark: #5140c4;
+  --bg: #f7f7fc;
+  --card: #ffffff;
+  --text: #24233a;
+  --muted: #68677d;
+  --border: #e5e3f2;
+  --green: #16865c;
+  --red: #c23c50;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.header-inner {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo {
+  color: var(--purple);
+  font-size: 24px;
+  font-weight: 800;
+  text-decoration: none;
+}
+nav { display: flex; gap: 18px; flex-wrap: wrap; }
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+nav a:hover { color: var(--purple); }
+main {
+  max-width: 760px;
+  margin: 36px auto;
+  padding: 0 16px;
+}
+.intro { text-align: center; margin-bottom: 24px; }
+h1 { font-size: clamp(28px, 5vw, 38px); margin: 0 0 8px; }
+.intro p { color: var(--muted); margin: 0 auto; max-width: 600px; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(18px, 4vw, 30px);
+  box-shadow: 0 8px 28px rgba(40, 30, 100, .06);
+}
+label, .section-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.password-output {
+  width: 100%;
+  min-height: 58px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #faf9ff;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+  margin-bottom: 12px;
+}
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 46px;
+}
+button:focus-visible, input:focus-visible {
+  outline: 3px solid #bcb3ff;
+  outline-offset: 2px;
+}
+.primary {
+  background: var(--purple);
+  color: white;
+}
+.primary:hover { background: var(--purple-dark); }
+.secondary {
+  background: #efedff;
+  color: var(--purple-dark);
+}
+.secondary:hover { background: #e5e1ff; }
+.button-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.button-row button { flex: 1 1 140px; }
+.length-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0 8px;
+}
+.length-number {
+  width: 86px;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+}
+input[type="range"] { width: 100%; accent-color: var(--purple); }
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0;
+  font-weight: 500;
+}
+.option input { width: 18px; height: 18px; accent-color: var(--purple); }
+.status {
+  min-height: 25px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.strength { margin-top: 14px; }
+.strength-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+.strength-track {
+  height: 8px;
+  background: #eceaf4;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.strength-fill {
+  width: 0;
+  height: 100%;
+  background: var(--purple);
+  transition: width .2s ease;
+}
+.info {
+  margin-top: 24px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+h2 { font-size: 22px; margin: 0 0 10px; }
+h3 { font-size: 18px; margin: 18px 0 6px; }
+.info p, .info li { color: var(--muted); }
+.info a { color: var(--purple-dark); }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 16px;
+  font-size: 14px;
+}
+footer a { color: var(--purple-dark); text-decoration: none; }
+@media (max-width: 480px) {
+  header { padding: 14px 16px; }
+  nav { gap: 12px; font-size: 14px; }
+  main { margin-top: 24px; }
+  .options { grid-template-columns: 1fr; }
+  .button-row button { flex-basis: 100%; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">NinaTools</a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/tools/">All Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>Password Generator</h1>
+    <p>Create a random password for your accounts. Choose its length and the character types you want to include.</p>
+  </section>
+
+  <section class="card" aria-label="Password generator">
+    <label for="password">Your password</label>
+    <div id="password" class="password-output" role="textbox" aria-readonly="true">Click Generate Password to begin</div>
+
+    <div class="button-row">
+      <button class="primary" id="generate" type="button">Generate Password</button>
+      <button class="secondary" id="copy" type="button">Copy Password</button>
+    </div>
+
+    <div class="strength">
+      <div class="strength-top">
+        <span>Character variety</span>
+        <span id="strength-label">Not generated</span>
+      </div>
+      <div class="strength-track" role="progressbar" aria-label="Character variety indicator" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="strength-bar">
+        <div class="strength-fill" id="strength-fill"></div>
+      </div>
+    </div>
+
+    <div class="length-row">
+      <label for="length" style="margin:0">Password length</label>
+      <input class="length-number" id="length-number" type="number" min="8" max="64" value="16" aria-label="Password length number">
+    </div>
+    <input id="length" type="range" min="8" max="64" value="16" aria-label="Password length slider">
+    <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px">
+      <span>8 characters</span><span>64 characters</span>
+    </div>
+
+    <div class="section-label" style="margin-top:24px">Include character types</div>
+    <div class="options">
+      <label class="option"><input type="checkbox" id="lowercase" checked> Lowercase letters (a–z)</label>
+      <label class="option"><input type="checkbox" id="uppercase" checked> Uppercase letters (A–Z)</label>
+      <label class="option"><input type="checkbox" id="numbers" checked> Numbers (0–9)</label>
+      <label class="option"><input type="checkbox" id="symbols" checked> Symbols (!@#$...)</label>
+    </div>
+
+    <div class="button-row">
+      <button class="secondary" id="clear" type="button">Clear</button>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="info">
+    <h2>How to use the Password Generator</h2>
+    <ol>
+      <li>Choose a password length between 8 and 64 characters.</li>
+      <li>Select the character types you want to include.</li>
+      <li>Click <strong>Generate Password</strong>.</li>
+      <li>Click <strong>Copy Password</strong> to copy it for use.</li>
+    </ol>
+
+    <h2>Tips for safer passwords</h2>
+    <ul>
+      <li>Use a different password for every account.</li>
+      <li>Longer passwords generally provide more possible combinations.</li>
+      <li>Consider using a reputable password manager to store passwords.</li>
+      <li>Enable two-factor authentication when available.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Is this password generator free?</h3>
+    <p>Yes. You can generate passwords for free without creating an account.</p>
+
+    <h3>Are my passwords uploaded or saved?</h3>
+    <p>This tool generates passwords in your browser. It does not send them to a NinaTools server or intentionally save them. If you copy a password, it may remain in your device's clipboard until replaced.</p>
+
+    <h3>How long should my password be?</h3>
+    <p>A longer, unique password is generally preferable. For many accounts, 16 or more characters is a practical choice, but follow the account provider's requirements.</p>
+
+    <p>Explore more free tools on the <a href="/tools/">NinaTools tools page</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> NinaTools · Free online tools</p>
+  <p><a href="/">Home</a> · <a href="/tools/">All Tools</a></p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const lengthSlider = document.getElementById("length");
+  const lengthNumber = document.getElementById("length-number");
+  const passwordOutput = document.getElementById("password");
+  const status = document.getElementById("status");
+  const strengthLabel = document.getElementById("strength-label");
+  const strengthFill = document.getElementById("strength-fill");
+  const strengthBar = document.getElementById("strength-bar");
+  const generateButton = document.getElementById("generate");
+  const copyButton = document.getElementById("copy");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function setLength(value) {
+    const parsed = Number.parseInt(value, 10);
+    const safeLength = Number.isFinite(parsed)
+      ? Math.max(8, Math.min(64, parsed))
+      : 16;
+    lengthSlider.value = String(safeLength);
+    lengthNumber.value = String(safeLength);
+  }
+
+  lengthSlider.addEventListener("input", () => setLength(lengthSlider.value));
+  lengthNumber.addEventListener("change", () => setLength(lengthNumber.value));
+
+  function randomIndex(max) {
+    if (!Number.isSafeInteger(max) || max < 1 || max > 256) {
+      throw new Error("Invalid character set.");
+    }
+
+    if (!window.crypto || !window.crypto.getRandomValues) {
+      throw new Error("Secure random generation is not available in this browser.");
+    }
+
+    // Rejection sampling avoids modulo bias.
+    const limit = Math.floor(256 / max) * max;
+    const byte = new Uint8Array(1);
+    let value;
+
+    do {
+      window.crypto.getRandomValues(byte);
+      value = byte[0];
+    } while (value >= limit);
+
+    return value % max;
+  }
+
+  function secureShuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = randomIndex(i + 1);
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function getCharacterSets() {
+    const sets = [];
+    if (document.getElementById("lowercase").checked) {
+      sets.push("abcdefghijklmnopqrstuvwxyz");
+    }
+    if (document.getElementById("uppercase").checked) {
+      sets.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    }
+    if (document.getElementById("numbers").checked) {
+      sets.push("0123456789");
+    }
+    if (document.getElementById("symbols").checked) {
+      sets.push("!@#$%^&*()-_=+[]{};:,.?/|~");
+    }
+    return sets;
+  }
+
+  function updateVariety(password, sets) {
+    if (!password) {
+      strengthLabel.textContent = "Not generated";
+      strengthFill.style.width = "0%";
+      strengthBar.setAttribute("aria-valuenow", "0");
+      return;
+    }
+
+    const percentage = Math.min(100, Math.round((sets.length / 4) * 100));
+    strengthFill.style.width = percentage + "%";
+    strengthBar.setAttribute("aria-valuenow", String(percentage));
+
+    const labels = ["", "Limited variety", "Good variety", "High variety", "All character types"];
+    strengthLabel.textContent = labels[sets.length] || "Variety";
+  }
+
+  function generatePassword() {
+    const sets = getCharacterSets();
+    const length = Number.parseInt(lengthSlider.value, 10);
+
+    if (sets.length === 0) {
+      status.textContent = "Please select at least one character type.";
+      return;
+    }
+
+    try {
+      const allCharacters = sets.join("");
+      const passwordCharacters = [];
+
+      // Include at least one character from every selected type.
+      for (const set of sets) {
+        passwordCharacters.push(set[randomIndex(set.length)]);
+      }
+
+      while (passwordCharacters.length < length) {
+        passwordCharacters.push(allCharacters[randomIndex(allCharacters.length)]);
+      }
+
+      secureShuffle(passwordCharacters);
+      passwordOutput.textContent = passwordCharacters.join("");
+      status.textContent = "Password generated in your browser.";
+      updateVariety(passwordOutput.textContent, sets);
+    } catch (error) {
+      status.textContent = error.message || "Unable to generate a password.";
+    }
+  }
+
+  generateButton.addEventListener("click", generatePassword);
+
+  copyButton.addEventListener("click", async () => {
+    const password = passwordOutput.textContent;
+
+    if (!password || password === "Click Generate Password to begin") {
+      status.textContent = "Generate a password first.";
+      return;
+    }
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(password);
+      } else {
+        const temporary = document.createElement("textarea");
+        temporary.value = password;
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        document.body.appendChild(temporary);
+        temporary.select();
+        const copied = document.execCommand("copy");
+        temporary.remove();
+        if (!copied) throw new Error("Copy was not available.");
+      }
+      status.textContent = "Password copied to clipboard.";
+    } catch (error) {
+      status.textContent = "Copy failed. Please select and copy the password manually.";
+    }
+  });
+
+  document.getElementById("clear").addEventListener("click", () => {
+    passwordOutput.textContent = "";
+    status.textContent = "Cleared. Generate a new password when ready.";
+    updateVariety("", []);
+  });
+
+  document.querySelectorAll(".option input").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      if (getCharacterSets().length === 0) {
+        status.textContent = "Select at least one character type before generating.";
+      } else {
+        status.textContent = "";
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
