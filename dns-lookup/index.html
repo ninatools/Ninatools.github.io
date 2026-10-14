@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free DNS Lookup tool. Check A, AAAA, MX, NS, TXT and CNAME DNS records for any domain.">
+<meta name="theme-color" content="#6d5ce7">
+<title>DNS Lookup - Free DNS Record Checker | NinaTools</title>
+
+<style>
+:root {
+  --primary: #6d5ce7;
+  --primary-dark: #5544c9;
+  --background: #f7f8fc;
+  --text: #202238;
+  --muted: #687086;
+  --border: #e3e6ef;
+  --success: #168653;
+  --error: #c0394b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.nav {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.logo {
+  color: var(--primary);
+  font-size: 23px;
+  font-weight: 800;
+  text-decoration: none;
+}
+nav { display: flex; gap: 18px; flex-wrap: wrap; }
+nav a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+main {
+  max-width: 900px;
+  margin: 36px auto;
+  padding: 0 18px;
+}
+.hero { text-align: center; margin-bottom: 28px; }
+h1 {
+  font-size: clamp(29px, 5vw, 42px);
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+.hero p { color: var(--muted); margin: 0; }
+.panel, .content-section {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 26px 22px;
+  box-shadow: 0 8px 28px rgba(31, 35, 70, .05);
+}
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+input, select {
+  min-width: 0;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #cfd3e2;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--text);
+  background: #fff;
+}
+input:focus, select:focus {
+  outline: 3px solid #ded9ff;
+  border-color: var(--primary);
+}
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+}
+button:disabled { opacity: .6; cursor: wait; }
+.primary { background: var(--primary); color: #fff; }
+.primary:hover { background: var(--primary-dark); }
+.secondary { background: #f0eeff; color: var(--primary-dark); }
+.controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, .45fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+#status {
+  min-height: 26px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+#status.success { color: var(--success); }
+#status.error { color: var(--error); }
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.example-button {
+  min-height: 36px;
+  padding: 7px 12px;
+  background: #f0eeff;
+  color: var(--primary-dark);
+  font-size: 14px;
+}
+.results {
+  margin-top: 24px;
+  overflow-wrap: anywhere;
+}
+.results h2 { margin-bottom: 12px; }
+.result-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 12px;
+  background: #fff;
+}
+.result-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.record-type {
+  display: inline-block;
+  background: #f0eeff;
+  color: var(--primary-dark);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.record-data {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 14px;
+}
+.record-meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+.copy-record {
+  min-height: 34px;
+  padding: 5px 10px;
+  font-size: 13px;
+  background: #f0eeff;
+  color: var(--primary-dark);
+}
+.content-section { margin-top: 22px; box-shadow: none; }
+h2 { font-size: 23px; margin: 0 0 12px; }
+h3 { font-size: 17px; margin: 18px 0 6px; }
+.content-section p, .content-section li { color: #50576b; }
+.try-tool {
+  color: #6d5ce7;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+  display: inline-block;
+}
+footer {
+  text-align: center;
+  padding: 25px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+footer a { margin: 0 7px; }
+[hidden] { display: none !important; }
+@media (max-width: 560px) {
+  .nav { align-items: flex-start; flex-direction: column; }
+  nav { gap: 14px; }
+  main { margin-top: 26px; }
+  .panel, .content-section { padding: 21px 16px; }
+  .input-row { flex-direction: column; }
+  .input-row button { width: 100%; }
+  .controls { grid-template-columns: 1fr; }
+  .actions button { flex: 1 1 130px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="nav">
+    <a class="logo" href="/">NinaTools</a>
+    <nav aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/tools/">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>DNS Lookup</h1>
+    <p>Check DNS records for any domain with this free online tool.</p>
+  </section>
+
+  <section class="panel">
+    <form id="lookupForm">
+      <label for="domain">Domain name</label>
+      <div class="input-row">
+        <input
+          id="domain"
+          name="domain"
+          type="text"
+          placeholder="example.com"
+          autocomplete="url"
+          autocapitalize="none"
+          spellcheck="false"
+          maxlength="253"
+          required
+        >
+        <button class="primary" id="lookupButton" type="submit">
+          Lookup DNS
+        </button>
+      </div>
+
+      <div class="controls">
+        <div>
+          <label for="recordType">DNS record type</label>
+          <select id="recordType" name="recordType">
+            <option value="ALL">All supported types</option>
+            <option value="A">A — IPv4 address</option>
+            <option value="AAAA">AAAA — IPv6 address</option>
+            <option value="MX">MX — Mail servers</option>
+            <option value="NS">NS — Name servers</option>
+            <option value="TXT">TXT — Text records</option>
+            <option value="CNAME">CNAME — Canonical name</option>
+          </select>
+        </div>
+        <div>
+          <label for="dnssec">DNSSEC</label>
+          <select id="dnssec" name="dnssec">
+            <option value="false">Standard lookup</option>
+            <option value="true">Request DNSSEC data</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" type="button" id="clearButton">
+          Clear
+        </button>
+        <button class="secondary" type="button" id="copyAllButton" disabled>
+          Copy Results
+        </button>
+      </div>
+    </form>
+
+    <div class="examples">
+      <span>Try an example:</span>
+      <button type="button" class="example-button" data-domain="example.com">example.com</button>
+      <button type="button" class="example-button" data-domain="google.com">google.com</button>
+      <button type="button" class="example-button" data-domain="cloudflare.com">cloudflare.com</button>
+    </div>
+
+    <p id="status" role="status" aria-live="polite">
+      Enter a domain name to look up its DNS records.
+    </p>
+
+    <section id="results" class="results" aria-live="polite" hidden>
+      <h2 id="resultsTitle">DNS Results</h2>
+      <div id="resultsList"></div>
+    </section>
+  </section>
+
+  <section class="content-section">
+    <h2>What Is DNS Lookup?</h2>
+    <p>
+      DNS (Domain Name System) translates domain names into information
+      that computers use to find services on the internet. A DNS lookup
+      lets you inspect the records published for a domain.
+    </p>
+
+    <h3>Common DNS Record Types</h3>
+    <ul>
+      <li><strong>A:</strong> Maps a domain to an IPv4 address.</li>
+      <li><strong>AAAA:</strong> Maps a domain to an IPv6 address.</li>
+      <li><strong>MX:</strong> Lists mail servers for a domain.</li>
+      <li><strong>NS:</strong> Identifies authoritative name servers.</li>
+      <li><strong>TXT:</strong> Stores text data, often used for verification and email security.</li>
+      <li><strong>CNAME:</strong> Points one name to another canonical name.</li>
+    </ul>
+
+    <h3>Is this DNS Lookup tool free?</h3>
+    <p>
+      Yes. NinaTools provides this interface for free. DNS queries are sent
+      to Google's public DNS-over-HTTPS service, which is subject to its own
+      availability and privacy practices.
+    </p>
+
+    <h3>Why might no records appear?</h3>
+    <p>
+      A domain may not have the selected record type, the response may be
+      cached or unavailable, or the DNS service may return an error.
+      Try another record type or check the domain spelling.
+    </p>
+
+    <h3>Does a DNS lookup show every DNS record?</h3>
+    <p>
+      No. Results depend on the selected query, the public resolver's response,
+      and the records it returns. This tool does not guarantee a complete
+      authoritative zone listing.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>Explore More Free Tools</h2>
+    <p>
+      <a class="try-tool" href="/what-is-my-ip/">What Is My IP? →</a>
+    </p>
+    <p>
+      <a class="try-tool" href="/url-encoder-decoder/">URL Encoder / Decoder →</a>
+    </p>
+    <p>
+      <a class="try-tool" href="/json-formatter-validator/">JSON Formatter &amp; Validator →</a>
+    </p>
+    <p>
+      <a class="try-tool" href="/tools/">Explore All Tools →</a>
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>Free online tools from NinaTools.</p>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+</footer>
+
+<script>
+(() => {
+  const form = document.getElementById("lookupForm");
+  const domainInput = document.getElementById("domain");
+  const recordTypeSelect = document.getElementById("recordType");
+  const dnssecSelect = document.getElementById("dnssec");
+  const lookupButton = document.getElementById("lookupButton");
+  const clearButton = document.getElementById("clearButton");
+  const copyAllButton = document.getElementById("copyAllButton");
+  const status = document.getElementById("status");
+  const results = document.getElementById("results");
+  const resultsTitle = document.getElementById("resultsTitle");
+  const resultsList = document.getElementById("resultsList");
+
+  const recordTypes = [
+    ["A", 1],
+    ["AAAA", 28],
+    ["MX", 15],
+    ["NS", 2],
+    ["TXT", 16],
+    ["CNAME", 5]
+  ];
+
+  let lastResults = [];
+
+  function setStatus(message, type = "") {
+    status.textContent = message;
+    status.className = type;
+  }
+
+  function normalizeDomain(value) {
+    let domain = value.trim().toLowerCase();
+
+    domain = domain.replace(/^https?:\/\//, "");
+    domain = domain.split(/[/?#]/)[0];
+    domain = domain.replace(/\.$/, "");
+
+    return domain;
+  }
+
+  function isValidDomain(domain) {
+    if (!domain || domain.length > 253) return false;
+    if (!domain.includes(".")) return false;
+    if (domain.includes("..")) return false;
+
+    const labels = domain.split(".");
+
+    return labels.every(label =>
+      label.length >= 1 &&
+      label.length <= 63 &&
+      /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(label)
+    );
+  }
+
+  async function queryDNS(domain, type, dnssec) {
+    const url = new URL("https://dns.google/resolve");
+    url.searchParams.set("name", domain);
+    url.searchParams.set("type", type);
+    url.searchParams.set("do", dnssec ? "true" : "false");
+
+    const response = await fetch(url.toString(), {
+      headers: { "Accept": "application/dns-json" }
+    });
+
+    if (!response.ok) {
+      throw new Error("The DNS service returned HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (typeof data.Status !== "number") {
+      throw new Error("The DNS service returned an unexpected response.");
+    }
+
+    return { domain, type, data };
+  }
+
+  function getRecordTypeName(type) {
+    const found = recordTypes.find(item => item[1] === type);
+    return found ? found[0] : String(type);
+  }
+
+  function formatAnswer(answer) {
+    const data = answer.data == null ? "" : String(answer.data);
+
+    if (answer.type === 15) {
+      return data;
+    }
+
+    return data;
+  }
+
+  function addRecordCard(recordType, answer, domain) {
+    const card = document.createElement("article");
+    card.className = "result-card";
+
+    const heading = document.createElement("div");
+    heading.className = "result-heading";
+
+    const badge = document.createElement("span");
+    badge.className = "record-type";
+    badge.textContent = getRecordTypeName(answer.type);
+
+    const copyButton = document.createElement("button");
+    copyButton.type = "button";
+    copyButton.className = "copy-record";
+    copyButton.textContent = "Copy";
+    copyButton.addEventListener("click", async () => {
+      await copyText(formatAnswer(answer), "Record copied.");
+    });
+
+    heading.append(badge, copyButton);
+
+    const data = document.createElement("p");
+    data.className = "record-data";
+    data.textContent = formatAnswer(answer);
+
+    const meta = document.createElement("div");
+    meta.className = "record-meta";
+    meta.textContent =
+      "Name: " + (answer.name || domain) +
+      " · TTL: " + answer.TTL + " seconds";
+
+    card.append(heading, data, meta);
+    resultsList.appendChild(card);
+  }
+
+  function addMessage(message) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = message;
+    resultsList.appendChild(paragraph);
+  }
+
+  async function copyText(text, successMessage) {
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus(successMessage, "success");
+    } catch (error) {
+      setStatus(
+        "Clipboard access was blocked. Please select and copy the result manually.",
+        "error"
+      );
+    }
+  }
+
+  async function lookup(event) {
+    if (event) event.preventDefault();
+
+    const domain = normalizeDomain(domainInput.value);
+
+    if (!isValidDomain(domain)) {
+      results.hidden = true;
+      setStatus(
+        "Enter a valid domain name, such as example.com. Do not include a port number.",
+        "error"
+      );
+      domainInput.focus();
+      return;
+    }
+
+    domainInput.value = domain;
+    const selectedType = recordTypeSelect.value;
+    const dnssec = dnssecSelect.value === "true";
+
+    lookupButton.disabled = true;
+    copyAllButton.disabled = true;
+    results.hidden = true;
+    resultsList.replaceChildren();
+    lastResults = [];
+    setStatus("Looking up DNS records for " + domain + "...");
+
+    try {
+      const types = selectedType === "ALL"
+        ? recordTypes
+        : recordTypes.filter(item => item[0] === selectedType);
+
+      const responses = await Promise.all(
+        types.map(item => queryDNS(domain, item[0], dnssec))
+      );
+
+      lastResults = responses;
+
+      const found = responses.flatMap(response =>
+        (response.data.Answer || []).map(answer => ({
+          domain: response.domain,
+          queryType: response.type,
+          answer
+        }))
+      );
+
+      resultsTitle.textContent = "DNS Results for " + domain;
+      results.hidden = false;
+
+      if (found.length === 0) {
+        addMessage(
+          "No records of the selected type were returned for this domain. " +
+          "This does not necessarily mean the domain is invalid."
+        );
+        setStatus("Lookup completed. No matching records were returned.");
+      } else {
+        found.forEach(item =>
+          addRecordCard(item.queryType, item.answer, domain)
+        );
+        copyAllButton.disabled = false;
+        setStatus(
+          "Lookup completed. Found " + found.length +
+          " record(s) returned by the DNS service.",
+          "success"
+        );
+      }
+
+      const warnings = responses.filter(response =>
+        response.data.Status !== 0 && response.data.Status !== 3
+      );
+
+      if (warnings.length > 0) {
+        setStatus(
+          "Some DNS queries returned non-success status codes. Results may be incomplete.",
+          "error"
+        );
+      }
+    } catch (error) {
+      results.hidden = false;
+      resultsTitle.textContent = "DNS Lookup";
+      addMessage(
+        "The DNS lookup could not be completed. Check your internet connection " +
+        "and try again. The public DNS service may also be temporarily unavailable."
+      );
+      setStatus("DNS lookup failed. Please try again.", "error");
+    } finally {
+      lookupButton.disabled = false;
+    }
+  }
+
+  form.addEventListener("submit", lookup);
+
+  clearButton.addEventListener("click", () => {
+    domainInput.value = "";
+    recordTypeSelect.value = "ALL";
+    dnssecSelect.value = "false";
+    resultsList.replaceChildren();
+    results.hidden = true;
+    lastResults = [];
+    copyAllButton.disabled = true;
+    setStatus("Enter a domain name to look up its DNS records.");
+    domainInput.focus();
+  });
+
+  copyAllButton.addEventListener("click", async () => {
+    if (!lastResults.length) return;
+
+    const lines = [];
+
+    lastResults.forEach(response => {
+      lines.push(
+        "Domain: " + response.domain +
+        " | Query: " + response.type +
+        " | DNS status: " + response.data.Status
+      );
+
+      (response.data.Answer || []).forEach(answer => {
+        lines.push(
+          getRecordTypeName(answer.type) + ": " +
+          formatAnswer(answer) +
+          " | TTL: " + answer.TTL
+        );
+      });
+
+      lines.push("");
+    });
+
+    await copyText(lines.join("\n").trim(), "DNS results copied.");
+  });
+
+  document.querySelectorAll("[data-domain]").forEach(button => {
+    button.addEventListener("click", () => {
+      domainInput.value = button.dataset.domain;
+      lookup();
+    });
+  });
+})();
+</script>
+</body>
+</html>
