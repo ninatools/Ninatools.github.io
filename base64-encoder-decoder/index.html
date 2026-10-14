@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Encode text to Base64 and decode Base64 back to text for free. Fast, secure, and processed locally in your browser.">
+<meta name="theme-color" content="#6857df">
+<title>Base64 Encoder &amp; Decoder - NinaTools</title>
+<style>
+:root {
+  --purple: #6857df;
+  --purple-dark: #5142c4;
+  --bg: #f7f7fc;
+  --text: #25243a;
+  --muted: #68677c;
+  --border: #deddf0;
+  --white: #ffffff;
+  --success: #16794b;
+  --error: #b42318;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 17px 20px;
+}
+.header-inner {
+  max-width: 900px;
+  margin: auto;
+}
+.brand {
+  color: var(--purple);
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: 800;
+}
+main {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(27px, 5vw, 36px);
+  line-height: 1.25;
+}
+.intro { color: var(--muted); margin: 0 0 24px; }
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 5px 22px rgba(40, 35, 100, .05);
+}
+label {
+  display: block;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+textarea {
+  width: 100%;
+  min-height: 155px;
+  padding: 13px;
+  border: 1px solid #c9c7e2;
+  border-radius: 10px;
+  font: 16px/1.5 Arial, sans-serif;
+  resize: vertical;
+  background: #fff;
+  color: var(--text);
+}
+textarea:focus {
+  outline: 2px solid rgba(104, 87, 223, .25);
+  border-color: var(--purple);
+}
+.field { margin-bottom: 20px; }
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+.primary { background: var(--purple); color: white; }
+.primary:hover { background: var(--purple-dark); }
+.secondary {
+  background: #efedff;
+  color: #493bb4;
+}
+.neutral {
+  background: #f0f0f5;
+  color: #39384b;
+}
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #aaa0ff;
+  outline-offset: 3px;
+}
+#status {
+  min-height: 24px;
+  margin: 10px 0 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+#status.success { color: var(--success); }
+#status.error { color: var(--error); }
+.content-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 22px;
+}
+h2 { font-size: 21px; margin: 0 0 10px; }
+h3 { font-size: 17px; margin: 17px 0 5px; }
+p, li { overflow-wrap: anywhere; }
+a { color: var(--purple-dark); }
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 16px 34px;
+  font-size: 14px;
+}
+@media (max-width: 480px) {
+  main { margin-top: 22px; }
+  .panel { padding: 16px; }
+  .buttons button { flex: 1 1 42%; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="brand" href="https://ninatools.github.io/">NinaTools</a>
+  </div>
+</header>
+
+<main>
+  <h1>Base64 Encoder &amp; Decoder</h1>
+  <p class="intro">Encode text to Base64 or decode Base64 back into readable text. Free, simple, and works in your browser.</p>
+
+  <section class="panel" aria-label="Base64 converter">
+    <div class="field">
+      <label for="inputText">Input text or Base64</label>
+      <textarea id="inputText" placeholder="Type or paste your text here..." spellcheck="false"></textarea>
+    </div>
+
+    <div class="buttons">
+      <button class="primary" id="encodeBtn" type="button">Encode to Base64</button>
+      <button class="primary" id="decodeBtn" type="button">Decode Base64</button>
+    </div>
+
+    <div class="field">
+      <label for="outputText">Result</label>
+      <textarea id="outputText" placeholder="Your result will appear here..." readonly spellcheck="false"></textarea>
+    </div>
+
+    <div class="buttons">
+      <button class="secondary" id="copyBtn" type="button">Copy result</button>
+      <button class="neutral" id="clearBtn" type="button">Clear all</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="content-section">
+    <h2>How to use the Base64 tool</h2>
+    <ol>
+      <li>Enter or paste text into the input box.</li>
+      <li>Choose <strong>Encode to Base64</strong> to convert text.</li>
+      <li>Paste Base64 and choose <strong>Decode Base64</strong> to restore the text.</li>
+      <li>Use <strong>Copy result</strong> to copy the output.</li>
+    </ol>
+  </section>
+
+  <section class="content-section">
+    <h2>What is Base64?</h2>
+    <p>Base64 is a way to represent binary data using a set of text characters. It is commonly used in data transfer, email, and web development.</p>
+    <p><strong>Important:</strong> Base64 is encoding, not encryption. It does not protect passwords or other sensitive information.</p>
+  </section>
+
+  <section class="content-section">
+    <h2>Frequently asked questions</h2>
+    <h3>Is this Base64 tool free?</h3>
+    <p>Yes. You can encode and decode text for free without creating an account.</p>
+    <h3>Does it support Thai and other languages?</h3>
+    <p>Yes. The tool uses UTF-8, so it supports Thai, English, and other Unicode text.</p>
+    <h3>Are my texts uploaded to a server?</h3>
+    <p>The conversion is performed locally in your browser. This page does not send your input to a conversion server.</p>
+    <h3>Is Base64 secure encryption?</h3>
+    <p>No. Anyone can decode Base64. Do not use it to protect confidential information.</p>
+  </section>
+
+  <section class="content-section">
+    <h2>More free tools</h2>
+    <ul>
+      <li><a href="https://ninatools.github.io/url-encoder-decoder/">URL Encoder / Decoder</a></li>
+      <li><a href="https://ninatools.github.io/password-generator/">Password Generator</a></li>
+      <li><a href="https://ninatools.github.io/tools/">Explore all tools</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <a href="https://ninatools.github.io/">Home</a> ·
+  <a href="https://ninatools.github.io/tools/">Tools</a>
+  <p>© 2026 NinaTools. Free online tools.</p>
+</footer>
+
+<script>
+"use strict";
+
+const input = document.getElementById("inputText");
+const output = document.getElementById("outputText");
+const status = document.getElementById("status");
+
+function showStatus(message, type) {
+  status.textContent = message;
+  status.className = type || "";
+}
+
+function encodeBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = "";
+  const chunkSize = 0x8000;
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+
+  return btoa(binary);
+}
+
+function decodeBase64(value) {
+  const cleaned = value.replace(/\s/g, "");
+
+  if (!cleaned) {
+    throw new Error("Please enter Base64 text to decode.");
+  }
+
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
+    throw new Error("Invalid Base64 characters. Please check your input.");
+  }
+
+  if (cleaned.length % 4 === 1) {
+    throw new Error("Invalid Base64 length. Please check your input.");
+  }
+
+  const padded = cleaned + "=".repeat((4 - cleaned.length % 4) % 4);
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+
+  return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+
+document.getElementById("encodeBtn").addEventListener("click", () => {
+  try {
+    if (!input.value.length) {
+      output.value = "";
+      showStatus("Please enter some text to encode.", "error");
+      return;
+    }
+    output.value = encodeBase64(input.value);
+    showStatus("Text encoded successfully.", "success");
+  } catch (error) {
+    output.value = "";
+    showStatus("Could not encode this text. Please try again.", "error");
+  }
+});
+
+document.getElementById("decodeBtn").addEventListener("click", () => {
+  try {
+    output.value = decodeBase64(input.value);
+    showStatus("Base64 decoded successfully.", "success");
+  } catch (error) {
+    output.value = "";
+    showStatus(error.message || "Could not decode this Base64 text.", "error");
+  }
+});
+
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  if (!output.value) {
+    showStatus("There is no result to copy yet.", "error");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(output.value);
+    showStatus("Result copied to clipboard.", "success");
+  } catch (error) {
+    output.focus();
+    output.select();
+    showStatus("Automatic copy is unavailable. Select and copy the result manually.", "error");
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  input.value = "";
+  output.value = "";
+  showStatus("Input and result cleared.", "success");
+  input.focus();
+});
+</script>
+</body>
+</html>
