@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free online URL Encoder and Decoder. Encode special characters in URLs or decode encoded text instantly. Private, secure and processed in your browser.">
+<meta name="theme-color" content="#6857df">
+<title>URL Encoder & Decoder - NinaTools</title>
+<style>
+:root {
+  --purple: #6857df;
+  --purple-dark: #5141c4;
+  --bg: #f7f7fc;
+  --text: #25243a;
+  --muted: #68677b;
+  --border: #e3e2ef;
+  --white: #ffffff;
+  --success: #16834a;
+  --error: #c03939;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 17px 20px;
+}
+.nav {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.logo {
+  color: var(--purple);
+  font-size: 23px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.nav a:last-child {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+}
+main {
+  max-width: 820px;
+  margin: 38px auto;
+  padding: 0 18px;
+}
+h1 {
+  font-size: clamp(28px, 5vw, 38px);
+  line-height: 1.2;
+  margin: 0 0 12px;
+  text-align: center;
+}
+.intro {
+  color: var(--muted);
+  text-align: center;
+  margin: 0 auto 28px;
+  max-width: 620px;
+}
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 5px 22px rgba(40, 30, 100, 0.05);
+}
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 165px;
+  resize: vertical;
+  border: 1px solid #d5d3e5;
+  border-radius: 10px;
+  padding: 14px;
+  font: 15px/1.6 monospace;
+  color: var(--text);
+  background: #fff;
+}
+textarea:focus {
+  outline: 2px solid var(--purple);
+  outline-offset: 1px;
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 17px 0 24px;
+}
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 18px;
+  min-height: 45px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible {
+  outline: 3px solid #b5adff;
+  outline-offset: 2px;
+}
+.primary {
+  background: var(--purple);
+  color: white;
+}
+.primary:hover { background: var(--purple-dark); }
+.secondary {
+  background: #efedff;
+  color: var(--purple-dark);
+}
+.neutral {
+  background: #f0f0f5;
+  color: var(--text);
+}
+.result-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+.result-label label { margin: 0; }
+.copy-btn {
+  min-height: 36px;
+  padding: 7px 12px;
+  background: #efedff;
+  color: var(--purple-dark);
+  font-size: 14px;
+}
+#status {
+  min-height: 25px;
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+#status.success { color: var(--success); }
+#status.error { color: var(--error); }
+.info {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+h2 { font-size: 21px; margin: 0 0 10px; }
+.info p { margin: 8px 0; color: var(--muted); }
+.example {
+  background: #f3f2fc;
+  border-radius: 7px;
+  padding: 10px 12px;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 14px;
+}
+footer {
+  text-align: center;
+  padding: 26px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+footer a { color: var(--purple); }
+@media (max-width: 520px) {
+  main { margin: 26px auto; padding: 0 13px; }
+  .card { padding: 17px; }
+  .buttons button { flex: 1 1 40%; }
+  textarea { min-height: 140px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="logo" href="/">NinaTools</a>
+    <a href="/tools/">All Tools</a>
+  </nav>
+</header>
+<main>
+  <h1>URL Encoder &amp; Decoder</h1>
+  <p class="intro">
+    Encode special characters in URLs or decode URL-encoded text.
+    Free, simple and processed directly in your browser.
+  </p>
+  <section class="card" aria-label="URL encoder and decoder tool">
+    <label for="inputText">Enter your text or encoded URL</label>
+    <textarea id="inputText" placeholder="Type or paste your text here..." spellcheck="false"></textarea>
+    <div class="buttons">
+      <button class="primary" id="encodeBtn" type="button">Encode URL</button>
+      <button class="secondary" id="decodeBtn" type="button">Decode URL</button>
+      <button class="neutral" id="clearBtn" type="button">Clear All</button>
+    </div>
+    <div class="result-label">
+      <label for="outputText">Result</label>
+      <button class="copy-btn" id="copyBtn" type="button">Copy Result</button>
+    </div>
+    <textarea id="outputText" placeholder="Your result will appear here..." readonly spellcheck="false"></textarea>
+    <p id="status" role="status" aria-live="polite"></p>
+  </section>
+  <section class="info">
+    <h2>How to use the URL Encoder &amp; Decoder</h2>
+    <p><strong>Encode URL:</strong> Converts text into a URL-compatible format. Spaces become %20 and special characters are encoded.</p>
+    <p><strong>Decode URL:</strong> Converts percent-encoded text back into readable text.</p>
+    <p><strong>Copy Result:</strong> Copies the converted text to your clipboard.</p>
+  </section>
+  <section class="info">
+    <h2>Example</h2>
+    <p>Original text:</p>
+    <div class="example">hello world &amp; tea</div>
+    <p>Encoded result:</p>
+    <div class="example">hello%20world%20%26%20tea</div>
+  </section>
+  <section class="info">
+    <h2>Privacy</h2>
+    <p>Your text is processed locally in your browser. This tool does not send your input to a NinaTools server.</p>
+  </section>
+</main>
+<footer>
+  <p>Free online tools by <a href="/">NinaTools</a></p>
+  <p><a href="/tools/">Explore all tools</a></p>
+</footer>
+<script>
+(function () {
+  "use strict";
+  const input = document.getElementById("inputText");
+  const output = document.getElementById("outputText");
+  const status = document.getElementById("status");
+  function showStatus(message, type) {
+    status.textContent = message;
+    status.className = type || "";
+  }
+  document.getElementById("encodeBtn").addEventListener("click", function () {
+    if (!input.value) {
+      output.value = "";
+      showStatus("Please enter some text to encode.", "error");
+      return;
+    }
+    try {
+      output.value = encodeURIComponent(input.value);
+      showStatus("Text encoded successfully.", "success");
+    } catch (error) {
+      output.value = "";
+      showStatus("Unable to encode this text.", "error");
+    }
+  });
+  document.getElementById("decodeBtn").addEventListener("click", function () {
+    if (!input.value) {
+      output.value = "";
+      showStatus("Please enter some text to decode.", "error");
+      return;
+    }
+    try {
+      output.value = decodeURIComponent(input.value);
+      showStatus("Text decoded successfully.", "success");
+    } catch (error) {
+      output.value = "";
+      showStatus("Invalid encoded text. Please check your input and try again.", "error");
+    }
+  });
+  document.getElementById("copyBtn").addEventListener("click", async function () {
+    if (!output.value) {
+      showStatus("There is no result to copy yet.", "error");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(output.value);
+      showStatus("Result copied to clipboard.", "success");
+    } catch (error) {
+      output.focus();
+      output.select();
+      const copied = document.execCommand("copy");
+      showStatus(
+        copied ? "Result copied to clipboard." : "Copy was blocked. Please select and copy the result manually.",
+        copied ? "success" : "error"
+      );
+    }
+  });
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    input.value = "";
+    output.value = "";
+    showStatus("All fields cleared.");
+    input.focus();
+  });
+})();
+</script>
+</body>
+</html>
