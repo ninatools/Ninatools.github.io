@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert currencies with the latest available reference exchange rates. Free online currency converter for EUR, USD, GBP, THB, MXN, MYR and more.">
+<meta name="theme-color" content="#6d5ce7">
+<link rel="canonical" href="https://ninatools.github.io/currency-converter/">
+<title>Currency Converter — NinaTools</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f9fc;color:#172033;line-height:1.6}
+header{background:#fff;border-bottom:1px solid #e8edf5;padding:16px 5%}header a{font-weight:800;color:#5146c7;text-decoration:none}
+main{width:min(900px,92%);margin:48px auto}h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0 0 12px}.intro{color:#596579;max-width:720px;margin-bottom:28px}
+.panel{background:#fff;border:1px solid #e2e7f0;border-radius:20px;padding:clamp(20px,4vw,36px);box-shadow:0 12px 36px rgba(30,40,80,.06)}
+h2{font-size:20px;margin:30px 0 8px}ul{padding-left:22px;color:#596579}footer{width:min(900px,92%);margin:30px auto 50px;color:#697386;font-size:13px}
+</style>
+<script defer src="/currency-converter/currency-converter.js"></script>
+</head>
+<body>
+<header><a href="/">NinaTools</a></header>
+<main>
+<h1>Currency Converter</h1>
+<p class="intro">Convert between popular currencies using the latest available reference exchange rates. Choose the currencies, enter an amount, and view the converted value and rate date.</p>
+<section class="panel" aria-label="Currency converter">
+<div data-currency-converter data-from="EUR" data-to="USD"></div>
+</section>
+<h2>About the exchange rates</h2>
+<p>Rates are provided by the free Frankfurter API and reflect published reference rates. They may update on business days rather than continuously and can differ from the rates, fees or spreads offered by banks, card providers and currency-exchange services. This tool is for informational estimates only.</p>
+<p>Source: <a href="https://frankfurter.dev/" target="_blank" rel="noopener">Frankfurter API</a>.</p>
+</main>
+<footer>© NinaTools · <a href="/">Home</a></footer>
+</body>
+</html>
