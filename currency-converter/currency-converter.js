@@ -54,7 +54,11 @@
     const result = root.querySelector(".nt-currency-result");
     const form = root.querySelector(".nt-currency-form");
     const money = (value, code) => new Intl.NumberFormat(undefined,{style:"currency",currency:code,maximumFractionDigits: code==="JPY"||code==="KRW"?0:2}).format(value);
+    let requestId = 0;
+    let inputTimer;
     async function convert() {
+      const currentRequest = ++requestId;
+      if (amount.value.trim() === "") { result.textContent = "Enter an amount to convert."; return; }
       const value = Number(amount.value), base = from.value, quote = to.value;
       if (!Number.isFinite(value) || value < 0) { result.textContent = "Please enter a valid non-negative amount."; return; }
       result.textContent = "Loading latest available reference rate…";
@@ -67,6 +71,7 @@
           rate = Number(data.rate); date = data.date || date;
           if (!Number.isFinite(rate) || rate <= 0) throw new Error("Invalid rate");
         }
+        if (currentRequest !== requestId) return;
         result.replaceChildren();
         const summary = document.createElement("div");
         summary.textContent = `${money(value,base)} =`;
@@ -78,13 +83,18 @@
         stamp.textContent = `Rate date: ${date}`;
         result.append(summary,total,details,stamp);
       } catch (e) {
+        if (currentRequest !== requestId) return;
         result.textContent = "Sorry, the exchange rate could not be loaded. Please check your connection and try again.";
       }
     }
-    form.addEventListener("submit", e => { e.preventDefault(); convert(); });
+    form.addEventListener("submit", e => { e.preventDefault(); clearTimeout(inputTimer); convert(); });
     from.addEventListener("change", convert); to.addEventListener("change", convert);
     root.querySelector(".nt-swap").addEventListener("click", () => { const old = from.value; from.value = to.value; to.value = old; convert(); });
-    amount.addEventListener("change", convert);
+    amount.addEventListener("input", () => {
+      clearTimeout(inputTimer);
+      inputTimer = setTimeout(convert, 350);
+    });
+    amount.addEventListener("change", () => { clearTimeout(inputTimer); convert(); });
     convert();
   }
   function start() { document.querySelectorAll("[data-currency-converter]").forEach(init); }
