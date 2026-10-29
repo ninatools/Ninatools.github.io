@@ -61,10 +61,16 @@ main{width:min(850px,92%);margin:42px auto 56px}h1{font-size:clamp(30px,5vw,44px
   for(let i=0;i<files.length;i++){
    const file=files[i];status.textContent='Compressing '+(i+1)+' of '+files.length+': '+file.name;
    try{
-    const blob=await compressImage(file,Number(quality.value)/100),url=URL.createObjectURL(blob),name=safeName(file.name)+'-compressed.jpg';
+    const blob=await compressImage(file,Number(quality.value)/100);
+    const reduced=blob.size<file.size;
+    const outputBlob=reduced?blob:file;
+    const url=URL.createObjectURL(outputBlob);
+    const name=safeName(file.name)+(reduced?'-compressed.jpg':'-original.jpg');
     const row=document.createElement('div');row.className='result';const info=document.createElement('div');const title=document.createElement('div');title.className='result-name';title.textContent=name;
-    const detail=document.createElement('div');detail.className='small';const before=(file.size/1024).toFixed(1),after=(blob.size/1024).toFixed(1),delta=file.size?Math.round((1-blob.size/file.size)*100):0;
-    detail.textContent='Original: '+before+' KB · Compressed: '+after+' KB · '+(delta>0?delta+'% smaller':delta<0?Math.abs(delta)+'% larger':'same size');
+    const detail=document.createElement('div');detail.className='small';const before=(file.size/1024).toFixed(1),after=(outputBlob.size/1024).toFixed(1),delta=file.size?Math.round((1-outputBlob.size/file.size)*100):0;
+    detail.textContent=reduced
+      ?'Original: '+before+' KB · Compressed: '+after+' KB · '+delta+'% smaller'
+      :'Original: '+before+' KB · Compressed version would be '+(blob.size/1024).toFixed(1)+' KB. No size reduction, so the original file is kept.';
     info.append(title,detail);const link=document.createElement('a');link.className='download';link.href=url;link.download=name;link.textContent='Download JPG';row.append(info,link);results.append(row);success++;
    }catch(err){failed++;const row=document.createElement('div');row.className='result';row.textContent='Could not compress: '+file.name;results.append(row)}
   }
