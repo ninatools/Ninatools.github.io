@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Compress JPG and JPEG images for smaller file sizes with a free browser-based image compressor.">
+<meta name="theme-color" content="#6d5ce7">
+<link rel="canonical" href="https://ninatools.github.io/compress-jpg/">
+<title>Compress JPG Images — NinaTools</title>
+<style>
+:root{--purple:#6d5ce7;--ink:#172033;--muted:#5d687b;--line:#e4e8f1;--bg:#f7f8fc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:#fff;border-bottom:1px solid var(--line)}.nav{width:min(1040px,92%);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:22px;font-weight:800;color:var(--purple);text-decoration:none}.navlinks{display:flex;gap:18px;flex-wrap:wrap}.navlinks a,footer a{color:var(--purple);font-weight:700;text-decoration:none}
+main{width:min(850px,92%);margin:42px auto 56px}h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.6px}.intro{font-size:18px;color:var(--muted);margin:0 0 26px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,34px);box-shadow:0 10px 28px rgba(30,40,80,.05)}
+.drop{border:2px dashed #c9c4f7;background:#faf9ff;border-radius:16px;padding:26px 18px;text-align:center}.drop strong{display:block;font-size:19px;margin-bottom:5px}.hint{font-size:14px;color:var(--muted)}input[type=file]{display:block;width:100%;max-width:420px;margin:18px auto 8px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.quality{margin:24px 0 12px}.quality-head{display:flex;justify-content:space-between;gap:12px;font-weight:700}.quality input{width:100%;accent-color:var(--purple);margin:12px 0}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}button,.download{display:inline-block;border:0;border-radius:10px;padding:12px 18px;background:var(--purple);color:#fff;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.secondary{background:#ece9ff;color:#40349f}.status{min-height:28px;margin:16px 0 0;text-align:center;color:var(--muted);overflow-wrap:anywhere}.results{display:grid;gap:12px;margin-top:18px}.result{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.result-name{font-weight:700;overflow-wrap:anywhere}.small{font-size:13px;color:var(--muted)}h2{font-size:22px;margin:28px 0 8px}ul{padding-left:22px;color:var(--muted)}footer{border-top:1px solid var(--line);background:#fff;padding:22px 4%;color:var(--muted);font-size:14px}.footer-inner{width:min(1040px,100%);margin:auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:560px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.navlinks{gap:12px}main{margin-top:28px}.result{align-items:flex-start;flex-direction:column;width:100%}.result a{width:100%;text-align:center}}
+</style>
+</head>
+<body>
+<header><div class="nav"><a class="brand" href="https://ninatools.github.io/">NinaTools</a><nav class="navlinks" aria-label="Main navigation"><a href="https://ninatools.github.io/tools/">All tools</a><a href="https://ninatools.github.io/about/">About</a></nav></div></header>
+<main>
+<h1>Compress JPG Images</h1>
+<p class="intro">Make JPG and JPEG images smaller for easier sharing and storage. Adjust image quality to balance file size and appearance.</p>
+<section class="panel" aria-label="JPG image compressor">
+<div class="drop"><strong>Choose JPG or JPEG images</strong><span class="hint">Select one or more images. Processing happens locally in your browser.</span>
+<input id="files" type="file" accept=".jpg,.jpeg,image/jpeg" multiple aria-label="Choose JPG or JPEG images">
+</div>
+<div class="quality"><div class="quality-head"><label for="quality">JPEG quality</label><output id="qualityValue" for="quality">75%</output></div><input id="quality" type="range" min="30" max="95" step="5" value="75"><div class="hint">Lower quality usually creates a smaller file. Try 75% as a starting point.</div></div>
+<div class="actions"><button id="compress" type="button">Compress JPG</button><button id="clear" type="button" class="secondary">Reset</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Choose JPG files to get started.</p><div id="results" class="results"></div>
+</section>
+<h2>How to compress JPG files</h2><ul><li>Select one or more JPG/JPEG images.</li><li>Choose a quality level. Higher quality usually means a larger file.</li><li>Tap <strong>Compress JPG</strong>, compare the original and compressed sizes, then download the result.</li></ul>
+<h2>Privacy</h2><p class="hint">Your images are processed in your browser and are not uploaded to NinaTools. Compressed images are saved as JPEG files.</p>
+</main>
+<footer><div class="footer-inner"><span>© <span id="year"></span> NinaTools</span><div><a href="https://ninatools.github.io/">Home</a> · <a href="https://ninatools.github.io/tools/">Tools</a> · <a href="https://ninatools.github.io/privacy/">Privacy</a> · <a href="https://ninatools.github.io/contact/">Contact</a></div></div></footer>
+<script>
+(() => {
+ const input=document.getElementById('files'), quality=document.getElementById('quality'), qualityValue=document.getElementById('qualityValue'), compressBtn=document.getElementById('compress'), clearBtn=document.getElementById('clear'), status=document.getElementById('status'), results=document.getElementById('results');
+ document.getElementById('year').textContent=new Date().getFullYear();
+ quality.addEventListener('input',()=>qualityValue.value=quality.value+'%');
+ const safeName=name=>name.replace(/\.(jpe?g)$/i,'').replace(/[\\/:*?"<>|]/g,'_')||'compressed-image';
+ function compressImage(file,q){
+  return new Promise((resolve,reject)=>{
+   const url=URL.createObjectURL(file),img=new Image();
+   img.onload=()=>{
+    try{
+     const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+     const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvas is not available');
+     ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0);
+     canvas.toBlob(blob=>{URL.revokeObjectURL(url);canvas.width=0;canvas.height=0;if(blob)resolve(blob);else reject(new Error('Could not create a JPEG image'))},'image/jpeg',q);
+    }catch(err){URL.revokeObjectURL(url);reject(err)}
+   };
+   img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Image could not be read'))};img.src=url;
+  });
+ }
+ compressBtn.addEventListener('click',async()=>{
+  const files=Array.from(input.files||[]);
+  if(!files.length){status.textContent='Please choose at least one JPG or JPEG image.';return}
+  compressBtn.disabled=true;clearBtn.disabled=true;results.replaceChildren();let success=0,failed=0;
+  for(let i=0;i<files.length;i++){
+   const file=files[i];status.textContent='Compressing '+(i+1)+' of '+files.length+': '+file.name;
+   try{
+    const blob=await compressImage(file,Number(quality.value)/100),url=URL.createObjectURL(blob),name=safeName(file.name)+'-compressed.jpg';
+    const row=document.createElement('div');row.className='result';const info=document.createElement('div');const title=document.createElement('div');title.className='result-name';title.textContent=name;
+    const detail=document.createElement('div');detail.className='small';const before=(file.size/1024).toFixed(1),after=(blob.size/1024).toFixed(1),delta=file.size?Math.round((1-blob.size/file.size)*100):0;
+    detail.textContent='Original: '+before+' KB · Compressed: '+after+' KB · '+(delta>0?delta+'% smaller':delta<0?Math.abs(delta)+'% larger':'same size');
+    info.append(title,detail);const link=document.createElement('a');link.className='download';link.href=url;link.download=name;link.textContent='Download JPG';row.append(info,link);results.append(row);success++;
+   }catch(err){failed++;const row=document.createElement('div');row.className='result';row.textContent='Could not compress: '+file.name;results.append(row)}
+  }
+  status.textContent='Finished. Compressed '+success+' file(s)'+(failed?'; '+failed+' file(s) could not be processed.':' successfully.');
+  compressBtn.disabled=false;clearBtn.disabled=false;
+ });
+ clearBtn.addEventListener('click',()=>{results.querySelectorAll('a.download').forEach(a=>{if(a.href.startsWith('blob:'))URL.revokeObjectURL(a.href)});input.value='';results.replaceChildren();status.textContent='Choose JPG files to get started.'});
+})();
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"80b34a467198469e92e3636312d38b9f"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body></html>
