@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert HEIC and HEIF photos to JPG in your browser with this free online converter.">
+<meta name="theme-color" content="#6d5ce7">
+<link rel="canonical" href="https://ninatools.github.io/heic-to-jpg/">
+<title>HEIC to JPG Converter — NinaTools</title>
+<style>
+:root{--purple:#6d5ce7;--ink:#172033;--muted:#5d687b;--line:#e4e8f1;--bg:#f7f8fc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:#fff;border-bottom:1px solid var(--line)}.nav{width:min(1040px,92%);margin:auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:22px;font-weight:800;color:var(--purple);text-decoration:none}.navlinks{display:flex;gap:18px;flex-wrap:wrap}.navlinks a,footer a{color:var(--purple);font-weight:700;text-decoration:none}
+main{width:min(850px,92%);margin:42px auto 56px}h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.6px}.intro{font-size:18px;color:var(--muted);margin:0 0 26px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,34px);box-shadow:0 10px 28px rgba(30,40,80,.05)}
+.drop{border:2px dashed #c9c4f7;background:#faf9ff;border-radius:16px;padding:26px 18px;text-align:center}.drop strong{display:block;font-size:19px;margin-bottom:5px}.hint{font-size:14px;color:var(--muted)}input[type=file]{display:block;width:100%;max-width:420px;margin:18px auto 8px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
+button,.download{display:inline-block;border:0;border-radius:10px;padding:12px 18px;background:var(--purple);color:#fff;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}.secondary{background:#ece9ff;color:#40349f}.status{min-height:28px;margin:16px 0 0;text-align:center;color:var(--muted);overflow-wrap:anywhere}.results{display:grid;gap:12px;margin-top:18px}.result{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.result-name{font-weight:700;overflow-wrap:anywhere}.small{font-size:13px;color:var(--muted)}h2{font-size:22px;margin:28px 0 8px}ul{padding-left:22px;color:var(--muted)}footer{border-top:1px solid var(--line);background:#fff;padding:22px 4%;color:var(--muted);font-size:14px}.footer-inner{width:min(1040px,100%);margin:auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:560px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.navlinks{gap:12px}main{margin-top:28px}.result{align-items:flex-start;flex-direction:column;width:100%}.result a{width:100%;text-align:center}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+</head>
+<body>
+<header><div class="nav"><a class="brand" href="https://ninatools.github.io/">NinaTools</a><nav class="navlinks" aria-label="Main navigation"><a href="https://ninatools.github.io/tools/">All tools</a><a href="https://ninatools.github.io/about/">About</a></nav></div></header>
+<main>
+<h1>HEIC to JPG Converter</h1>
+<p class="intro">Convert HEIC or HEIF photos to JPG format right in your browser. Free to use, with no account required.</p>
+<section class="panel" aria-label="HEIC to JPG converter">
+<div class="drop"><strong>Choose your HEIC photos</strong><span class="hint">Select one or more .heic or .heif files. Your photos are processed in this browser.</span>
+<input id="files" type="file" accept=".heic,.heif,image/heic,image/heif" multiple aria-label="Choose HEIC or HEIF files">
+<div class="hint">For best results, keep this page open until conversion finishes.</div></div>
+<div class="actions"><button id="convert" type="button">Convert to JPG</button><button id="clear" type="button" class="secondary">Reset</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Choose a file to get started.</p><div id="results" class="results"></div>
+</section>
+<h2>How to convert HEIC to JPG</h2><ul><li>Select one or more HEIC/HEIF photos from your device.</li><li>Tap <strong>Convert to JPG</strong> and wait for each conversion to finish.</li><li>Use the download link beside each converted photo.</li></ul>
+<h2>Privacy</h2><p class="hint">File conversion runs locally in your browser. Your selected photos are not uploaded to NinaTools. The converter library is loaded from a content delivery network.</p>
+</main>
+<footer><div class="footer-inner"><span>© <span id="year"></span> NinaTools</span><div><a href="https://ninatools.github.io/">Home</a> · <a href="https://ninatools.github.io/tools/">Tools</a> · <a href="https://ninatools.github.io/privacy/">Privacy</a> · <a href="https://ninatools.github.io/contact/">Contact</a></div></div></footer>
+<script>
+(() => {
+ const input=document.getElementById('files'), convertBtn=document.getElementById('convert'), clearBtn=document.getElementById('clear'), status=document.getElementById('status'), results=document.getElementById('results');
+ document.getElementById('year').textContent=new Date().getFullYear();
+ const safeName=name=>name.replace(/\.(heic|heif)$/i,'').replace(/[\\/:*?"<>|]/g,'_')||'converted-photo';
+ convertBtn.addEventListener('click',async()=>{
+  const files=Array.from(input.files||[]);
+  if(!files.length){status.textContent='Please choose at least one HEIC or HEIF photo.';return}
+  if(typeof window.heic2any!=='function'){status.textContent='The converter library could not load. Check your internet connection, then reload this page and try again.';return}
+  convertBtn.disabled=true;clearBtn.disabled=true;results.replaceChildren();
+  let succeeded=0,failed=0;
+  for(let i=0;i<files.length;i++){
+   const file=files[i];status.textContent='Converting '+(i+1)+' of '+files.length+': '+file.name;
+   try{
+    const converted=await window.heic2any({blob:file,toType:'image/jpeg',quality:0.92});
+    const blobs=Array.isArray(converted)?converted:[converted];
+    blobs.forEach((blob,index)=>{
+     const url=URL.createObjectURL(blob),name=safeName(file.name)+(blobs.length>1?'-'+(index+1):'')+'.jpg';
+     const row=document.createElement('div');row.className='result';
+     const info=document.createElement('div');const title=document.createElement('div');title.className='result-name';title.textContent=name;
+     const detail=document.createElement('div');detail.className='small';detail.textContent=(blob.size/1024/1024).toFixed(2)+' MB';
+     info.append(title,detail);const link=document.createElement('a');link.className='download';link.href=url;link.download=name;link.textContent='Download JPG';row.append(info,link);results.append(row);
+    });succeeded++;
+   }catch(err){failed++;const row=document.createElement('div');row.className='result';const msg=document.createElement('div');msg.textContent='Could not convert: '+file.name;row.append(msg);results.append(row)}
+  }
+  status.textContent='Finished. Converted '+succeeded+' file(s)'+(failed?'; '+failed+' file(s) could not be converted.':' successfully.');
+  convertBtn.disabled=false;clearBtn.disabled=false;
+ });
+ clearBtn.addEventListener('click',()=>{results.querySelectorAll('a.download').forEach(a=>{if(a.href.startsWith('blob:'))URL.revokeObjectURL(a.href)});input.value='';results.replaceChildren();status.textContent='Choose a file to get started.'});
+})();
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"80b34a467198469e92e3636312d38b9f"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body></html>
