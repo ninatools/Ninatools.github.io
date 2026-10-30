@@ -1,626 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Free Online Tools — NinaTools</title>
-
-  <meta name="description" content="Explore free online tools from NinaTools for images, PDFs, QR codes and everyday digital tasks. Simple, fast and privacy-friendly.">
-
-  <meta name="robots" content="index, follow">
-
-  <link rel="canonical" href="https://ninatools.github.io/tools/">
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #172033;
-      background: #f7f8fc;
-      line-height: 1.7;
-    }
-
-    header {
-      background: white;
-      border-bottom: 1px solid #e7e9f2;
-      padding: 20px 24px;
-    }
-
-    .header-inner {
-      max-width: 1000px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: #172033;
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: #6c63f5;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 25px;
-      font-weight: 700;
-    }
-
-    .home-link {
-      text-decoration: none;
-      color: #5b54dc;
-      font-weight: 600;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 70px 24px 90px;
-    }
-
-    .label {
-      display: inline-block;
-      padding: 8px 18px;
-      border-radius: 30px;
-      background: #eeecff;
-      color: #5b54dc;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 48px;
-      line-height: 1.15;
-      margin: 0 0 20px;
-    }
-
-    .intro {
-      max-width: 720px;
-      color: #68738a;
-      font-size: 19px;
-      margin-bottom: 50px;
-    }
-
-    h2 {
-      font-size: 30px;
-      margin-top: 50px;
-      margin-bottom: 20px;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 22px;
-    }
-
-    .tool-card {
-      background: white;
-      border: 1px solid #e4e7f0;
-      border-radius: 22px;
-      padding: 24px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .tool-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(30, 35, 60, 0.08);
-    }
-
-    .tool-icon {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .tool-card h3 {
-      margin: 0 0 10px;
-      font-size: 24px;
-    }
-
-    .tool-card p {
-      margin: 0;
-      color: #68738a;
-      font-size: 16px;
-    }
-
-    .available {
-      color: #5b54dc;
-      font-weight: 700;
-      margin-top: 18px;
-      display: inline-block;
-    }
-
-    .coming {
-      color: #8a92a5;
-      font-weight: 700;
-      margin-top: 18px;
-      display: inline-block;
-    }
-
-    footer {
-      background: white;
-      border-top: 1px solid #e7e9f2;
-      text-align: center;
-      padding: 30px 20px;
-      color: #7a8498;
-      font-size: 14px;
-    }
-
-    footer a {
-      color: #5b54dc;
-      text-decoration: none;
-    }
-
-    @media (max-width: 700px) {
-
-      header {
-        padding: 16px;
-      }
-
-      .brand {
-        font-size: 21px;
-      }
-
-      .logo {
-        width: 42px;
-        height: 42px;
-      }
-
-      main {
-        padding: 50px 20px 70px;
-      }
-
-      h1 {
-        font-size: 38px;
-      }
-
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .tool-link {
-color: #8b5cf6;
-}
-
-.tool-card:hover .tool-link {
-color: #7c3aed;
-}
-  /* Consistent tool card typography */
-.tool-card h3 {
-  font-size: 24px;
-  line-height: 1.3;
-  color: #192033;
-}
-
-.tool-card p {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #68738a;
-}
-
-.tool-link {
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: #8b5cf6;
-  text-decoration: none;
-}
-
-.tool-card:hover .tool-link {
-  color: #7c3aed;
-}  
-  /* Consistent Try the tool links */
-.tool-link,
-a.tool-card .tool-link {
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: #6d5ce7;
-  text-decoration: none;
-}
-
-.tool-card:hover .tool-link {
-  color: #5946d2;
-}
- /* Final style for tool links */
-.tool-card .tool-link {
-  font-size: 17px;
-  font-weight: 600;
-  color: #6d5ce7;
-  text-decoration: none;
-}
-
-.tool-card:hover .tool-link {
-  color: #5946d2;
-}
-/* Consistent Try the tool links */
-.try-tool {
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #6d5ce7;
-  text-decoration: none;
-}
- 
-.available {
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #6d5ce7;
-  text-decoration: none;
-}
- 
-
-  
-  
-  
-  
-  
-  
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Online Tools — NinaTools</title>
+<meta name="description" content="Explore free online tools from NinaTools for images, PDFs, QR codes and everyday digital tasks. Simple, fast and privacy-friendly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ninatools.github.io/tools/">
+<style>
+*{box-sizing:border-box}
+:root{--ink:#192033;--muted:#68738a;--purple:#6d5ce7;--purple-dark:#5946d2;--line:#e4e7f0;--page:#f7f8fc;--white:#fff}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--page);line-height:1.65}
+header{background:var(--white);border-bottom:1px solid var(--line);padding:18px 24px}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:inline-flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-size:24px;font-weight:700}
+.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--purple);color:#fff;font-size:25px;font-weight:700}
+.home-link,footer a{color:var(--purple);text-decoration:none;font-weight:700}
+.home-link{font-size:16px}
+main{width:min(1100px,100%);margin:0 auto;padding:58px 24px 82px}
+.eyebrow{display:inline-block;margin-bottom:16px;padding:7px 16px;border-radius:999px;background:#eeecff;color:var(--purple-dark);font-size:14px;font-weight:700}
+h1{margin:0 0 14px;font-size:clamp(34px,5vw,46px);line-height:1.15;letter-spacing:-.7px}
+.intro{max-width:720px;margin:0 0 42px;color:var(--muted);font-size:19px;line-height:1.65}
+.tool-section{margin-top:42px}
+.section-heading{margin:0 0 17px;font-size:27px;line-height:1.25}
+.section-description{margin:-8px 0 19px;color:var(--muted);font-size:16px}
+.tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.tool-card{min-width:0;min-height:218px;display:flex;flex-direction:column;align-items:flex-start;padding:23px;border:1px solid var(--line);border-radius:19px;background:var(--white);color:inherit;text-decoration:none;box-shadow:0 2px 8px rgba(25,32,51,.025);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.tool-card:hover{transform:translateY(-3px);border-color:#d2ccff;box-shadow:0 12px 28px rgba(35,31,85,.08)}
+.tool-card:focus-visible,.home-link:focus-visible,footer a:focus-visible{outline:3px solid #b8adff;outline-offset:4px;border-radius:6px}
+.tool-icon{width:48px;height:48px;display:grid;place-items:center;margin-bottom:15px;border-radius:14px;background:#f1efff;font-size:27px}
+.tool-card h3{margin:0 0 8px;color:var(--ink);font-size:21px;line-height:1.3}
+.tool-card p{margin:0 0 17px;color:var(--muted);font-size:16px;line-height:1.55}
+.try-tool{display:inline-block;margin-top:auto;color:var(--purple);font-size:17px;font-weight:700;line-height:1.5;text-decoration:none}
+.tool-card:hover .try-tool{color:var(--purple-dark)}
+footer{padding:28px 20px;border-top:1px solid var(--line);background:var(--white);color:#7a8498;text-align:center;font-size:14px}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 16px;margin-top:10px}
+@media(max-width:900px){.tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){header{padding:15px 18px}.brand{font-size:22px}.logo{width:42px;height:42px}main{padding:42px 18px 64px}.intro{margin-bottom:32px;font-size:18px}.tool-section{margin-top:34px}.section-heading{font-size:25px}.tools-grid{grid-template-columns:1fr;gap:15px}.tool-card{min-height:0;padding:21px}.tool-card h3{font-size:21px}.tool-card p{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.tool-card{transition:none}.tool-card:hover{transform:none}}
+</style>
 </head>
-
 <body>
-
-<header>
-
-  <div class="header-inner">
-
-    <a class="brand" href="https://ninatools.github.io/">
-      <span class="logo">N</span>
-      <span>NinaTools</span>
-    </a>
-
-    <a class="home-link" href="https://ninatools.github.io/">
-      Home
-    </a>
-
-  </div>
-
-</header>
-
-
+<header><div class="header-inner">
+<a class="brand" href="https://ninatools.github.io/" aria-label="NinaTools home"><span class="logo" aria-hidden="true">N</span><span>NinaTools</span></a>
+<a class="home-link" href="https://ninatools.github.io/">Home</a>
+</div></header>
 <main>
-
-  <span class="label">Free Online Tools</span>
-
-  <h1>Useful tools for everyday tasks.</h1>
-
-  <p class="intro">
-    Explore simple, fast and privacy-friendly online tools
-    from NinaTools. More useful tools will be added over time.
-  </p>
-
-
-  <h2>Image Tools</h2>
-
-  <div class="tools-grid">
-
-    <a class="tool-card"
-       href="https://ninatools.github.io/heic-to-jpg/">
-
-      <div class="tool-icon">🖼️</div>
-
-      <h3>HEIC to JPG</h3>
-
-      <p>
-        Convert HEIC and HEIF images to JPG directly in your browser.
-      </p>
-
-      <span class="available">
-        Try the tool →
-      </span>
-
-    </a>
-
-
-    <a class="tool-card"
-   href="https://ninatools.github.io/compress-jpg/">
-
-  <div class="tool-icon">🗜️</div>
-
-  <h3>Compress JPG</h3>
-
-  <p>
-    Reduce JPG file size while keeping your images looking good.
-  </p>
-
-  <span class="available">
-    Try the tool →
-  </span>
-
-</a>
-
- <a class="tool-card" href="https://ninatools.github.io/resize-image/">
-  <div class="tool-icon">↔️</div>
-  <h3>Resize Image</h3>
-  <p>Change image dimensions for JPG, PNG and WebP files directly in your browser.</p>
-  <span class="available">Try the tool →</span>
-</a>     
-
-      
-
-      
-        
-      
-
-      
-        
-      
-
-  
-
-
-    
-
-      
-      
-
-      
-        
-      
-
-      
-      
-
-
-    
-
-
-<div class="tool-card">
-  <div class="tool-icon">🔄</div>
-  <h3>PNG to JPG</h3>
-  <p>
-    Convert PNG images to JPG format with an easy online tool.
-  </p>
-  <a href="https://ninatools.github.io/png-to-jpg/" class="tool-link">Try the tool →</a>
-</div>    
-
-      
-
-
-  </div>
-
-
-  <h2>PDF Tools</h2>
-
-  <div class="tools-grid">
-
-    <div class="tool-card">
-
-      <div class="tool-icon">📄</div>
-
-      <h3>JPG to PDF</h3>
-
-      <p>
-        Turn your images into a convenient PDF document.
-      </p>
-
-      
-     <a href="https://ninatools.github.io/jpg-to-pdf/" class="tool-link">Try the tool →</a>
-
-     </div>
-    
-
-
-    <div class="tool-card">
-
-      <div class="tool-icon">📑</div>
-
-      <h3>PDF Tools</h3>
-
-      <p>
-        Useful tools for working with PDF files.
-      </p>
-
-  <div class="tool-card">
-  <div class="tool-icon">📄</div>
-  <h3>Merge PDF</h3>
-  <p>Combine multiple PDF files into one document for free.</p>
-  <a href="https://ninatools.github.io/pdf-merger/" class="tool-link">Try the tool →</a>
-</div>
-  
-
-
-   <div class="tool-card">
-  <div class="tool-icon">✂️</div>
-  <h3>Split PDF</h3>
-  <p>Split PDF files into separate pages for free.</p>
-  <a href="https://ninatools.github.io/split-pdf/" class="tool-link">Try the tool →</a>
-  </div>     
-      
-
-    </div>
-
-  </div>
-
-
-  <h2>More Tools</h2>
-
-  <div class="tools-grid">
-
-    <div class="tool-card">
-
-      <div class="tool-icon">🔳</div>
-
-      <h3>QR Tools</h3>
-
-      <p>
-        Create and work with QR codes for everyday use.
-      </p>
-
-      
-      <a href="/qr-code-generator/" class="try-tool">
-      Try the tool →
-       </a>
-      
-
-    </div>
-
-
-    <div class="tool-card">
-
-      <div class="tool-icon">🌐</div>
-
-      <h3>Internet Tools</h3>
-
-      <p>
-        Simple utilities for common internet and digital tasks.
-      </p>
-
-      
-  <div class="tool-card">
-  <div class="tool-icon">🔗</div>
-  <h3>URL Encoder / Decoder</h3>
-  <p>
-    Encode and decode URLs and special characters online for free.
-  </p>
-  <a href="https://ninatools.github.io/url-encoder-decoder/" class="try-tool">
-    Try the tool →
-  </a>
-</div>
-  
-  
-<div class="tool-card">
-  <div class="tool-icon">🔐</div>
-  <h3>Password Generator</h3>
-  <p>
-    Generate strong random passwords for free. Choose your password length and character types.
-  </p>
-  <a href="https://ninatools.github.io/password-generator/" class="try-tool">
-    Try the tool →
-  </a>
-</div>
-        
-   
-<div class="tool-card">
-  <div class="tool-icon">🔤</div>
-  <h3>Base64 Encoder / Decoder</h3>
-  <p>
-    Encode text to Base64 or decode Base64 back to text for free. Supports Thai and other languages.
-  </p>
-  <a href="https://ninatools.github.io/base64-encoder-decoder/" class="try-tool">
-    Try the tool →
-  </a>
-</div>
-  
-<div class="tool-card">
-  <div class="tool-icon">🕒</div>
-  <h3>Timestamp Converter</h3>
-  <p>
-    Convert Unix timestamps to readable dates and times, or convert dates into Unix timestamps for free.
-  </p>
-  <a href="https://ninatools.github.io/timestamp-converter/" class="try-tool">
-    Try the tool →
-  </a>
-</div>
- <div class="tool-card">
-  <div class="tool-icon">📋</div>
-  <h3>JSON Formatter &amp; Validator</h3>
-  <p>
-    Format, validate, and minify JSON data online for free.
-    Find errors and make JSON easier to read.
-  </p>
-  <a href="https://ninatools.github.io/json-formatter-validator/" class="try-tool">
-    Try the tool →
-  </a>
-</div>
-
- 
-<div class="tool-card">
-  <div class="tool-icon">🌐</div>
-  <h3>What Is My IP?</h3>
-  <p>
-    Check your public IP address instantly.
-    Find out which IP address websites can see.
-  </p>
-  <a class="try-tool" href="https://ninatools.github.io/what-is-my-ip/">
-    Try the tool →
-  </a>
-</div>
-<div class="tool-card">
-  <div class="tool-icon">🌐</div>
-  <h3>DNS Lookup</h3>
-  <p>
-    Check DNS records for any domain,
-    including A, AAAA, MX, NS, TXT and CNAME.
-  </p>
-  <a class="try-tool" href="https://ninatools.github.io/dns-lookup/">
-    Try the tool →
-  </a>
-</div>
-      
-    </div>
-
-  </div>
-
+<span class="eyebrow">Free Online Tools</span>
+<h1>Useful tools for everyday tasks.</h1>
+<p class="intro">Explore simple, fast and privacy-friendly online tools from NinaTools. Choose a category below to find the tool you need. More useful tools will be added over time.</p>
+
+<section class="tool-section" aria-labelledby="image-tools">
+<h2 class="section-heading" id="image-tools">Image Tools</h2>
+<p class="section-description">Convert, resize and reduce the file size of your images.</p>
+<div class="tools-grid">
+<a class="tool-card" href="https://ninatools.github.io/heic-to-jpg/"><span class="tool-icon" aria-hidden="true">🖼️</span><h3>HEIC to JPG</h3><p>Convert HEIC and HEIF photos to JPG directly in your browser.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/compress-jpg/"><span class="tool-icon" aria-hidden="true">🗜️</span><h3>Compress JPG</h3><p>Reduce JPG image file sizes while keeping image quality in balance.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/resize-image/"><span class="tool-icon" aria-hidden="true">↔️</span><h3>Resize Image</h3><p>Change image dimensions for JPG, PNG and WebP files in your browser.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/png-to-jpg/"><span class="tool-icon" aria-hidden="true">🔄</span><h3>PNG to JPG</h3><p>Convert PNG images to JPG format with a simple online tool.</p><span class="try-tool">Try the tool →</span></a>
+</div></section>
+
+<section class="tool-section" aria-labelledby="pdf-tools">
+<h2 class="section-heading" id="pdf-tools">PDF Tools</h2>
+<p class="section-description">Create, combine and split PDF documents.</p>
+<div class="tools-grid">
+<a class="tool-card" href="https://ninatools.github.io/jpg-to-pdf/"><span class="tool-icon" aria-hidden="true">📄</span><h3>JPG to PDF</h3><p>Turn your JPG images into a convenient PDF document.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/pdf-merger/"><span class="tool-icon" aria-hidden="true">📑</span><h3>Merge PDF</h3><p>Combine multiple PDF files into one document.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/split-pdf/"><span class="tool-icon" aria-hidden="true">✂️</span><h3>Split PDF</h3><p>Split a PDF document into separate pages or smaller files.</p><span class="try-tool">Try the tool →</span></a>
+</div></section>
+
+<section class="tool-section" aria-labelledby="qr-tools">
+<h2 class="section-heading" id="qr-tools">QR Code Tools</h2>
+<p class="section-description">Create QR codes for links and everyday sharing.</p>
+<div class="tools-grid">
+<a class="tool-card" href="https://ninatools.github.io/qr-code-generator/"><span class="tool-icon" aria-hidden="true">🔳</span><h3>QR Code Generator</h3><p>Create and download QR codes for websites, text and other information.</p><span class="try-tool">Try the tool →</span></a>
+</div></section>
+
+<section class="tool-section" aria-labelledby="internet-tools">
+<h2 class="section-heading" id="internet-tools">Internet &amp; Text Tools</h2>
+<p class="section-description">Useful utilities for text, data and common internet tasks.</p>
+<div class="tools-grid">
+<a class="tool-card" href="https://ninatools.github.io/url-encoder-decoder/"><span class="tool-icon" aria-hidden="true">🔗</span><h3>URL Encoder / Decoder</h3><p>Encode and decode URLs and special characters online.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/password-generator/"><span class="tool-icon" aria-hidden="true">🔐</span><h3>Password Generator</h3><p>Generate random passwords and choose the length and character types.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/base64-encoder-decoder/"><span class="tool-icon" aria-hidden="true">🔤</span><h3>Base64 Encoder / Decoder</h3><p>Encode text to Base64 or decode Base64 back into readable text.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/timestamp-converter/"><span class="tool-icon" aria-hidden="true">🕒</span><h3>Timestamp Converter</h3><p>Convert Unix timestamps and dates into readable date and time formats.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/json-formatter-validator/"><span class="tool-icon" aria-hidden="true">📋</span><h3>JSON Formatter &amp; Validator</h3><p>Format, validate and minify JSON data, and make errors easier to find.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/what-is-my-ip/"><span class="tool-icon" aria-hidden="true">🌐</span><h3>What Is My IP?</h3><p>Check your public IP address and see which address websites can detect.</p><span class="try-tool">Try the tool →</span></a>
+<a class="tool-card" href="https://ninatools.github.io/dns-lookup/"><span class="tool-icon" aria-hidden="true">🔎</span><h3>DNS Lookup</h3><p>Check DNS records for a domain, including A, AAAA, MX, NS, TXT and CNAME.</p><span class="try-tool">Try the tool →</span></a>
+</div></section>
 </main>
-
-
-<footer>
-
-  <div>
-    © 2026 NinaTools
-  </div>
-
-  <div style="margin-top:10px;">
-
-    <a href="https://ninatools.github.io/">
-      Home
-    </a>
-
-    &nbsp; · &nbsp;
-
-    <a href="/about/">
-      About
-    </a>
-
-    &nbsp; · &nbsp;
-
-    <a href="/privacy/">
-      Privacy
-    </a>
-
-    &nbsp; · &nbsp;
-
-    <a href="/terms/">
-      Terms
-    </a>
-
-    &nbsp; · &nbsp;
-
-    <a href="/contact/">
-      Contact
-    </a>
-
-  </div>
-
-</footer>
-
-
+<footer><div>© 2026 NinaTools</div><nav class="footer-links" aria-label="Footer navigation"><a href="https://ninatools.github.io/">Home</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a></nav></footer>
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"80b34a467198469e92e3636312d38b9f"}'></script>
 <!-- End Cloudflare Web Analytics -->
