@@ -13,6 +13,19 @@ header{background:#fff;border-bottom:1px solid #e8edf5;padding:16px 5%}header a{
 main{width:min(900px,92%);margin:48px auto}h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0 0 12px}.intro{color:#596579;max-width:720px;margin-bottom:28px}
 .panel{background:#fff;border:1px solid #e2e7f0;border-radius:20px;padding:clamp(20px,4vw,36px);box-shadow:0 12px 36px rgba(30,40,80,.06)}
 h2{font-size:20px;margin:30px 0 8px}ul{padding-left:22px;color:#596579}footer{width:min(900px,92%);margin:30px auto 50px;color:#697386;font-size:13px}
+
+/* NinaTools shared purple design system */
+:root{--purple:#6D5CE7;--purple-dark:#5847CE;--bg:#F7F8FC;--text:#172033;--muted:#626E82;--border:#E3E6EF}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+header{border-color:var(--border);padding:16px max(5%,env(safe-area-inset-left))}
+header a{color:var(--purple-dark)}
+main{padding-left:max(4%,env(safe-area-inset-left));padding-right:max(4%,env(safe-area-inset-right))}
+.intro{color:var(--muted);line-height:1.7}
+.panel{border-color:var(--border);border-radius:18px;box-shadow:0 6px 22px rgba(25,32,51,.045)}
+h1,h2{color:var(--text);line-height:1.3}
+a{color:var(--purple-dark)}
+footer{padding-bottom:max(32px,env(safe-area-inset-bottom));color:var(--muted)}
+@media(max-width:600px){main{margin:28px auto}.panel{padding:18px}}
 </style>
 <script defer src="/currency-converter/currency-converter.js"></script>
 </head>
