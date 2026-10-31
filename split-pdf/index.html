@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Split PDF files online for free. Select pages or page ranges and download separate PDF files privately in your browser.">
-  <meta name="theme-color" content="#7138c8">
+  <meta name="theme-color" content="#6d5ce7">
   <title>Split PDF Online Free | NinaTools</title>
 
   <style>
@@ -316,7 +316,26 @@
         width: 100%;
       }
     }
-  </style>
+  
+/* NinaTools unified purple design system */
+:root{--nt-purple:#6d5ce7;--nt-purple-dark:#5847ce;--nt-ink:#172033;--nt-muted:#626e82;--nt-line:#e3e6ef;--nt-bg:#f7f8fc}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--nt-ink);background:var(--nt-bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+header{background:#fff;border-color:var(--nt-line)}
+.brand,.logo{color:var(--nt-purple)}
+nav a,header a,footer a{transition:color .18s ease}
+nav a:hover,header a:hover,footer a:hover{color:var(--nt-purple-dark)}
+button,.pick{font-family:inherit;border-radius:11px;min-height:46px;font-weight:700;transition:background .18s ease,box-shadow .18s ease,transform .18s ease}
+button:not(:disabled):hover,.pick:hover{box-shadow:0 5px 14px rgba(109,92,231,.17)}
+.primary{background:var(--nt-purple);border-color:var(--nt-purple)}
+.primary:hover:not(:disabled){background:var(--nt-purple-dark)}
+.secondary{background:#efedff;color:var(--nt-purple-dark);border-color:#e3defe}
+input:not([type=checkbox]):not([type=radio]):not([type=color]):not([type=range]),select,textarea{font-family:inherit;border-color:#d9deea;border-radius:11px}
+input[type=range],input[type=checkbox]{accent-color:var(--nt-purple)}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.pick:focus-visible{outline:3px solid #b9afff;outline-offset:3px}
+.panel,.card,.tool-card{border-color:var(--nt-line);box-shadow:0 8px 26px rgba(25,32,51,.045)}
+@media(max-width:600px){main{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}.panel,.card,.tool-card{border-radius:16px}button,.pick{min-height:48px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 
 <body>
