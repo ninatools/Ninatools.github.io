@@ -15,6 +15,22 @@ main{width:min(850px,92%);margin:42px auto 56px}h1{font-size:clamp(30px,5vw,44px
 .drop{border:2px dashed #c9c4f7;background:#faf9ff;border-radius:16px;padding:26px 18px;text-align:center}.drop strong{display:block;font-size:19px;margin-bottom:5px}.hint{font-size:14px;color:var(--muted)}input[type=file]{display:block;width:100%;max-width:420px;margin:18px auto 8px;padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
 button,.download{display:inline-block;border:0;border-radius:10px;padding:12px 18px;background:var(--purple);color:#fff;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}.secondary{background:#ece9ff;color:#40349f}.status{min-height:28px;margin:16px 0 0;text-align:center;color:var(--muted);overflow-wrap:anywhere}.results{display:grid;gap:12px;margin-top:18px}.result{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.result-name{font-weight:700;overflow-wrap:anywhere}.small{font-size:13px;color:var(--muted)}h2{font-size:22px;margin:28px 0 8px}ul{padding-left:22px;color:var(--muted)}footer{border-top:1px solid var(--line);background:#fff;padding:22px 4%;color:var(--muted);font-size:14px}.footer-inner{width:min(1040px,100%);margin:auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 @media(max-width:560px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.navlinks{gap:12px}main{margin-top:28px}.result{align-items:flex-start;flex-direction:column;width:100%}.result a{width:100%;text-align:center}}
+
+/* NinaTools unified purple design system */
+:root{--purple:#6d5ce7;--purple-dark:#5847ce;--ink:#172033;--muted:#626e82;--line:#e3e6ef;--bg:#f7f8fc}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+header,footer{background:#fff;border-color:var(--line)}
+a{transition:color .18s ease}
+button,.button,.download{min-height:46px;border-radius:11px;font-family:inherit;font-weight:700;transition:background .18s ease,box-shadow .18s ease,transform .18s ease}
+button:not(:disabled):hover,.button:hover,.download:hover{filter:brightness(.96);box-shadow:0 5px 14px rgba(109,92,231,.18)}
+button:focus-visible,.button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b9afff;outline-offset:3px}
+input,select,textarea{font-family:inherit}
+input[type=file],input[type=number],select,textarea{border-color:#d9deea;border-radius:11px}
+input[type=range]{accent-color:#6d5ce7}
+.panel,.card{border-color:var(--line);box-shadow:0 8px 26px rgba(25,32,51,.045)}
+.navlinks a:hover,footer a:hover{color:#5847ce}
+@media(max-width:600px){main{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}.panel,.card{border-radius:16px}.buttons button,.buttons .button,.actions button,.actions .download{min-height:48px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
 </head>

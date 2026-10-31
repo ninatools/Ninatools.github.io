@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Convert PNG images to JPG online for free. Convert multiple images, adjust JPG quality, and download your images securely in your browser.">
-<meta name="theme-color" content="#6857df">
+<meta name="theme-color" content="#6d5ce7">
 <title>PNG to JPG Converter - NinaTools</title>
 
 <style>
@@ -429,6 +429,22 @@ footer a {
     transition: none !important;
   }
 }
+
+/* NinaTools unified purple design system */
+:root{--purple:#6d5ce7;--purple-dark:#5847ce;--ink:#172033;--muted:#626e82;--line:#e3e6ef;--bg:#f7f8fc}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+header,footer{background:#fff;border-color:var(--line)}
+a{transition:color .18s ease}
+button,.button,.download{min-height:46px;border-radius:11px;font-family:inherit;font-weight:700;transition:background .18s ease,box-shadow .18s ease,transform .18s ease}
+button:not(:disabled):hover,.button:hover,.download:hover{filter:brightness(.96);box-shadow:0 5px 14px rgba(109,92,231,.18)}
+button:focus-visible,.button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b9afff;outline-offset:3px}
+input,select,textarea{font-family:inherit}
+input[type=file],input[type=number],select,textarea{border-color:#d9deea;border-radius:11px}
+input[type=range]{accent-color:#6d5ce7}
+.panel,.card{border-color:var(--line);box-shadow:0 8px 26px rgba(25,32,51,.045)}
+.navlinks a:hover,footer a:hover{color:#5847ce}
+@media(max-width:600px){main{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}.panel,.card{border-radius:16px}.buttons button,.buttons .button,.actions button,.actions .download{min-height:48px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 
