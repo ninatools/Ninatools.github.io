@@ -4,9 +4,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Convert Unix timestamps to readable dates and times, or convert dates back to Unix timestamps. Free online timestamp converter.">
+<meta name="description" content="Convert Unix timestamps to dates and times, or turn a date into Unix seconds and milliseconds. Free online timestamp converter with UTC and local time options.">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#6857df">
-<title>Timestamp Converter - NinaTools</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Unix Timestamp Converter | NinaTools">
+<meta property="og:description" content="Convert Unix timestamps to readable dates or dates to Unix seconds and milliseconds. Choose UTC or local time.">
+<meta property="og:url" content="https://ninatools.github.io/timestamp-converter/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Unix Timestamp Converter | NinaTools">
+<meta name="twitter:description" content="Convert Unix timestamps to dates and times, or convert dates back to timestamps.">
+<title>Free Unix Timestamp Converter Online | NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/timestamp-converter/">
 <style>
 :root {
@@ -156,8 +164,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 </header>
 
 <main>
-  <h1>Timestamp Converter</h1>
-  <p class="intro">Convert Unix timestamps to readable dates and times, or convert a date and time into a Unix timestamp. Free and easy to use.</p>
+  <h1>Free Unix Timestamp Converter</h1>
+  <p class="intro">Convert a Unix timestamp into a readable date and time, or convert a date and time into Unix seconds and milliseconds. Choose UTC or your device’s local time zone. Free to use, with conversions performed in your browser.</p>
 
   <section class="panel">
     <h2>Timestamp to Date</h2>
@@ -216,21 +224,25 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
   <section class="content-section">
     <h2>What is a Unix timestamp?</h2>
-    <p>A Unix timestamp represents the number of seconds elapsed since January 1, 1970, at 00:00:00 UTC. Some systems use milliseconds instead of seconds.</p>
-    <h3>Seconds vs. milliseconds</h3>
-    <p>A timestamp in seconds commonly has 10 digits for current dates. A timestamp in milliseconds commonly has 13 digits. Choose automatic detection or select the unit yourself.</p>
-    <h3>Does the time zone matter?</h3>
-    <p>Unix timestamps represent a moment in UTC. The same timestamp may display as a different local date and time depending on your time zone.</p>
+    <p>A Unix timestamp is a number that counts the time elapsed since 1 January 1970 at 00:00:00 UTC, also known as the Unix epoch. It represents a moment in time rather than a date formatted for a particular country or time zone.</p>
+    <h3>Unix timestamp in seconds vs. milliseconds</h3>
+    <p>Unix timestamps are commonly stored in seconds, while many programming languages and APIs use milliseconds. For dates around the present day, seconds values usually have 10 digits and milliseconds values usually have 13 digits. This converter can detect the unit automatically, or you can select seconds or milliseconds yourself.</p>
+    <h3>UTC and local time zones</h3>
+    <p>The timestamp itself is independent of a display time zone. UTC provides a consistent reference, while local date and time are formatted using your device’s time zone. When converting a date to a timestamp, choose UTC to interpret the entered date and time as UTC, or choose your device’s local time zone to use its local setting.</p>
+    <h3>How to convert a date to a Unix timestamp</h3>
+    <p>Choose a date and time, select the intended time zone, and select Convert to Timestamp. The tool displays both seconds and milliseconds so you can use the format required by your application or API.</p>
   </section>
 
   <section class="content-section">
     <h2>Frequently asked questions</h2>
-    <h3>Is this tool free?</h3>
-    <p>Yes. The timestamp converter is free to use without an account.</p>
-    <h3>Are my inputs uploaded?</h3>
-    <p>No. Conversions are performed locally in your browser.</p>
-    <h3>Why does a date look different on another device?</h3>
-    <p>The device may use a different time zone. Select UTC when you need a consistent UTC display.</p>
+    <h3>Is this Unix timestamp converter free?</h3>
+    <p>Yes. You can convert timestamps and dates for free without creating an account.</p>
+    <h3>How can I tell whether a timestamp uses seconds or milliseconds?</h3>
+    <p>For current dates, a seconds timestamp commonly has 10 digits and a milliseconds timestamp commonly has 13 digits. Use automatic detection or choose the unit explicitly when you know the source format.</p>
+    <h3>Why can the same timestamp show a different date or time?</h3>
+    <p>The timestamp identifies the same moment, but local clock displays vary by time zone. Compare the UTC result when you need a consistent reference across devices.</p>
+    <h3>Are my timestamp and date inputs uploaded?</h3>
+    <p>No. The conversion runs in your browser; the values you enter are not sent to NinaTools for conversion.</p>
   </section>
 
   <section class="content-section">
