@@ -235,6 +235,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   </section>
 
   <section class="content-section">
+    <h2>How Base64 encoding works</h2>
+    <p>Base64 represents data using 64 printable ASCII characters. It converts groups of bytes into text; it does not compress or encrypt the original data. Padding characters may appear at the end of an encoded result.</p>
+  </section>
+
+  <section class="content-section">
     <h2>What is Base64?</h2>
     <p>Base64 is a way to represent binary data using a set of text characters. It is commonly used in data transfer, email, and web development.</p>
     <p><strong>Important:</strong> Base64 is encoding, not encryption. It does not protect passwords or other sensitive information.</p>
@@ -250,6 +255,10 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     <p>The conversion is performed locally in your browser. This page does not send your input to a conversion server.</p>
     <h3>Is Base64 secure encryption?</h3>
     <p>No. Anyone can decode Base64. Do not use it to protect confidential information.</p>
+    <h3>Why does Base64 output sometimes end with an equals sign?</h3>
+    <p>The equals sign is padding used when the input byte length does not fit evenly into Base64 conversion groups.</p>
+    <h3>Can I encode Unicode text?</h3>
+    <p>Yes. This tool converts text to UTF-8 bytes before encoding, so it supports Thai and other Unicode characters.</p>
   </section>
 
   <section class="content-section">
