@@ -4,9 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Format, validate and minify JSON online for free. Find JSON syntax errors and make your data easier to read. Your data stays in your browser.">
+  <meta name="description" content="Format, validate and minify JSON online for free. Check JSON syntax, beautify code with custom indentation, and copy the result. Processed locally in your browser.">
+  <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#6857df">
-  <title>JSON Formatter &amp; Validator - NinaTools</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free JSON Formatter &amp; Validator Online | NinaTools">
+  <meta property="og:description" content="Beautify, validate and minify JSON with custom indentation. Free browser-based JSON tool.">
+  <meta property="og:url" content="https://ninatools.github.io/json-formatter-validator/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free JSON Formatter &amp; Validator Online | NinaTools">
+  <meta name="twitter:description" content="Format, validate and minify JSON online. Your input stays in your browser.">
+  <title>Free JSON Formatter &amp; Validator Online | NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/json-formatter-validator/">
 
   <style>
@@ -253,10 +261,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   </header>
 
   <main>
-    <h1>JSON Formatter &amp; Validator</h1>
+    <h1>Free JSON Formatter &amp; Validator</h1>
     <p class="intro">
-      Format JSON to make it easier to read, validate JSON syntax,
-      or minify JSON to reduce unnecessary whitespace. Free and easy to use.
+      Format and beautify JSON with readable indentation, validate JSON syntax,
+      or minify JSON by removing unnecessary whitespace. This free online JSON tool
+      processes your input locally in your browser.
     </p>
 
     <section class="panel" aria-label="JSON editor">
@@ -301,13 +310,16 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         arrays, strings, numbers, booleans, and null values.
       </p>
 
-      <h2>How to use this tool</h2>
+      <h2>How to format, validate and minify JSON</h2>
       <ol>
         <li>Paste your JSON into the input box.</li>
         <li>Select an indentation size if you want to format it.</li>
         <li>Choose Format JSON, Validate JSON, or Minify JSON.</li>
         <li>Use Copy Result to copy the processed JSON.</li>
       </ol>
+
+      <h2>JSON formatting and validation guide</h2>
+      <p>Use Format JSON to add line breaks and indentation, making nested objects and arrays easier to inspect. Choose 2 spaces, 4 spaces or tabs for indentation. Use Validate JSON to check syntax without changing the input, or Minify JSON to remove formatting whitespace while keeping the JSON data structure.</p>
 
       <h2>Frequently asked questions</h2>
 
@@ -317,6 +329,12 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         It does not verify whether the data is factually correct
         or matches a particular application's requirements.
       </p>
+
+      <h3>What is the difference between formatting and minifying JSON?</h3>
+      <p>Formatting adds whitespace and indentation to improve readability. Minifying removes unnecessary whitespace to create a more compact JSON string. Both preserve the represented JSON data.</p>
+
+      <h3>Does this tool support JSON arrays and nested objects?</h3>
+      <p>Yes. It uses the browser’s built-in JSON parser and supports valid JSON values, including objects, arrays, strings, numbers, booleans and null.</p>
 
       <h3>Why is my JSON invalid?</h3>
       <p>
