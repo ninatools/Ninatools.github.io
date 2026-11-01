@@ -4,9 +4,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Encode text to Base64 and decode Base64 back to text for free. Fast, secure, and processed locally in your browser.">
+<meta name="description" content="Free Base64 encoder and decoder for text, including Thai and other UTF-8 languages. Convert text to Base64 or decode Base64 directly in your browser.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Free Base64 Encoder &amp; Decoder | NinaTools">
+<meta property="og:description" content="Encode text to Base64 or decode Base64 into readable UTF-8 text with this free browser-based tool.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ninatools.github.io/base64-encoder-decoder/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Base64 Encoder &amp; Decoder | NinaTools">
+<meta name="twitter:description" content="Convert text to Base64 and decode Base64 with UTF-8 support.">
 <meta name="theme-color" content="#6857df">
-<title>Base64 Encoder &amp; Decoder - NinaTools</title>
+<title>Free Base64 Encoder &amp; Decoder Online | NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/base64-encoder-decoder/">
 <style>
 :root {
@@ -190,8 +198,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 </header>
 
 <main>
-  <h1>Base64 Encoder &amp; Decoder</h1>
-  <p class="intro">Encode text to Base64 or decode Base64 back into readable text. Free, simple, and works in your browser.</p>
+  <h1>Free Base64 Encoder &amp; Decoder</h1>
+  <p class="intro">Encode text into Base64 or decode Base64 into readable UTF-8 text. Supports Thai and other languages, with conversion performed directly in your browser.</p>
 
   <section class="panel" aria-label="Base64 converter">
     <div class="field">
@@ -227,6 +235,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   </section>
 
   <section class="content-section">
+    <h2>How Base64 encoding works</h2>
+    <p>Base64 represents data using 64 printable ASCII characters. It converts groups of bytes into text; it does not compress or encrypt the original data. Padding characters may appear at the end of an encoded result.</p>
+  </section>
+
+  <section class="content-section">
     <h2>What is Base64?</h2>
     <p>Base64 is a way to represent binary data using a set of text characters. It is commonly used in data transfer, email, and web development.</p>
     <p><strong>Important:</strong> Base64 is encoding, not encryption. It does not protect passwords or other sensitive information.</p>
@@ -242,6 +255,10 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     <p>The conversion is performed locally in your browser. This page does not send your input to a conversion server.</p>
     <h3>Is Base64 secure encryption?</h3>
     <p>No. Anyone can decode Base64. Do not use it to protect confidential information.</p>
+    <h3>Why does Base64 output sometimes end with an equals sign?</h3>
+    <p>The equals sign is padding used when the input byte length does not fit evenly into Base64 conversion groups.</p>
+    <h3>Can I encode Unicode text?</h3>
+    <p>Yes. This tool converts text to UTF-8 bytes before encoding, so it supports Thai and other Unicode characters.</p>
   </section>
 
   <section class="content-section">
