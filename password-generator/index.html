@@ -4,9 +4,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Generate strong random passwords for free. Choose password length and character types. Passwords are generated locally in your browser.">
+<meta name="description" content="Create secure random passwords for free with this online password generator. Choose a length of 8–64 characters and customize letters, numbers and symbols. Generated privately in your browser.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Free Secure Password Generator | NinaTools">
+<meta property="og:description" content="Generate a unique random password with customizable length and character types. Securely generated in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ninatools.github.io/password-generator/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Secure Password Generator | NinaTools">
+<meta name="twitter:description" content="Create random passwords with your preferred length, letters, numbers and symbols.">
 <meta name="theme-color" content="#6857df">
-<title>Password Generator - NinaTools</title>
+<title>Free Secure Password Generator Online | NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/password-generator/">
 
 <style>
@@ -253,8 +261,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
 <main>
   <section class="intro">
-    <h1>Password Generator</h1>
-    <p>Create a random password for your accounts. Choose its length and the character types you want to include.</p>
+    <h1>Free Secure Password Generator</h1>
+    <p>Generate a unique random password for your accounts. Choose a length from 8 to 64 characters and select the letters, numbers and symbols to include. Passwords are generated locally in your browser.</p>
   </section>
 
   <section class="card" aria-label="Password generator">
@@ -308,6 +316,9 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
       <li>Click <strong>Copy Password</strong> to copy it for use.</li>
     </ol>
 
+    <h2>How this password generator works</h2>
+    <p>This tool uses your browser's built-in cryptographic random number generator to select password characters. It uses rejection sampling when choosing characters and securely shuffles the result to avoid simple patterns. At least one character from each selected character type is included.</p>
+
     <h2>Tips for safer passwords</h2>
     <ul>
       <li>Use a different password for every account.</li>
@@ -324,7 +335,10 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     <p>This tool generates passwords in your browser. It does not send them to a NinaTools server or intentionally save them. If you copy a password, it may remain in your device's clipboard until replaced.</p>
 
     <h3>How long should my password be?</h3>
-    <p>A longer, unique password is generally preferable. For many accounts, 16 or more characters is a practical choice, but follow the account provider's requirements.</p>
+    <p>A longer, unique password is generally preferable. A length of 16 or more characters is a useful starting point for many accounts, but follow the account provider's requirements.</p>
+
+    <h3>Is this generator suitable for important accounts?</h3>
+    <p>The generator uses the browser's cryptographic random number API to create passwords. Keep each password unique, store it in a trusted password manager, and enable multi-factor authentication where available.</p>
 
     <p>Explore more free tools on the <a href="/tools/">NinaTools tools page</a>.</p>
   </section>
