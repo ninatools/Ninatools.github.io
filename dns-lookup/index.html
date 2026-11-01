@@ -3,10 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Free DNS Lookup tool. Check A, AAAA, MX, NS, TXT and CNAME DNS records for any domain.">
+<meta name="description" content="Use NinaTools’ free DNS lookup tool to check A, AAAA, MX, NS, TXT and CNAME records for any domain online.">
 <meta name="theme-color" content="#6d5ce7">
-<title>DNS Lookup - Free DNS Record Checker | NinaTools</title>
+<title>Free DNS Lookup Tool – Check DNS Records | NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/dns-lookup/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free DNS Lookup Tool – Check DNS Records | NinaTools">
+<meta property="og:description" content="Check A, AAAA, MX, NS, TXT and CNAME DNS records for any domain with NinaTools’ free online DNS lookup tool.">
+<meta property="og:url" content="https://ninatools.github.io/dns-lookup/">
+<meta name="twitter:card" content="summary">
 
 <style>
 :root {
@@ -270,8 +275,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
 <main>
   <section class="hero">
-    <h1>DNS Lookup</h1>
-    <p>Check DNS records for any domain with this free online tool.</p>
+    <h1>Free DNS Lookup Tool</h1>
+    <p>Check DNS records for any domain online, including A, AAAA, MX, NS, TXT and CNAME records.</p>
   </section>
 
   <section class="panel">
@@ -344,42 +349,60 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   </section>
 
   <section class="content-section">
-    <h2>What Is DNS Lookup?</h2>
+    <h2>What Is a DNS Lookup?</h2>
     <p>
-      DNS (Domain Name System) translates domain names into information
-      that computers use to find services on the internet. A DNS lookup
-      lets you inspect the records published for a domain.
+      A DNS lookup checks the Domain Name System records published for a domain.
+      DNS connects human-readable domain names with the information browsers and
+      other internet services use to locate websites, mail servers and other services.
+      Use this free online DNS lookup tool to inspect the records returned by a public resolver.
     </p>
 
-    <h3>Common DNS Record Types</h3>
+    <h2>How to Use This Online DNS Lookup Tool</h2>
+    <ol>
+      <li>Enter a domain name, such as example.com.</li>
+      <li>Choose a specific DNS record type or select all supported types.</li>
+      <li>Select whether to request DNSSEC data.</li>
+      <li>Choose <strong>Lookup DNS</strong> to view the records returned by the DNS service.</li>
+      <li>Use the copy buttons to copy an individual record or the complete lookup results.</li>
+    </ol>
+
+    <h2>Which DNS Records Can You Check?</h2>
     <ul>
-      <li><strong>A:</strong> Maps a domain to an IPv4 address.</li>
-      <li><strong>AAAA:</strong> Maps a domain to an IPv6 address.</li>
-      <li><strong>MX:</strong> Lists mail servers for a domain.</li>
-      <li><strong>NS:</strong> Identifies authoritative name servers.</li>
-      <li><strong>TXT:</strong> Stores text data, often used for verification and email security.</li>
-      <li><strong>CNAME:</strong> Points one name to another canonical name.</li>
+      <li><strong>A record:</strong> Maps a hostname to an IPv4 address.</li>
+      <li><strong>AAAA record:</strong> Maps a hostname to an IPv6 address.</li>
+      <li><strong>MX record:</strong> Identifies the mail servers that receive email for a domain.</li>
+      <li><strong>NS record:</strong> Lists name servers associated with a domain.</li>
+      <li><strong>TXT record:</strong> Returns text data often used for domain verification and email security, such as SPF and other policy information.</li>
+      <li><strong>CNAME record:</strong> Makes one hostname an alias of another canonical hostname.</li>
     </ul>
 
-    <h3>Is this DNS Lookup tool free?</h3>
+    <h2>DNS Lookup FAQs</h2>
+    <h3>Is this DNS lookup tool free?</h3>
     <p>
-      Yes. NinaTools provides this interface for free. DNS queries are sent
-      to Google's public DNS-over-HTTPS service, which is subject to its own
-      availability and privacy practices.
+      Yes. NinaTools provides this DNS record lookup tool free to use.
+      Queries are sent to Google Public DNS over HTTPS, so availability and
+      response details depend on that public resolver.
     </p>
 
-    <h3>Why might no records appear?</h3>
+    <h3>Why does a DNS lookup return no records?</h3>
     <p>
-      A domain may not have the selected record type, the response may be
-      cached or unavailable, or the DNS service may return an error.
-      Try another record type or check the domain spelling.
+      The domain may not publish the selected record type, the resolver may return
+      no matching answers, or the response may be temporarily unavailable.
+      Check the spelling and try another record type.
     </p>
 
-    <h3>Does a DNS lookup show every DNS record?</h3>
+    <h3>Does a DNS lookup show every DNS record for a domain?</h3>
     <p>
-      No. Results depend on the selected query, the public resolver's response,
-      and the records it returns. This tool does not guarantee a complete
-      authoritative zone listing.
+      No. This tool displays the records returned for the selected queries by the
+      public DNS resolver. It does not perform an authoritative zone transfer and
+      cannot guarantee a complete list of every record in a domain's DNS zone.
+    </p>
+
+    <h3>What is the difference between a DNS lookup and a DNS record checker?</h3>
+    <p>
+      The terms are often used for similar tasks. Both describe checking DNS
+      information for a domain, such as its A, MX, NS, TXT or CNAME records.
+      The results can differ depending on the record type and DNS resolver used.
     </p>
   </section>
 
