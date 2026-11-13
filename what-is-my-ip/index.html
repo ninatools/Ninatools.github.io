@@ -352,7 +352,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
     try {
       const response = await fetch(
-        "https://api.ipify.org?format=json",
+        "https://api64.ipify.org?format=json",
         { cache: "no-store" }
       );
 
@@ -368,10 +368,15 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         /^(?:\d{1,3}\.){3}\d{1,3}$/.test(candidate) &&
         candidate.split(".").every(part => Number(part) <= 255);
 
-      const validIPv6 =
-        typeof candidate === "string" &&
-        candidate.includes(":") &&
-        /^[0-9a-fA-F:]+$/.test(candidate);
+      let validIPv6 = false;
+      if (typeof candidate === "string" && candidate.includes(":")) {
+        try {
+          const parsedIPv6 = new URL("http://[" + candidate + "]/");
+          validIPv6 = parsedIPv6.hostname.toLowerCase() === "[" + candidate.toLowerCase() + "]";
+        } catch {
+          validIPv6 = false;
+        }
+      }
 
       if (!validIPv4 && !validIPv6) {
         throw new Error("The service returned an invalid IP address.");
