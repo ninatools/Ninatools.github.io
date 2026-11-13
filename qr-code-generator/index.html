@@ -599,6 +599,9 @@ textInput.addEventListener("keydown", event => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") generateQR();
 });
 updateColorLabels();
+const initialPreset = document.querySelector('.preset[data-preset="Nina Purple"]');
+if (initialPreset) initialPreset.setAttribute("aria-pressed", "true");
+syncBackgroundSwatch();
 </script>
 
 <!-- Cloudflare Web Analytics -->
