@@ -91,7 +91,10 @@ label {
 textarea {
   display: block;
   width: 100%;
-  min-height: 165px;
+  height: 160px;
+  min-height: 160px;
+  max-height: 420px;
+  overflow-y: auto;
   resize: vertical;
   border: 1px solid #d5d3e5;
   border-radius: 10px;
@@ -189,7 +192,6 @@ footer a { color: var(--purple); }
   main { margin: 26px auto; padding: 0 13px; }
   .card { padding: 17px; }
   .buttons button { flex: 1 1 40%; }
-  textarea { min-height: 140px; }
 }
 
 /* NinaTools shared purple design system */
@@ -312,6 +314,18 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     status.textContent = message;
     status.className = type || "";
   }
+  function resizeTextareas() {
+    [input, output].forEach(function (field) {
+      field.style.height = "160px";
+      field.style.height = Math.min(Math.max(field.scrollHeight, 160), 420) + "px";
+    });
+  }
+  input.addEventListener("input", function () {
+    output.value = "";
+    showStatus("");
+    resizeTextareas();
+  });
+  window.addEventListener("resize", resizeTextareas);
   document.getElementById("encodeBtn").addEventListener("click", function () {
     if (!input.value) {
       output.value = "";
@@ -320,9 +334,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     }
     try {
       output.value = encodeURIComponent(input.value);
+      resizeTextareas();
       showStatus("Text encoded successfully.", "success");
     } catch (error) {
       output.value = "";
+      resizeTextareas();
       showStatus("Unable to encode this text.", "error");
     }
   });
@@ -334,9 +350,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     }
     try {
       output.value = decodeURIComponent(input.value);
+      resizeTextareas();
       showStatus("Text decoded successfully.", "success");
     } catch (error) {
       output.value = "";
+      resizeTextareas();
       showStatus("Invalid encoded text. Please check your input and try again.", "error");
     }
   });
@@ -361,6 +379,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   document.getElementById("clearBtn").addEventListener("click", function () {
     input.value = "";
     output.value = "";
+    resizeTextareas();
     showStatus("All fields cleared.");
     input.focus();
   });
