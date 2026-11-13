@@ -576,12 +576,31 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     }
   }
 
+  function clearStaleResults(message = "") {
+    lastResults = [];
+    resultsList.replaceChildren();
+    results.hidden = true;
+    copyAllButton.disabled = true;
+    if (message) setStatus(message);
+  }
+
+  domainInput.addEventListener("input", () => {
+    clearStaleResults("Domain changed. Run a new lookup to see current DNS records.");
+  });
+  recordTypeSelect.addEventListener("change", () => {
+    clearStaleResults("Record type changed. Run a new lookup to refresh the results.");
+  });
+  dnssecSelect.addEventListener("change", () => {
+    clearStaleResults("DNSSEC setting changed. Run a new lookup to refresh the results.");
+  });
+
   async function lookup(event) {
     if (event) event.preventDefault();
 
     const domain = normalizeDomain(domainInput.value);
 
     if (!isValidDomain(domain)) {
+      clearStaleResults();
       results.hidden = true;
       setStatus(
         "Enter a valid domain name, such as example.com. Do not include a port number.",
@@ -659,6 +678,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         "The DNS lookup could not be completed. Check your internet connection " +
         "and try again. The public DNS service may also be temporarily unavailable."
       );
+      lastResults = [];
+      copyAllButton.disabled = true;
       setStatus("DNS lookup failed. Please try again.", "error");
     } finally {
       lookupButton.disabled = false;
