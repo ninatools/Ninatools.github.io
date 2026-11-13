@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Create free custom QR codes from text or URLs. Choose colors, preview your QR code, and download it as a PNG.">
+<meta name="description" content="Create QR codes online for free. Customize QR and background colors, preview your design, and download high-quality PNG or JPG images.">
 <meta name="theme-color" content="#6d5ce7">
 <title>Free QR Code Generator - NinaTools</title>
 <link rel="canonical" href="https://ninatools.github.io/qr-code-generator/">
@@ -272,7 +272,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 
 </svg></div>
     <h1>Free QR Code Generator</h1>
-    <p>Create a QR code from any text or website link. Customize the colors and download your QR code as a PNG image.</p>
+    <p>Create a QR code from text or a website link. Customize your colors, preview the result, and download it as a PNG or JPG image.</p>
   </section>
 
   <section class="panel">
@@ -283,8 +283,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
       <div>
         <label for="darkColor">QR code color</label>
         <div class="color-row">
-          <input id="darkColor" type="color" value="#24164f" aria-label="Choose QR code color">
-          <span id="darkValue">#24164F</span>
+          <input id="darkColor" type="color" value="#4A35B8" aria-label="Choose QR code color">
+          <span id="darkValue">#4A35B8</span>
         </div>
         <div class="preset-groups" aria-label="QR code color presets">
           <div class="preset-group"><strong>Classic</strong><div class="presets">
@@ -313,16 +313,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
       <div>
         <label for="lightColor">Background color</label>
         <div class="color-row">
-          <input id="lightColor" type="color" value="#ffffff" aria-label="Choose background color">
-          <span id="lightValue">#FFFFFF</span>
+          <input id="lightColor" type="color" value="#F3F0FF" aria-label="Choose background color">
+          <span id="lightValue">#F3F0FF</span>
         </div>
         <div class="background-swatches" aria-label="Professional background color presets">
-          <button class="bg-swatch" type="button" data-light="#FFFFFF" aria-label="Pure White background" aria-pressed="true"><span style="--bg-swatch:#FFFFFF"></span><small>Pure White</small><small>#FFFFFF</small></button>
+          <button class="bg-swatch" type="button" data-light="#FFFFFF" aria-label="Pure White background" aria-pressed="false"><span style="--bg-swatch:#FFFFFF"></span><small>Pure White</small><small>#FFFFFF</small></button>
           <button class="bg-swatch" type="button" data-light="#FFFDF7" aria-label="Soft Ivory background" aria-pressed="false"><span style="--bg-swatch:#FFFDF7"></span><small>Soft Ivory</small><small>#FFFDF7</small></button>
           <button class="bg-swatch" type="button" data-light="#FFF7E8" aria-label="Warm Cream background" aria-pressed="false"><span style="--bg-swatch:#FFF7E8"></span><small>Warm Cream</small><small>#FFF7E8</small></button>
           <button class="bg-swatch" type="button" data-light="#F3F4F6" aria-label="Cool Gray background" aria-pressed="false"><span style="--bg-swatch:#F3F4F6"></span><small>Cool Gray</small><small>#F3F4F6</small></button>
           <button class="bg-swatch" type="button" data-light="#EFF6FF" aria-label="Mist Blue background" aria-pressed="false"><span style="--bg-swatch:#EFF6FF"></span><small>Mist Blue</small><small>#EFF6FF</small></button>
-          <button class="bg-swatch" type="button" data-light="#F5F3FF" aria-label="Soft Lavender background" aria-pressed="false"><span style="--bg-swatch:#F5F3FF"></span><small>Soft Lavender</small><small>#F5F3FF</small></button>
+          <button class="bg-swatch" type="button" data-light="#F5F3FF" aria-label="Soft Lavender background" aria-pressed="true"><span style="--bg-swatch:#F5F3FF"></span><small>Soft Lavender</small><small>#F5F3FF</small></button>
           <button class="bg-swatch" type="button" data-light="#ECFDF5" aria-label="Pale Mint background" aria-pressed="false"><span style="--bg-swatch:#ECFDF5"></span><small>Pale Mint</small><small>#ECFDF5</small></button>
           <button class="bg-swatch" type="button" data-light="#FFF1F2" aria-label="Blush Pink background" aria-pressed="false"><span style="--bg-swatch:#FFF1F2"></span><small>Blush Pink</small><small>#FFF1F2</small></button>
         </div>
@@ -343,7 +343,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     </div>
 
     <div class="info">
-      <strong>Free and private:</strong> Your text or URL is processed in your browser. NinaTools does not upload your content to our server. You can use the downloaded PNG in digital projects or print it.
+      <strong>Free and private:</strong> Your text or URL is processed in your browser. NinaTools does not upload your content to our server. Download your QR code as a PNG or JPG for digital use or printing.
     </div>
     <div class="info">
   <strong>How to save your QR code:</strong>
@@ -537,10 +537,13 @@ downloadBtn.addEventListener("click", downloadQR);
 });
 darkInput.addEventListener("input", () => {
   updateColorLabels();
+  document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", "false"));
   if (textInput.value.trim()) generateQR();
 });
 lightInput.addEventListener("input", () => {
   updateColorLabels();
+  syncBackgroundSwatch();
+  document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", "false"));
   if (textInput.value.trim()) generateQR();
 });
 
@@ -550,15 +553,22 @@ function selectPreset(button) {
   document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
   document.getElementById("presetInfo").textContent = "Selected: " + button.dataset.preset + " · " + darkInput.value.toUpperCase() + " on " + lightInput.value.toUpperCase();
   updateColorLabels();
+  syncBackgroundSwatch();
   if (textInput.value.trim()) generateQR();
 }
 document.querySelectorAll(".preset[data-preset]").forEach(button => {
   button.setAttribute("aria-pressed", "false");
   button.addEventListener("click", () => selectPreset(button));
 });
+function syncBackgroundSwatch() {
+  document.querySelectorAll(".bg-swatch[data-light]").forEach(item => {
+    item.setAttribute("aria-pressed", String(item.dataset.light.toUpperCase() === lightInput.value.toUpperCase()));
+  });
+}
 document.getElementById("resetPreset").addEventListener("click", () => {
   const defaultPreset = document.querySelector('.preset[data-preset="Nina Purple"]');
   if (defaultPreset) selectPreset(defaultPreset);
+  syncBackgroundSwatch();
 });
 // Keep the independent background swatches functional as well.
 document.querySelectorAll(".bg-swatch[data-light]").forEach(button => {
