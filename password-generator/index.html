@@ -120,6 +120,7 @@ button:focus-visible, input:focus-visible {
   color: var(--purple-dark);
 }
 .secondary:hover { background: #e5e1ff; }
+button:disabled { opacity: .48; cursor: not-allowed; }
 .button-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .button-row button { flex: 1 1 140px; }
 .length-row {
@@ -267,11 +268,11 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
   <section class="card" aria-label="Password generator">
     <label for="password">Your password</label>
-    <div id="password" class="password-output" role="textbox" aria-readonly="true">Click Generate Password to begin</div>
+    <div id="password" class="password-output" role="textbox" aria-label="Generated password" aria-readonly="true" tabindex="0" aria-live="polite">Click Generate Password to begin</div>
 
     <div class="button-row">
       <button class="primary" id="generate" type="button">Generate Password</button>
-      <button class="secondary" id="copy" type="button">Copy Password</button>
+      <button class="secondary" id="copy" type="button" disabled>Copy Password</button>
     </div>
 
     <div class="strength">
@@ -464,10 +465,14 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
       secureShuffle(passwordCharacters);
       passwordOutput.textContent = passwordCharacters.join("");
+      copyButton.disabled = false;
       status.textContent = "Password generated in your browser.";
       updateVariety(passwordOutput.textContent, sets);
     } catch (error) {
+      passwordOutput.textContent = "Click Generate Password to begin";
+      copyButton.disabled = true;
       status.textContent = error.message || "Unable to generate a password.";
+      updateVariety("", []);
     }
   }
 
@@ -502,7 +507,8 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
   });
 
   document.getElementById("clear").addEventListener("click", () => {
-    passwordOutput.textContent = "";
+    passwordOutput.textContent = "Click Generate Password to begin";
+    copyButton.disabled = true;
     status.textContent = "Cleared. Generate a new password when ready.";
     updateVariety("", []);
   });
