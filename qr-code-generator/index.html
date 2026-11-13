@@ -124,6 +124,12 @@ input[type="color"] {
 .preset[aria-pressed="true"] { border-color: var(--purple); background: #f5f2ff; box-shadow: 0 0 0 1px var(--purple); }
 .swatch { display: inline-block; flex: 0 0 19px; width: 19px; height: 19px; border: 1px solid #c9c9d2; border-radius: 50%; background: var(--swatch); }
 .preset-info { margin: 12px 0 0; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.background-swatches { display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:9px; margin-top:11px; }
+.bg-swatch { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-width:0; min-height:86px; padding:8px 5px; border:1px solid var(--border); border-radius:12px; background:#fff; color:var(--text); }
+.bg-swatch > span { display:block; width:31px; height:31px; border-radius:50%; background:var(--bg-swatch); border:1px solid #cbd0dc; }
+.bg-swatch small { display:block; font-size:11px; line-height:1.25; }
+.bg-swatch small:last-child { color:var(--muted); font-size:10px; }
+.bg-swatch[aria-pressed="true"] { border:2px solid var(--purple); background:#f8f6ff; box-shadow:0 0 0 1px rgba(109,92,231,.12); }
 .reset-preset { margin-top: 8px; padding: 7px 11px; min-height: 38px; font-size: 13px; background: #f1efff; color: var(--purple-dark); }
 @media(max-width:600px){.preset{font-size:12px;padding:6px 8px}.preset-groups{gap:12px}}
 button {
@@ -310,12 +316,15 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
           <input id="lightColor" type="color" value="#ffffff" aria-label="Choose background color">
           <span id="lightValue">#FFFFFF</span>
         </div>
-        <div class="presets" aria-label="Background color presets">
-          <button class="swatch" type="button" style="background:#ffffff" data-light="#ffffff" aria-label="White background"></button>
-          <button class="swatch" type="button" style="background:#fff5d6" data-light="#fff5d6" aria-label="Cream background"></button>
-          <button class="swatch" type="button" style="background:#e8f5ff" data-light="#e8f5ff" aria-label="Pale blue background"></button>
-          <button class="swatch" type="button" style="background:#e9f7ed" data-light="#e9f7ed" aria-label="Pale green background"></button>
-          <button class="swatch" type="button" style="background:#f2edff" data-light="#f2edff" aria-label="Pale purple background"></button>
+        <div class="background-swatches" aria-label="Professional background color presets">
+          <button class="bg-swatch" type="button" data-light="#FFFFFF" aria-label="Pure White background" aria-pressed="true"><span style="--bg-swatch:#FFFFFF"></span><small>Pure White</small><small>#FFFFFF</small></button>
+          <button class="bg-swatch" type="button" data-light="#FFFDF7" aria-label="Soft Ivory background" aria-pressed="false"><span style="--bg-swatch:#FFFDF7"></span><small>Soft Ivory</small><small>#FFFDF7</small></button>
+          <button class="bg-swatch" type="button" data-light="#FFF7E8" aria-label="Warm Cream background" aria-pressed="false"><span style="--bg-swatch:#FFF7E8"></span><small>Warm Cream</small><small>#FFF7E8</small></button>
+          <button class="bg-swatch" type="button" data-light="#F3F4F6" aria-label="Cool Gray background" aria-pressed="false"><span style="--bg-swatch:#F3F4F6"></span><small>Cool Gray</small><small>#F3F4F6</small></button>
+          <button class="bg-swatch" type="button" data-light="#EFF6FF" aria-label="Mist Blue background" aria-pressed="false"><span style="--bg-swatch:#EFF6FF"></span><small>Mist Blue</small><small>#EFF6FF</small></button>
+          <button class="bg-swatch" type="button" data-light="#F5F3FF" aria-label="Soft Lavender background" aria-pressed="false"><span style="--bg-swatch:#F5F3FF"></span><small>Soft Lavender</small><small>#F5F3FF</small></button>
+          <button class="bg-swatch" type="button" data-light="#ECFDF5" aria-label="Pale Mint background" aria-pressed="false"><span style="--bg-swatch:#ECFDF5"></span><small>Pale Mint</small><small>#ECFDF5</small></button>
+          <button class="bg-swatch" type="button" data-light="#FFF1F2" aria-label="Blush Pink background" aria-pressed="false"><span style="--bg-swatch:#FFF1F2"></span><small>Blush Pink</small><small>#FFF1F2</small></button>
         </div>
       </div>
     </div>
@@ -552,12 +561,13 @@ document.getElementById("resetPreset").addEventListener("click", () => {
   if (defaultPreset) selectPreset(defaultPreset);
 });
 // Keep the independent background swatches functional as well.
-document.querySelectorAll("[data-light]").forEach(button => {
+document.querySelectorAll(".bg-swatch[data-light]").forEach(button => {
   button.addEventListener("click", () => {
     lightInput.value = button.dataset.light;
+    document.querySelectorAll(".bg-swatch").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
     updateColorLabels();
     const info = document.getElementById("presetInfo");
-    if (info) info.textContent = "Custom background · " + darkInput.value.toUpperCase() + " on " + lightInput.value.toUpperCase();
+    if (info) info.textContent = "Background: " + button.querySelector("small").textContent + " · " + darkInput.value.toUpperCase() + " on " + lightInput.value.toUpperCase();
     document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", "false"));
     if (textInput.value.trim()) generateQR();
   });
