@@ -108,7 +108,12 @@
     }
 
     textarea {
-      min-height: 220px;
+      display: block;
+      width: 100%;
+      height: 160px;
+      min-height: 160px;
+      max-height: 420px;
+      overflow-y: auto;
       resize: vertical;
       font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
       line-height: 1.55;
@@ -158,6 +163,7 @@
     }
 
     .wide { grid-column: 1 / -1; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
 
     .status {
       margin-top: 16px;
@@ -205,7 +211,6 @@
       .panel, .info-card { padding: 16px; }
       .button-grid { grid-template-columns: 1fr; }
       .wide { grid-column: auto; }
-      textarea { min-height: 190px; }
     }
   
 /* NinaTools shared purple design system */
@@ -293,7 +298,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         <button type="button" class="primary" id="validateBtn">Validate JSON</button>
         <button type="button" class="secondary" id="minifyBtn">Minify JSON</button>
         <button type="button" class="secondary" id="exampleBtn">Load Example</button>
-        <button type="button" class="secondary" id="copyBtn">Copy Result</button>
+        <button type="button" class="secondary" id="copyBtn" disabled>Copy Result</button>
         <button type="button" class="secondary" id="clearBtn">Clear</button>
       </div>
 
@@ -380,6 +385,16 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     const statusBox = document.getElementById("status");
 
     let resultText = "";
+    const copyButton = document.getElementById("copyBtn");
+
+    function setResult(value) {
+      resultText = value;
+      copyButton.disabled = !value;
+    }
+
+    function clearResult() {
+      setResult("");
+    }
 
     function showStatus(message, type = "") {
       statusBox.textContent = message;
@@ -394,6 +409,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
       const text = input.value.trim();
 
       if (!text) {
+        clearResult();
         showStatus("Please enter JSON first.", "error");
         return null;
       }
@@ -402,7 +418,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         return JSON.parse(text);
       } catch (error) {
         showStatus("Invalid JSON: " + error.message, "error");
-        resultText = "";
+        clearResult();
         return null;
       }
     }
@@ -411,14 +427,14 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
       const data = parseInput();
       if (data === null) {
         if (input.value.trim() === "null") {
-          resultText = "null";
+          setResult("null");
           input.value = resultText;
           showStatus("Valid JSON. Formatted successfully.", "success");
         }
         return;
       }
 
-      resultText = JSON.stringify(data, null, getIndent());
+      setResult(JSON.stringify(data, null, getIndent()));
       input.value = resultText;
       showStatus("Valid JSON. Formatted successfully.", "success");
     }
@@ -433,10 +449,10 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
 
       try {
         JSON.parse(text);
-        resultText = text;
+        setResult(text);
         showStatus("Valid JSON. No syntax errors found.", "success");
       } catch (error) {
-        resultText = "";
+        clearResult();
         showStatus("Invalid JSON: " + error.message, "error");
       }
     }
@@ -452,13 +468,13 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         return;
       }
 
-      resultText = JSON.stringify(data);
+      setResult(JSON.stringify(data));
       input.value = resultText;
       showStatus("Valid JSON. Minified successfully.", "success");
     }
 
     async function copyResult() {
-      const text = resultText || input.value;
+      const text = resultText;
 
       if (!text.trim()) {
         showStatus("There is no result to copy.", "error");
@@ -487,13 +503,13 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
         }
       }, null, 2);
 
-      resultText = input.value;
+      setResult(input.value);
       showStatus("Example loaded. Try formatting or minifying it.");
     }
 
     function clearAll() {
       input.value = "";
-      resultText = "";
+      clearResult();
       showStatus("Input cleared. Enter JSON to get started.");
       input.focus();
     }
@@ -506,7 +522,7 @@ footer { padding-bottom: max(28px, env(safe-area-inset-bottom)); }
     document.getElementById("clearBtn").addEventListener("click", clearAll);
 
     input.addEventListener("input", () => {
-      resultText = "";
+      clearResult();
       showStatus("Input changed. Choose an action to process your JSON.");
     });
   </script>
