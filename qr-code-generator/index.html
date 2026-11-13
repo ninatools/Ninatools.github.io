@@ -117,14 +117,15 @@ input[type="color"] {
   background: white;
   cursor: pointer;
 }
-.presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-.swatch {
-  width: 28px;
-  height: 28px;
-  border: 2px solid #ddd;
-  border-radius: 50%;
-  cursor: pointer;
-}
+.presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; }
+.preset-groups { display: grid; gap: 14px; margin-top: 13px; }
+.preset-group > strong { display: block; font-size: 13px; color: var(--muted); margin-bottom: 3px; }
+.preset { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 6px 10px; border: 1px solid var(--border); background: #fff; color: var(--text); font-size: 13px; }
+.preset[aria-pressed="true"] { border-color: var(--purple); background: #f5f2ff; box-shadow: 0 0 0 1px var(--purple); }
+.swatch { display: inline-block; flex: 0 0 19px; width: 19px; height: 19px; border: 1px solid #c9c9d2; border-radius: 50%; background: var(--swatch); }
+.preset-info { margin: 12px 0 0; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.reset-preset { margin-top: 8px; padding: 7px 11px; min-height: 38px; font-size: 13px; background: #f1efff; color: var(--purple-dark); }
+@media(max-width:600px){.preset{font-size:12px;padding:6px 8px}.preset-groups{gap:12px}}
 button {
   font: inherit;
   font-weight: 700;
@@ -279,13 +280,28 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
           <input id="darkColor" type="color" value="#24164f" aria-label="Choose QR code color">
           <span id="darkValue">#24164F</span>
         </div>
-        <div class="presets" aria-label="QR code color presets">
-          <button class="swatch" type="button" style="background:#24164f" data-dark="#24164f" aria-label="Dark purple"></button>
-          <button class="swatch" type="button" style="background:#000000" data-dark="#000000" aria-label="Black"></button>
-          <button class="swatch" type="button" style="background:#174a36" data-dark="#174a36" aria-label="Dark green"></button>
-          <button class="swatch" type="button" style="background:#153b75" data-dark="#153b75" aria-label="Dark blue"></button>
-          <button class="swatch" type="button" style="background:#8b1744" data-dark="#8b1744" aria-label="Dark red"></button>
+        <div class="preset-groups" aria-label="QR code color presets">
+          <div class="preset-group"><strong>Classic</strong><div class="presets">
+            <button class="preset" type="button" data-preset="Classic Black" data-dark="#171717" data-light="#FFFFFF"><span class="swatch" style="--swatch:#171717"></span><span>Classic Black</span></button>
+            <button class="preset" type="button" data-preset="Navy Blue" data-dark="#123B6D" data-light="#F2F7FF"><span class="swatch" style="--swatch:#123B6D"></span><span>Navy Blue</span></button>
+            <button class="preset" type="button" data-preset="Royal Blue" data-dark="#1746A2" data-light="#EFF4FF"><span class="swatch" style="--swatch:#1746A2"></span><span>Royal Blue</span></button>
+          </div></div>
+          <div class="preset-group"><strong>Elegant</strong><div class="presets">
+            <button class="preset" type="button" data-preset="Luxury Purple" data-dark="#4B2A91" data-light="#F5F0FF"><span class="swatch" style="--swatch:#4B2A91"></span><span>Luxury Purple</span></button>
+            <button class="preset" type="button" data-preset="Nina Purple" data-dark="#4A35B8" data-light="#F3F0FF"><span class="swatch" style="--swatch:#4A35B8"></span><span>Nina Purple</span></button>
+            <button class="preset" type="button" data-preset="Burgundy" data-dark="#7A1838" data-light="#FFF1F5"><span class="swatch" style="--swatch:#7A1838"></span><span>Burgundy</span></button>
+            <button class="preset" type="button" data-preset="Chocolate Brown" data-dark="#5C351C" data-light="#FAF2E8"><span class="swatch" style="--swatch:#5C351C"></span><span>Chocolate Brown</span></button>
+          </div></div>
+          <div class="preset-group"><strong>Fresh &amp; Vibrant</strong><div class="presets">
+            <button class="preset" type="button" data-preset="Emerald Green" data-dark="#075B45" data-light="#ECFDF5"><span class="swatch" style="--swatch:#075B45"></span><span>Emerald Green</span></button>
+            <button class="preset" type="button" data-preset="Teal" data-dark="#075B68" data-light="#E8FAFC"><span class="swatch" style="--swatch:#075B68"></span><span>Teal</span></button>
+            <button class="preset" type="button" data-preset="Ruby Red" data-dark="#A61B1B" data-light="#FFF1F0"><span class="swatch" style="--swatch:#A61B1B"></span><span>Ruby Red</span></button>
+            <button class="preset" type="button" data-preset="Sunset Orange" data-dark="#9A3412" data-light="#FFF7ED"><span class="swatch" style="--swatch:#9A3412"></span><span>Sunset Orange</span></button>
+            <button class="preset" type="button" data-preset="Rose Pink" data-dark="#9D174D" data-light="#FFF0F6"><span class="swatch" style="--swatch:#9D174D"></span><span>Rose Pink</span></button>
+          </div></div>
         </div>
+        <p id="presetInfo" class="preset-info" aria-live="polite">Selected: Nina Purple · #4A35B8 on #F3F0FF</p>
+        <button class="reset-preset" id="resetPreset" type="button">Reset to Nina Purple</button>
       </div>
 
       <div>
@@ -364,6 +380,7 @@ function generateQR() {
     qrContainer.innerHTML = '<p class="hint">Enter some text or a URL above first.</p>';
     message.textContent = "Please enter text or a website URL.";
     downloadBtn.disabled = true;
+    document.getElementById("downloadJpgBtn").disabled = true;
     qrReady = false;
     return;
   }
@@ -371,6 +388,7 @@ function generateQR() {
   if (typeof QRCode === "undefined") {
     message.textContent = "The QR code library could not load. Check your internet connection and try again.";
     downloadBtn.disabled = true;
+    document.getElementById("downloadJpgBtn").disabled = true;
     qrReady = false;
     return;
   }
@@ -378,6 +396,7 @@ function generateQR() {
   qrContainer.innerHTML = "";
   message.textContent = "";
   downloadBtn.disabled = true;
+  document.getElementById("downloadJpgBtn").disabled = true;
   qrReady = false;
 
   try {
@@ -516,20 +535,35 @@ lightInput.addEventListener("input", () => {
   if (textInput.value.trim()) generateQR();
 });
 
-document.querySelectorAll("[data-dark]").forEach(button => {
-  button.addEventListener("click", () => {
-    darkInput.value = button.dataset.dark;
-    updateColorLabels();
-    if (textInput.value.trim()) generateQR();
-  });
+function selectPreset(button) {
+  darkInput.value = button.dataset.dark;
+  lightInput.value = button.dataset.light;
+  document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+  document.getElementById("presetInfo").textContent = "Selected: " + button.dataset.preset + " · " + darkInput.value.toUpperCase() + " on " + lightInput.value.toUpperCase();
+  updateColorLabels();
+  if (textInput.value.trim()) generateQR();
+}
+document.querySelectorAll(".preset[data-preset]").forEach(button => {
+  button.setAttribute("aria-pressed", "false");
+  button.addEventListener("click", () => selectPreset(button));
 });
-document.querySelectorAll("[data-light]").forEach(button => {
-  button.addEventListener("click", () => {
-    lightInput.value = button.dataset.light;
-    updateColorLabels();
-    if (textInput.value.trim()) generateQR();
-  });
+document.getElementById("resetPreset").addEventListener("click", () => {
+  const defaultPreset = document.querySelector('.preset[data-preset="Nina Purple"]');
+  if (defaultPreset) selectPreset(defaultPreset);
 });
+function clearQRWhenTextChanges() {
+  qrReady = false;
+  downloadBtn.disabled = true;
+  document.getElementById("downloadJpgBtn").disabled = true;
+  if (textInput.value.trim()) {
+    qrContainer.innerHTML = '<p class="hint">Text changed. Generate a new QR code to update the preview.</p>';
+    message.textContent = "Please generate the updated QR code before downloading.";
+  } else {
+    qrContainer.innerHTML = '<p class="hint">Your QR code will appear here.</p>';
+    message.textContent = "";
+  }
+}
+textInput.addEventListener("input", clearQRWhenTextChanges);
 textInput.addEventListener("keydown", event => {
   if ((event.ctrlKey || event.metaKey) && event.key === "Enter") generateQR();
 });
