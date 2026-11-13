@@ -551,6 +551,17 @@ document.getElementById("resetPreset").addEventListener("click", () => {
   const defaultPreset = document.querySelector('.preset[data-preset="Nina Purple"]');
   if (defaultPreset) selectPreset(defaultPreset);
 });
+// Keep the independent background swatches functional as well.
+document.querySelectorAll("[data-light]").forEach(button => {
+  button.addEventListener("click", () => {
+    lightInput.value = button.dataset.light;
+    updateColorLabels();
+    const info = document.getElementById("presetInfo");
+    if (info) info.textContent = "Custom background · " + darkInput.value.toUpperCase() + " on " + lightInput.value.toUpperCase();
+    document.querySelectorAll(".preset[data-preset]").forEach(item => item.setAttribute("aria-pressed", "false"));
+    if (textInput.value.trim()) generateQR();
+  });
+});
 function clearQRWhenTextChanges() {
   qrReady = false;
   downloadBtn.disabled = true;
